@@ -1,4 +1,4 @@
-# Pravidlá obsahu appky WordWise
+# Pravidlá obsahu appky Samouk
 
 Platia pre každú knihu (úroveň). Pri pridávaní novej knihy prejsť všetky body.
 

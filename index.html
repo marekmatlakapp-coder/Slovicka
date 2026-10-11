@@ -2,15 +2,15 @@
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<title>WordWise</title>
+<title>Samouk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="WordWise – anglické slovíčka podľa učebnice, úrovne 1–6.">
+<meta name="description" content="Samouk – anglické slovíčka podľa učebnice, úrovne 1–6.">
 <meta name="theme-color" content="#1d5ea8">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="ikona-192.png" type="image/png">
 <link rel="apple-touch-icon" href="ikona-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="WordWise">
+<meta name="apple-mobile-web-app-title" content="Samouk">
 <link rel="stylesheet" href="pismo/pismo.css">
 <style>
 /* Layout: jedna úzka obrazovka pre mobil, karta s otázkou hore, veľké tlačidlá na palec dole.
@@ -2879,7 +2879,7 @@ function domov(){
   app.innerHTML = `
   <div class="top">
     <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg>
-    <div style="min-width:0"><h1>WordWise</h1>
+    <div style="min-width:0"><h1>Samouk</h1>
       <div class="kniha">${esc(K.nazov)}</div>
     </div>
     <button class="avatar" id="profil" aria-label="Profil">${esc(profil().meno.slice(0, 1).toUpperCase())}</button>
@@ -3319,7 +3319,7 @@ function urovenObr(){
 function pripravujeme(){
   const p = profil();
   app.innerHTML = `
-  <div class="top"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg><div style="min-width:0"><h1>WordWise</h1><div class="kniha">${esc(p.meno)} · úroveň ${p.uroven}</div></div></div>
+  <div class="top"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg><div style="min-width:0"><h1>Samouk</h1><div class="kniha">${esc(p.meno)} · úroveň ${p.uroven}</div></div></div>
   <section class="card"><h2>Úroveň ${p.uroven} pripravujeme</h2>
     <p style="margin:0">Pre túto knihu ešte nemám slovíčka. Odfoť slovník na konci knihy (strany so slovami a číslami lekcií) a nepravidelné slovesá a pošli ich Marekovi.</p></section>
   <div class="two"><button id="zmenU">Zmeniť úroveň</button><button id="zmen">Zmeniť profil</button></div>`;
