@@ -1,3 +1,4 @@
 android/build/
 android/podpis/
 Slovicka.apk
+*.idsig
