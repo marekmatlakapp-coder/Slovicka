@@ -95,6 +95,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .fb .res.ok{color:var(--ok)}.fb .res.bad{color:var(--bad)}
 .fb .ex{font-size:16px}
 mark{background:none;color:var(--accent);font-weight:700}
+.fe{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:2px}
 /* kartičky */
 .flash{background:var(--card);border:1px solid var(--line);border-radius:24px;min-height:300px;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center;cursor:pointer;width:100%}
 .flash .front{font-family:var(--f-disp);font-weight:800;font-size:34px;line-height:1.15}
@@ -771,6 +772,504 @@ yet|ešte nie (v zápore) / už (v otázke)|72||Have you finished *yet*?
 yourself|sa (seba) / ty sám|52
 yourselves|sa (seba) / vy sami|52
 zoo|zoo|48
+`,
+// Príklady použitia (For example) – anglicky|lekcia|veta s *slovom*
+priklady:`
+absolutely not|16|Can I borrow your car? *Absolutely not*!
+accountant|1|My sister is an *accountant* in a bank.
+activity|35|Swimming is my favourite *activity*.
+adverb|6|"Quickly" is an *adverb*.
+ahead|10|Look *ahead* when you drive.
+air-conditioned|84|The bus is *air-conditioned*.
+air-conditioning|84|Please turn on the *air-conditioning*.
+aircraft|49|The *aircraft* is very big.
+album|30|They have a new *album*.
+all sorts of|73|The shop sells *all sorts of* things.
+allergy|69|I have an *allergy* to nuts.
+among|40|She is *among* my best friends.
+anger|63|He couldn't hide his *anger*.
+apart from|70|Everybody came *apart from* Tom.
+Arab|63|He is an *Arab* from Egypt.
+architect|1|An *architect* designs houses.
+area|92|This *area* is very quiet.
+artist|7|My uncle is an *artist*.
+as soon as possible|85|Please call me *as soon as possible*.
+as usual|31|He was late *as usual*.
+at a crossroads|58|Turn left *at a crossroads*.
+at once|78|Come here *at once*!
+at the bottom|17|Sign your name *at the bottom*.
+at the top|17|Write the date *at the top*.
+attack|61|The dog didn't *attack* me.
+automatic|49|We have an *automatic* car.
+automatically|6|The door opens *automatically*.
+awesome|67|The concert was *awesome*!
+back|17|My bag is at the *back* of the car.
+baker's|85|I buy bread at the *baker's*.
+Baltic|54|We had a holiday by the *Baltic* Sea.
+beginner|2|I'm a *beginner* in English.
+behaviour|89|His *behaviour* is very good.
+bicycle|54|I go to work by *bicycle*.
+biker|61|The *biker* has a black jacket.
+blog|65|She writes a travel *blog*.
+blogger|65|He is a famous *blogger*.
+boat|22|We went to the island by *boat*.
+bone|96|The dog has a *bone*.
+bottle|23|Can I have a *bottle* of water?
+bottle-opener|23|Where is the *bottle-opener*?
+bottom|17|The keys are at the *bottom* of my bag.
+branch|85|The bank has a *branch* in our town.
+break a promise|55|Please don't *break a promise*.
+bridge|44|We walked over the *bridge*.
+briefcase|51|He carries a *briefcase* to work.
+builder|1|The *builder* is building a house.
+business|15|My father has his own *business*.
+businessman|81|He is a rich *businessman*.
+by accident|50|I broke the glass *by accident*.
+by mistake|41|I took your umbrella *by mistake*.
+calculate|92|Can you *calculate* the price?
+calculator|23|I need a *calculator* for maths.
+candy|76|Children love *candy*.
+captain|61|The *captain* is on the ship.
+carpet|25|We have a red *carpet* in the living room.
+carry on|86|*Carry on* reading, please.
+catch up|100|Walk slowly so I can *catch up*.
+Celsius|93|It's twenty degrees *Celsius* today.
+centimetre|91|The pencil is ten *centimetres* long.
+centre|84|We live in the town *centre*.
+champion|36|She is the tennis *champion*.
+championship|36|Our team won the *championship*.
+chance|67|Give me one more *chance*.
+chemist's|85|I bought some pills at the *chemist's*.
+chest of drawers|21|My socks are in the *chest of drawers*.
+chew|76|*Chew* your food slowly.
+chewing gum|76|Can I have some *chewing gum*?
+choice|15|You have a *choice*: tea or coffee.
+civil servant|1|My mother is a *civil servant*.
+clean|12|My room is *clean*.
+clever|88|She is a very *clever* girl.
+coal|59|We don't heat with *coal*.
+coast|54|We live on the *coast*.
+coffee table|21|The cups are on the *coffee table*.
+comfort|53|I like *comfort* when I travel.
+common|73|This name is very *common*.
+condition|64|The car is in good *condition*.
+conflict|63|There is a *conflict* between the two countries.
+contain|60|Does this food *contain* sugar?
+continue|83|Let's *continue* tomorrow.
+convenient|21|The shop is very *convenient* for me.
+correct|99|Your answer is *correct*.
+cost an arm and a leg|16|That new phone *costs an arm and a leg*.
+credit|14|I don't have any *credit* on my phone.
+crime|60|*Crime* is a big problem in this city.
+crisps|77|I'd like a bag of *crisps*.
+cross|89|*Cross* the street carefully.
+curtain|25|Please close the *curtain*.
+cycle|54|I *cycle* to work every day.
+dairy|69|Milk and cheese are *dairy* products.
+danger|51|*Danger*! Don't go there.
+dark|43|It's *dark* outside.
+data|64|The computer has a lot of *data*.
+death|55|The *death* of his dog made him sad.
+degree|93|It's thirty *degrees* today.
+dentist|62|I go to the *dentist* twice a year.
+department|88|She works in the sales *department*.
+department store|16|I bought a coat in a *department store*.
+despite|87|We went out *despite* the rain.
+diary|95|I write in my *diary* every evening.
+diet|71|I'm on a *diet*.
+dig|59|The dog likes to *dig* in the garden.
+direction|42|Which *direction* is the station?
+distance|36|What is the *distance* to Prague?
+divide|91|*Divide* the cake into eight pieces.
+do without|65|I can't *do without* coffee.
+downhill|36|It's easy to cycle *downhill*.
+drop|71|Don't *drop* the glass!
+drugstore|85|Is there a *drugstore* near here?
+dry|75|My hair is *dry* now.
+dude|68|Hey *dude*, how are you?
+economic|64|The country has *economic* problems.
+economical|64|This car is very *economical*.
+electrician|1|We need an *electrician* to fix the light.
+emotion|98|She showed no *emotion*.
+employ|4|The company *employs* fifty people.
+employee|4|He is a new *employee*.
+employer|4|My *employer* is very kind.
+enemy|61|The cat is the mouse's *enemy*.
+engineer|1|My brother is an *engineer*.
+enjoy yourself|52|*Enjoy yourself* at the party!
+especially|18|I like fruit, *especially* apples.
+exact|5|What is the *exact* time?
+exactly|5|It's *exactly* six o'clock.
+exercise|71|*Exercise* is good for your health.
+express|98|It's hard to *express* my feelings.
+factory|3|My dad works in a car *factory*.
+Fahrenheit|93|It's seventy degrees *Fahrenheit*.
+fall apart|64|My old shoes *fall apart*.
+false|90|Is it true or *false*?
+fan|30|I'm a big *fan* of this band.
+fat|19|Our cat is very *fat*.
+fatty|19|Don't eat *fatty* food.
+feeling|57|I have a good *feeling* about this.
+female|7|Is your cat male or *female*?
+fit|79|This jacket doesn't *fit* me.
+flame|59|The *flame* of the candle is small.
+flat tyre|53|My bike has a *flat tyre*.
+fly|49|We *fly* to London tomorrow.
+foot|91|He is six *feet* tall.
+for sure|41|I will come *for sure*.
+foreign|39|Do you speak a *foreign* language?
+fortunately|6|*Fortunately*, nobody was hurt.
+fortune|2|He made a *fortune* in business.
+free|14|The museum is *free* on Sunday.
+frequent|74|There are *frequent* buses to the airport.
+frequently|74|I *frequently* go to the gym.
+friendship|78|Our *friendship* is very important to me.
+front|17|Sit at the *front* of the class.
+full-time|9|She has a *full-time* job.
+furniture|24|We bought new *furniture*.
+general|61|This is a *general* rule.
+gentleman|21|He is a real *gentleman*.
+get a job|9|I want to *get a job* in London.
+giraffe|47|A *giraffe* has a long neck.
+give away|16|I *give away* my old clothes.
+go ahead|10|Can I sit here? *Go ahead*!
+go over|100|Let's *go over* the new words.
+go to college|88|My son wants to *go to college*.
+go up|14|Prices *go up* every year.
+gold|18|She has a *gold* ring.
+gonna|68|I'm *gonna* call you later.
+grass|80|The *grass* is green.
+greet|77|He *greets* everybody with a smile.
+greeting|77|"Hello" is a *greeting*.
+group|56|We work in a *group*.
+guilty|96|I feel *guilty* about it.
+guy|77|He is a nice *guy*.
+hairdresser|2|I go to the *hairdresser* once a month.
+hairdryer|75|Where is my *hairdryer*?
+happiness|78|Money doesn't buy *happiness*.
+happy to do something|10|I'm *happy to* help you.
+hard|18|This exercise is *hard*.
+have had enough|15|I *have had enough* of this rain!
+health|71|Sport is good for your *health*.
+heart|55|My *heart* is beating fast.
+heat|25|I don't like the summer *heat*.
+heating|25|Turn on the *heating*, it's cold.
+heavy metal|31|My brother listens to *heavy metal*.
+hip-hop|31|Do you like *hip-hop*?
+horrible|20|The weather is *horrible* today.
+hotel|39|We stayed in a nice *hotel*.
+How about...?|16|*How about* a cup of tea?
+huge|67|Their house is *huge*.
+human being|96|Every *human being* needs water.
+human nature|96|It's *human nature* to make mistakes.
+illness|71|He missed school because of *illness*.
+image|57|Look at this *image*.
+imagination|9|Children have a lot of *imagination*.
+in order not to|79|I left early *in order not to* be late.
+in spite of|69|We played *in spite of* the rain.
+in the middle|17|The table is *in the middle* of the room.
+inch|91|The screen is fifteen *inches*.
+incorrect|99|This answer is *incorrect*.
+independence|63|The country got its *independence* in 1993.
+independent|63|She is very *independent*.
+indoor|35|We have an *indoor* pool.
+indoors|35|It's raining, let's stay *indoors*.
+information|39|I need some *information* about the trains.
+insurance|38|Do you have travel *insurance*?
+insurance agent|38|The *insurance agent* called me.
+insurance policy|38|Read your *insurance policy* carefully.
+intention|37|I have no *intention* of leaving.
+Israel|63|*Israel* is in the Middle East.
+itself|52|The door closed by *itself*.
+jazz|31|My dad loves *jazz*.
+jet plane|38|A *jet plane* is very fast.
+Jew|63|He is a *Jew* from New York.
+Jewish|63|They celebrate *Jewish* holidays.
+job|1|I like my *job*.
+junk food|75|Don't eat so much *junk food*.
+keep|22|You can *keep* the book.
+keep a promise|55|Always *keep a promise*.
+keep away from|22|*Keep away from* the fire!
+keep off|22|*Keep off* the grass!
+kill|45|Smoking can *kill* you.
+killer|61|The police caught the *killer*.
+kinda|68|I'm *kinda* tired.
+lady|21|Who is that *lady*?
+lake|80|We swim in the *lake* in summer.
+landscape|53|The *landscape* here is beautiful.
+laugh|27|Why do you *laugh*?
+laugh at|27|Don't *laugh at* me!
+lawn mower|80|The *lawn mower* is in the garage.
+length|92|What is the *length* of the room?
+lie|79|The cat likes to *lie* in the sun.
+life|55|*Life* is beautiful.
+life insurance|38|He has *life insurance*.
+line|20|Draw a *line* under the word.
+lion|45|The *lion* is the king of animals.
+lip|80|She has red *lips*.
+Lisbon|40|*Lisbon* is the capital of Portugal.
+list|95|I have a shopping *list*.
+look alike|90|The twins *look alike*.
+lucky|51|You are so *lucky*!
+magazine|85|I'm reading a fashion *magazine*.
+make a decision|56|I must *make a decision* today.
+make money|15|He wants to *make money*.
+make sure|41|*Make sure* the door is locked.
+maker|4|He is a shoe *maker*.
+male|7|Is the dog *male* or female?
+marathon|33|She ran a *marathon*.
+Mars|66|*Mars* is a red planet.
+maximum|10|The *maximum* speed is fifty.
+medal|36|He won a gold *medal*.
+Mediterranean|54|We had a holiday by the *Mediterranean* Sea.
+meet|34|Let's *meet* at six.
+meet up|34|Let's *meet up* after work.
+memory|95|I have a good *memory*.
+message|57|I sent you a *message*.
+midday|74|We have lunch at *midday*.
+middle|17|Stand in the *middle*.
+mile|5|I walk one *mile* every day.
+milestone|86|This is an important *milestone*.
+minimum|10|The *minimum* age is eighteen.
+mirror|21|She looks in the *mirror*.
+mix|54|*Mix* the eggs with milk.
+more or less|20|It's *more or less* finished.
+motorbike|56|He rides a *motorbike*.
+motorcycle|56|My uncle has a *motorcycle*.
+move (house)|26|We *move* house next month.
+move in|26|They *move in* on Monday.
+move out|26|My son wants to *move out*.
+movie|57|Let's watch a *movie*.
+movies|57|We went to the *movies* last night.
+multiply|91|*Multiply* five by three.
+murder|60|The police are investigating a *murder*.
+muscle|80|My *muscles* hurt after the gym.
+musician|4|He is a famous *musician*.
+nature|96|I love *nature*.
+nephew|9|My *nephew* is five years old.
+Net|16|I found it on the *Net*.
+newsagent's|85|I buy a newspaper at the *newsagent's*.
+nice to meet you|34|Hello, I'm Anna. *Nice to meet you*.
+niece|9|My *niece* is very pretty.
+noise|56|What is that *noise*?
+noisy|56|The street is very *noisy*.
+not to|79|I told him *not to* go.
+note|100|I left you a *note*.
+notebook|100|Write it in your *notebook*.
+of course|18|Can you help me? *Of course*!
+offer|14|Can I *offer* you a drink?
+optimistic|7|I'm *optimistic* about the future.
+other|39|Where is the *other* shoe?
+ourselves|52|We made it *ourselves*.
+outdoor|35|We have an *outdoor* pool.
+outdoors|35|The children play *outdoors*.
+over|44|The plane flies *over* the city.
+own|38|I have my *own* room.
+pain|71|I have a *pain* in my back.
+painter|23|The *painter* is painting the wall.
+painting|23|This *painting* is very old.
+pal|68|He is my old *pal*.
+parallel|20|The two lines are *parallel*.
+part-time|9|She works *part-time*.
+participle|11|"Gone" is a *participle*.
+pass|89|I hope I *pass* the exam.
+passenger|49|Every *passenger* has a ticket.
+past participle|11|"Seen" is the *past participle* of "see".
+pay a visit|62|Let's *pay a visit* to grandma.
+peaceful|63|The village is very *peaceful*.
+pearl|21|She wears a *pearl* necklace.
+pepper|77|Pass me the salt and *pepper*.
+per|49|We drive fifty kilometres *per* hour.
+per cent|82|Ten *per cent* of students are absent.
+perfume|21|I like your *perfume*.
+perhaps|18|*Perhaps* it will rain.
+permission|72|You need *permission* to go out.
+perpendicular|20|Draw a *perpendicular* line.
+pessimistic|7|Don't be so *pessimistic*.
+picnic|29|Let's have a *picnic* in the park.
+pill|71|Take one *pill* after dinner.
+pilot|49|The *pilot* flies the plane.
+planet|60|Earth is our *planet*.
+player|56|He is a good football *player*.
+plenty of|81|We have *plenty of* time.
+point|91|Don't *point* at people.
+pop|31|She sings *pop* music.
+Portugal|40|*Portugal* is next to Spain.
+Prague|40|*Prague* is a beautiful city.
+prank|27|It was only a *prank*.
+price|14|What is the *price* of this coat?
+prison|60|The thief is in *prison*.
+probably|46|It will *probably* rain tomorrow.
+produce|3|This factory *produces* cars.
+producer|4|Brazil is a big coffee *producer*.
+product|3|This is a new *product*.
+profile|66|Update your *profile* photo.
+pronunciation|87|Your *pronunciation* is very good.
+protect|61|Sunglasses *protect* your eyes.
+pull|43|*Pull* the door to open it.
+push|43|*Push* the button.
+put off|9|Don't *put off* your homework.
+quality|5|This shirt is good *quality*.
+quick|69|Can I ask a *quick* question?
+quickly|69|Come here *quickly*!
+quiet|56|Please be *quiet*.
+quit|81|He wants to *quit* his job.
+quiz|66|We had a *quiz* at school.
+railway|50|The *railway* station is near.
+rap|31|My son listens to *rap*.
+rat|47|I saw a *rat* in the street.
+razor|75|I need a new *razor*.
+react|69|How did she *react*?
+reaction|69|His *reaction* was funny.
+read out|97|*Read out* the first sentence.
+ready|81|Are you *ready*?
+real|40|Is this a *real* diamond?
+reality|95|Dreams are not *reality*.
+realize|59|I didn't *realize* it was so late.
+really|40|I *really* like this song.
+reflexive|52|"Myself" is a *reflexive* pronoun.
+regularly|6|I go swimming *regularly*.
+remain|53|Please *remain* seated.
+remind|96|*Remind* me to call mum.
+reservation|42|I have a *reservation* for two.
+result|12|What is the *result* of the match?
+ride|54|Can you *ride* a horse?
+right|61|Turn *right* at the bank.
+roadworks|26|There are *roadworks* on the motorway.
+rock|31|I like *rock* music.
+role|80|She plays the main *role*.
+Rome|40|*Rome* is the capital of Italy.
+run|33|I *run* every morning.
+sad|20|Why are you *sad*?
+safe|51|This street is *safe* at night.
+safety|51|*Safety* is very important.
+salary|83|My *salary* is not very high.
+salty|80|The soup is too *salty*.
+see eye to eye|10|My brother and I don't *see eye to eye*.
+See you soon!|85|Bye, Tom! *See you soon*!
+seller|2|The *seller* gave me a discount.
+shave|75|My dad *shaves* every morning.
+shaving cream|75|I need some *shaving cream*.
+shaving foam|75|Where is the *shaving foam*?
+shop assistant|1|The *shop assistant* helped me.
+side|17|Park on the left *side*.
+silver|18|She has a *silver* ring.
+simply|59|It's *simply* the best.
+sing|31|She likes to *sing*.
+sink|25|Put the plates in the *sink*.
+skateboard|35|He has a new *skateboard*.
+skateboarding|35|*Skateboarding* is fun.
+skin|70|She has soft *skin*.
+slim|19|She is tall and *slim*.
+smile|27|What a beautiful *smile*!
+so ... that|45|It was *so* cold *that* we stayed home.
+so|46|I'm tired, *so* I'm going to bed.
+social|65|Humans are *social* animals.
+social networking|65|*Social networking* takes a lot of time.
+socialize|65|I like to *socialize* with friends.
+soft|18|This pillow is very *soft*.
+soon|85|See you *soon*!
+sooner or later|85|*Sooner or later* you will find a job.
+sore throat|70|I have a *sore throat*.
+sort|31|What *sort* of music do you like?
+sound|49|I like the *sound* of the sea.
+sparkling|76|I'd like *sparkling* water, please.
+speed|49|What is the *speed* limit here?
+spicy|75|This food is too *spicy*.
+square metre|92|The flat has sixty *square metres*.
+stay|39|We *stay* in a hotel.
+stone|25|The house is made of *stone*.
+stop|78|*Stop* the car, please!
+straight|20|Go *straight* on.
+strategy|81|We need a new *strategy*.
+stressful|7|My job is very *stressful*.
+strong|43|He is very *strong*.
+subway|50|We took the *subway* to Manhattan.
+sugar-free|76|I drink *sugar-free* cola.
+suggest|78|I *suggest* a short break.
+suggestion|58|Do you have a *suggestion*?
+suitcase|51|My *suitcase* is very heavy.
+supper|72|We have *supper* at seven.
+sure|40|Are you *sure*?
+surprise|48|We have a *surprise* for you.
+sweet|76|This cake is very *sweet*.
+swim|33|Can you *swim*?
+table tennis|35|We play *table tennis* after school.
+take part in|33|I want to *take part in* the race.
+tattoo|73|He has a *tattoo* on his arm.
+team|56|Our *team* won the match.
+teamwork|56|*Teamwork* is important.
+technical|66|We have a *technical* problem.
+technique|35|Her swimming *technique* is very good.
+techno|31|They play *techno* in the club.
+technology|66|*Technology* changes very fast.
+test|89|We have a *test* tomorrow.
+textbook|99|Open your *textbook* on page ten.
+thanks to|66|*Thanks to* you, I passed the exam.
+themselves|52|The children dressed *themselves*.
+thick|18|This book is very *thick*.
+though|84|It was cold. We had fun, *though*.
+throat|70|My *throat* hurts.
+tick|89|*Tick* the correct answer.
+ticket|38|I have a *ticket* for the concert.
+ticket office|38|Buy a ticket at the *ticket office*.
+tiger|45|The *tiger* is a big cat.
+time-consuming|7|Cooking is *time-consuming*.
+time is money|58|Hurry up, *time is money*!
+to|79|I went to the shop *to* buy bread.
+together|40|We go to school *together*.
+tonight|37|What are you doing *tonight*?
+top|17|The cat is on *top* of the fridge.
+tourist|39|The city is full of *tourists*.
+tourist office|39|Ask at the *tourist office*.
+towel|75|Can I have a clean *towel*?
+travel|38|I love to *travel*.
+triathlon|54|He finished the *triathlon*.
+true|90|Is that *true*?
+try|33|*Try* this cake!
+tube|50|We took the *tube* to Oxford Street.
+turn down|98|Please *turn down* the music.
+turn up|26|*Turn up* the radio, please.
+tyre|53|The *tyre* is flat.
+uncomfortable|53|This chair is *uncomfortable*.
+unfortunately|6|*Unfortunately*, I can't come.
+until|37|Wait *until* I come back.
+unusual|31|That's an *unusual* name.
+up to|67|It's *up to* you.
+uphill|36|It's hard to cycle *uphill*.
+usual|31|Let's meet at the *usual* place.
+verb form|13|Write the correct *verb form*.
+version|6|This is the new *version* of the app.
+village|54|My grandma lives in a small *village*.
+virtual|95|We had a *virtual* meeting.
+virus|74|I have a *virus* on my computer.
+visa|38|Do I need a *visa* for the USA?
+visit|62|I *visit* my parents every Sunday.
+vocabulary|87|I learn new *vocabulary* every day.
+wage|81|The *wage* is ten euros per hour.
+wake up|79|I *wake up* at six.
+way too difficult|36|This test is *way too difficult*.
+way too long|36|The film was *way too long*.
+weak|43|I feel *weak* today.
+web|95|I found it on the *web*.
+website|95|Visit our *website*.
+weekend|27|What are you doing at the *weekend*?
+wet|75|My shoes are *wet*.
+What about...?|16|I'm hungry. *What about* you?
+What is ... like?|20|*What is* your new teacher *like*?
+wheel|53|A bike has two *wheels*.
+when pigs can fly|73|He will clean his room *when pigs can fly*.
+wing|75|The bird has a broken *wing*.
+within walking distance|36|The shop is *within walking distance*.
+wolf|45|The *wolf* lives in the forest.
+work out|73|I *work out* in the gym.
+worker|2|He is a hard *worker*.
+worth|5|This car is *worth* a lot of money.
+would rather|62|I *would rather* stay at home.
+yard|91|The ball is ten *yards* away.
+yourself|52|Did you make it *yourself*?
+yourselves|52|Help *yourselves* to some cake.
+zoo|48|We went to the *zoo* on Sunday.
 `,
 slovesa:`
 be, was/were, been|byť|
@@ -1649,6 +2148,556 @@ Are you *married*?
 Do you have a *brother* or a sister?
 What is your *mother*'s name?
 `,
+// Príklady použitia (For example) – anglicky|lekcia|veta s *slovom*
+priklady:`
+'s|56|This is Sara*'s* book.
+a|4|I have *a* dog.
+about|63|This book is *about* London.
+action|85|"Run" is an *action*.
+adjective|85|"Big" is an *adjective*.
+affirmative|89|"I am happy" is an *affirmative* sentence.
+Africa|57|Egypt is in *Africa*.
+African|59|Lions are *African* animals.
+after|23|We play *after* school.
+age|GL35|What is your *age*?
+all|74|*All* my friends are here.
+alphabet|21|The English *alphabet* has 26 letters.
+always|77|I *always* drink coffee in the morning.
+American|11|My friend is *American*.
+and|20|I have a cat *and* a dog.
+animal|44|A cat is an *animal*.
+any|89|Do you have *any* money?
+apartment|81|We live in a small *apartment*.
+apartment building|82|Our *apartment building* has ten floors.
+apple|71|I eat an *apple* every day.
+April|28|My birthday is in *April*.
+aren't|7|They *aren't* at home.
+Argentina|58|*Argentina* is in South America.
+arm|33|He has a strong *arm*.
+Asia|58|China is in *Asia*.
+Asian|59|I like *Asian* food.
+ask|50|Can I *ask* a question?
+at|25|I am *at* the station.
+at home|60|I am *at home* now.
+at school|60|The children are *at school*.
+at the moment|80|I am busy *at the moment*.
+at work|60|My husband is *at work*.
+August|28|We go on holiday in *August*.
+aunt|100|My *aunt* lives in Paris.
+Austria|58|*Austria* is next to Slovakia.
+autumn|28|Leaves fall in *autumn*.
+back|34|My *back* hurts.
+bad|75|The weather is *bad* today.
+bad at|75|I am *bad at* maths.
+bag|55|My *bag* is red.
+banana|71|The monkey eats a *banana*.
+bar|59|Let's meet in the *bar*.
+because|95|I'm tired *because* I work a lot.
+beer|71|Two *beers*, please.
+before|23|Wash your hands *before* lunch.
+below|20|The cat is *below* the window.
+Berlin|8|*Berlin* is in Germany.
+beside|19|Sit *beside* me.
+between|20|The bank is *between* the shop and the café.
+big|81|They have a *big* house.
+bike|73|I go to school by *bike*.
+biscuit|62|Would you like a *biscuit*?
+block of flats|82|We live in a *block of flats*.
+blonde|35|She has *blonde* hair.
+blouse|55|She is wearing a white *blouse*.
+blue|43|The sky is *blue*.
+board|46|Look at the *board*, please.
+body|34|The human *body* is amazing.
+both|45|*Both* my sisters are tall.
+boy|4|The *boy* is my son.
+bra|55|She is buying a new *bra*.
+Brazil|57|*Brazil* is a big country.
+Brazilian|78|He is *Brazilian*.
+bread roll|61|I'd like a *bread roll* with cheese.
+break|62|We have a short *break* at ten.
+breakfast|69|I have *breakfast* at seven.
+British|81|The Queen was *British*.
+Brussels|9|*Brussels* is the capital of Belgium.
+building|81|This *building* is very old.
+bus|93|I go to work by *bus*.
+but|44|I like tea, *but* I don't like coffee.
+button|54|Press the *button*.
+by|93|We go to Vienna *by* train.
+cake|62|This *cake* is delicious.
+call|78|I'll *call* you tonight.
+can|73|I *can* swim.
+can be|62|English *can be* difficult.
+Can you repeat?|31|Sorry, *can you repeat*?
+Can you say it slowly?|31|I don't understand. *Can you say it slowly*?
+Canada|10|*Canada* is a very big country.
+canary|44|The *canary* is yellow.
+can't|74|I *can't* drive.
+car|93|My *car* is blue.
+carrot|72|Rabbits like *carrots*.
+CD|12|I have this song on *CD*.
+ceiling|12|The lamp is on the *ceiling*.
+certainly|GL21|Can you help me? *Certainly*!
+cheeseburger|65|I'd like a *cheeseburger*, please.
+cherry|71|This *cherry* is sweet.
+child|97|She has one *child*.
+China|8|*China* is in Asia.
+city car|94|A *city car* is small.
+class|26|There are twenty students in our *class*.
+Close your book!|31|The test starts now. *Close your book*!
+clothes|54|I need new *clothes*.
+coach|93|We went to Prague by *coach*.
+coat|54|Put on your *coat*, it's cold.
+coffee|62|I drink *coffee* every morning.
+Coke|66|A *Coke*, please.
+colon|GL8|Put a *colon* here.
+come|48|*Come* here, please.
+comma|GL8|Put a *comma* after "yes".
+communication|84|*Communication* is very important.
+continent|57|Europe is a *continent*.
+continuous|49|"I am reading" is present *continuous*.
+count|29|Can you *count* to ten?
+country|8|Slovakia is a small *country*.
+country code|100|The *country code* for Slovakia is 421.
+cousin|100|My *cousin* lives in Košice.
+curry|68|I like chicken *curry*.
+Czech Republic|58|Prague is in the *Czech Republic*.
+dad|98|My *dad* is a doctor.
+daddy|98|*Daddy*, look at me!
+dance|74|Can you *dance*?
+daughter|99|Our *daughter* is ten.
+December|28|Christmas is in *December*.
+desk|14|My computer is on the *desk*.
+different|76|We are very *different*.
+difficult|83|This exercise is *difficult*.
+dining room|70|We eat in the *dining room*.
+dinner|69|What's for *dinner*?
+divorced|98|My parents are *divorced*.
+do|37|What do you *do*?
+doctor|5|My wife is a *doctor*.
+doesn't|42|He *doesn't* like fish.
+dog|44|I have a big *dog*.
+don't|41|I *don't* speak French.
+door|12|Close the *door*, please.
+dot|82|My email is anna *dot* novak at gmail dot com.
+double|2|My phone number has *double* five.
+down|79|Sit *down*, please.
+dress|55|She has a beautiful *dress*.
+drink|66|What would you like to *drink*?
+Dublin|9|*Dublin* is the capital of Ireland.
+east|58|The sun rises in the *east*.
+easy|83|This test is *easy*.
+eat|65|I *eat* lunch at twelve.
+Egypt|57|*Egypt* is in Africa.
+Eiffel tower|14|The *Eiffel tower* is in Paris.
+electric|96|I have an *electric* car.
+eleven|29|My son is *eleven*.
+email|82|Send me an *email*.
+England|8|London is in *England*.
+estate|94|We have an *estate* car for the family.
+Europe|57|Slovakia is in *Europe*.
+European|59|Paris is a *European* city.
+ever|70|Have you *ever* been to London?
+exam|83|I have an *exam* tomorrow.
+example|49|Give me an *example*.
+Excellent!|31|Your answer is right. *Excellent*!
+exclamation mark|GL31|Put an *exclamation mark* at the end.
+exercise|83|Do *exercise* five, please.
+expert|76|He is a computer *expert*.
+face|33|She has a pretty *face*.
+family|97|I love my *family*.
+father|97|My *father* is tall.
+feet|34|My *feet* are cold.
+film|25|Let's watch a *film*.
+finger|33|I have five *fingers* on my hand.
+fish|71|I like *fish* and chips.
+first|31|January is the *first* month.
+flat|81|We live in a *flat*.
+food|68|I like Italian *food*.
+foot|34|My *foot* hurts.
+for|72|This present is *for* you.
+for example|49|I like fruit, *for example* apples.
+fork|68|I need a *fork* and a knife.
+foul|67|This milk smells *foul*.
+fourth|32|April is the *fourth* month.
+France|9|Paris is in *France*.
+fresh|70|This bread is *fresh*.
+French|11|Do you speak *French*?
+Friday|27|See you on *Friday*.
+frog|44|The *frog* is green.
+from|10|I am *from* Slovakia.
+frozen|70|I bought *frozen* pizza.
+fruit|71|I eat *fruit* every day.
+full stop|GL8|Put a *full stop* at the end of the sentence.
+German|11|I speak a little *German*.
+Germany|9|Berlin is in *Germany*.
+get into|95|*Get into* the car.
+get off|95|*Get off* the bus here.
+get on|95|*Get on* the train, please.
+get out of|95|*Get out of* the car.
+girl|4|The *girl* is my daughter.
+give|75|*Give* me the book, please.
+go|48|I *go* to work by car.
+go for a walk|79|Let's *go for a walk*.
+go out|48|We *go out* on Saturday.
+good|73|This is a *good* book.
+good at|75|She is *good at* English.
+good idea|GL23|Let's go to the park. *Good idea*!
+gorilla|45|The *gorilla* is very strong.
+grammar|83|English *grammar* is not difficult.
+Great Britain|9|London is in *Great Britain*.
+great|GL21|That's *great*!
+green|43|The grass is *green*.
+grey|43|My cat is *grey*.
+habit|63|Smoking is a bad *habit*.
+hamburger|61|I'd like a *hamburger*.
+hand|33|Give me your *hand*.
+has|37|She *has* two children.
+hat|54|He is wearing a black *hat*.
+hatchback|94|My car is a *hatchback*.
+have|37|I *have* a sister.
+he is|5|This is Tom. *He is* my friend.
+head|33|My *head* hurts.
+hello|1|*Hello*, how are you?
+her|2|This is *her* bag.
+Here you are|92|Can I have the salt? *Here you are*.
+hers|87|This bag is *hers*.
+hi|3|*Hi*, I'm Peter.
+high|14|The mountain is very *high*.
+him|51|I know *him*.
+hippie|38|He looks like a *hippie*.
+his|2|This is *his* car.
+home|59|I go *home* at five.
+horse|45|The *horse* is brown.
+hot dog|61|I'd like a *hot dog*.
+house|81|They have a big *house*.
+how|93|*How* do you go to work?
+How are you doing?|1|Hi Tom! *How are you doing*?
+How are you?|1|Hello Anna. *How are you*?
+how many|30|*How many* children do you have?
+How old are you?|30|*How old are you*? I'm thirty.
+hundred|29|One *hundred* people live here.
+husband|98|My *husband* is a teacher.
+hyphen|82|Write it with a *hyphen*.
+I am|3|*I am* Marek.
+I don't know|72|Where is Tom? *I don't know*.
+I don't understand|31|Sorry, *I don't understand*.
+I'm fine|1|How are you? *I'm fine*, thank you.
+I'm great|1|How are you? *I'm great*!
+I'm ok|1|How are you? *I'm ok*.
+I'll have|GL23|*I'll have* a coffee, please.
+in|8|The cat is *in* the box.
+in the afternoon|69|I play tennis *in the afternoon*.
+in the evening|69|I watch TV *in the evening*.
+in the morning|69|I drink coffee *in the morning*.
+India|57|*India* is in Asia.
+Indian|68|I like *Indian* food.
+instead of|94|I drink tea *instead of* coffee.
+into|95|Go *into* the house.
+Ireland|8|Dublin is in *Ireland*.
+irregular|18|"Go" is an *irregular* verb.
+isn't|7|He *isn't* at home.
+it|8|Where is my phone? *It* is on the table.
+it is called|96|What is this animal? *It is called* a giraffe.
+Italy|10|Rome is in *Italy*.
+it's a pity|GL21|You can't come? *It's a pity*.
+jacket|54|Put on your *jacket*.
+January|28|*January* is cold.
+Japan|10|Tokyo is in *Japan*.
+Japanese|74|Do you speak *Japanese*?
+juice|66|I'd like an orange *juice*.
+July|28|It's hot in *July*.
+jump|47|The dog can *jump*.
+jumper|54|I'm wearing a warm *jumper*.
+June|28|School ends in *June*.
+ketchup|61|I like chips with *ketchup*.
+key|13|Where is my *key*?
+knee|34|My *knee* hurts.
+knife|68|I need a *knife*.
+know|80|I *know* the answer.
+lamp|13|The *lamp* is on the table.
+language|78|English is a *language*.
+laptop|75|I work on my *laptop*.
+last|31|December is the *last* month.
+left|34|Turn *left*.
+let's go|GL23|*Let's go* to the cinema.
+letter|21|"A" is the first *letter*.
+library|60|I borrow books from the *library*.
+lie|47|The cat likes to *lie* on the sofa.
+light|12|Turn on the *light*, please.
+litre|66|I drink two *litres* of water a day.
+little|67|I have a *little* dog.
+live|81|I *live* in Bratislava.
+living room|12|The TV is in the *living room*.
+logo|94|This is the company *logo*.
+long|35|She has *long* hair.
+look at|50|*Look at* the board.
+lot of|66|I have a *lot of* work.
+lots of|67|There are *lots of* people here.
+lunch|69|We have *lunch* at noon.
+man|4|The *man* is tall.
+manager|5|She is the *manager*.
+March|28|Spring starts in *March*.
+May|28|My birthday is in *May*.
+me|51|Can you help *me*?
+meaning|GL21|What is the *meaning* of this word?
+message|100|I have a new *message*.
+Mexico|58|*Mexico* is in North America.
+milk|65|I drink *milk*.
+million|29|Two *million* people live here.
+mine|87|This book is *mine*.
+Miss|3|This is *Miss* Smith.
+mobile phone|13|Where is my *mobile phone*?
+moment|80|Wait a *moment*, please.
+Monaco|8|*Monaco* is a small country.
+Monday|27|I work on *Monday*.
+month|28|A year has twelve *months*.
+Moscow|9|*Moscow* is in Russia.
+mouth|33|Open your *mouth*.
+Mr|3|This is *Mr* Brown.
+Mrs|3|*Mrs* Smith is our teacher.
+Ms|3|*Ms* Jones is the manager.
+mum|98|My *mum* is a nurse.
+mummy|98|*Mummy*, I'm hungry!
+music|25|I like *music*.
+my|2|This is *my* house.
+name|1|What is your *name*?
+nationality|11|What is your *nationality*?
+neck|34|The giraffe has a long *neck*.
+negative|6|"I am not happy" is a *negative* sentence.
+never|71|I *never* drink coffee.
+New York|9|*New York* is in the USA.
+new|GL1|I have a *new* car.
+nice|67|She is very *nice*.
+nice to meet you|3|I'm Anna. *Nice to meet you*.
+Nigeria|57|*Nigeria* is in Africa.
+no|6|*No*, I'm not.
+no problem|GL21|Thank you! *No problem*.
+none of|100|*None of* my friends smoke.
+north|58|Poland is *north* of Slovakia.
+North America|58|Canada is in *North America*.
+nose|33|He has a big *nose*.
+not|6|I am *not* tired.
+not really|GL23|Do you like jazz? *Not really*.
+nothing|92|There is *nothing* in the fridge.
+noun|85|"Table" is a *noun*.
+November|28|It's cold in *November*.
+now|47|I'm reading *now*.
+nurse|6|The *nurse* works in a hospital.
+object|86|In "I see you", "you" is the *object*.
+October|28|My son was born in *October*.
+of|9|Bratislava is the capital *of* Slovakia.
+OK|GL23|Is everything *OK*?
+on|14|The book is *on* the table.
+on foot|93|I go to school *on foot*.
+on Friday afternoon|69|We play football *on Friday afternoon*.
+on Monday morning|69|I have English *on Monday morning*.
+on Tuesdays|GL21|I go swimming *on Tuesdays*.
+only|46|I have *only* one brother.
+Open your book!|31|Page ten. *Open your book*!
+opposite|36|The bank is *opposite* the school.
+or|15|Tea *or* coffee?
+orange|43|The pumpkin is *orange*.
+orange|72|I eat an *orange* every day.
+our|17|This is *our* car.
+ours|87|This house is *ours*.
+out of|95|Get *out of* the car.
+page|12|Open your book on *page* five.
+pants|55|He is wearing blue *pants*.
+parent|97|Every *parent* loves their child.
+Paris|9|*Paris* is the capital of France.
+part|34|The hand is a *part* of the body.
+partner|84|Work with your *partner*.
+pea|72|I don't like *peas*.
+pear|71|This *pear* is sweet.
+pen|13|Can I borrow your *pen*?
+pencil|13|Write with a *pencil*.
+person|35|She is a nice *person*.
+pink|43|Her dress is *pink*.
+pizza|68|Let's order a *pizza*.
+place|73|This is a nice *place*.
+plane|93|We go to London by *plane*.
+plate|68|Put the cake on the *plate*.
+please|21|A coffee, *please*.
+plural|16|"Books" is *plural*.
+pocket|24|My phone is in my *pocket*.
+point at|50|Don't *point at* people.
+Poland|9|Warsaw is in *Poland*.
+Polish|11|My neighbour is *Polish*.
+pony|45|The children ride a *pony*.
+popcorn|65|We eat *popcorn* in the cinema.
+possessive|88|"My" is a *possessive* adjective.
+postal code|GL35|What is your *postal code*?
+postcode|82|Write your *postcode* here.
+potato|72|I like *potatoes*.
+preposition|84|"On" is a *preposition*.
+pronoun|86|"He" is a *pronoun*.
+puma|44|A *puma* is a big cat.
+question|22|I have a *question*.
+question mark|GL8|Put a *question mark* at the end.
+really|GL1|Is it *really* you?
+red|43|I have a *red* car.
+Repeat, please!|31|I didn't hear you. *Repeat, please*!
+Republic of South Africa|57|Cape Town is in the *Republic of South Africa*.
+rice|71|I eat chicken with *rice*.
+ride|73|Can you *ride* a bike?
+right|34|Turn *right* at the shop.
+Russia|9|*Russia* is very big.
+salad|GL23|I'd like a *salad*, please.
+saloon|94|My dad drives a *saloon*.
+same|76|We have the *same* shoes.
+Saturday|27|I don't work on *Saturday*.
+Saudi Arabia|58|*Saudi Arabia* is in Asia.
+say|51|What did you *say*?
+school|59|My children go to *school*.
+Scotland|10|Edinburgh is in *Scotland*.
+season|28|Summer is my favourite *season*.
+second|31|February is the *second* month.
+secretary|6|The *secretary* answers the phone.
+send|99|*Send* me a message.
+September|28|School starts in *September*.
+Shard|14|The *Shard* is a tall building in London.
+she is|5|This is Anna. *She is* my wife.
+sheep|45|The *sheep* is white.
+shirt|54|He is wearing a white *shirt*.
+short form|5|"I'm" is the *short form* of "I am".
+similar|76|Our cars are *similar*.
+simple|63|This exercise is *simple*.
+sing|63|I *sing* in the shower.
+single|98|Are you married or *single*?
+singular|16|"Book" is *singular*.
+sister|97|My *sister* is younger than me.
+sit down|79|Please *sit down*.
+skirt|55|She is wearing a short *skirt*.
+Slovakia|58|I live in *Slovakia*.
+SMS|99|I sent you an *SMS*.
+so|80|It's late, *so* I'm going home.
+sock|55|Where is my other *sock*?
+some|89|I'd like *some* water.
+some of|100|*Some of* my friends speak English.
+something|49|I want to eat *something*.
+sometimes|79|I *sometimes* go to the cinema.
+son|99|My *son* plays football.
+song|63|I like this *song*.
+sorry|GL21|I'm *sorry*, I'm late.
+soup|68|The *soup* is hot.
+south|58|Hungary is *south* of Slovakia.
+South America|58|Brazil is in *South America*.
+spaghetti|61|I love *spaghetti*.
+spoon|68|I eat soup with a *spoon*.
+spring|28|Flowers grow in *spring*.
+stand up|79|Please *stand up*.
+street|82|I live on a quiet *street*.
+subject|86|In "Tom reads", "Tom" is the *subject*.
+sugar|67|Coffee with *sugar*, please.
+summer|28|We go to the sea in *summer*.
+Sunday|27|We visit grandma on *Sunday*.
+supermarket|14|I buy food in the *supermarket*.
+sushi|61|Do you like *sushi*?
+Sweden|57|Stockholm is in *Sweden*.
+Swedish|60|My friend is *Swedish*.
+swim|73|I *swim* in the lake.
+Swiss|78|I love *Swiss* chocolate.
+Switzerland|78|Zurich is in *Switzerland*.
+tail|45|The dog has a long *tail*.
+take|50|*Take* an umbrella.
+tall|4|My brother is very *tall*.
+tea|62|A cup of *tea*, please.
+teaspoon|68|Add a *teaspoon* of sugar.
+tell|51|*Tell* me your name.
+test|83|We have a *test* on Friday.
+text message|99|I sent her a *text message*.
+thank you|92|*Thank you* for your help.
+thank you very much|GL21|*Thank you very much*!
+thanks|1|*Thanks* for the coffee.
+that|15|What is *that*?
+that's right|GL1|Is this your car? *That's right*.
+the|9|*The* book is on the table.
+their|17|This is *their* house.
+theirs|87|The car is *theirs*.
+them|52|I like *them*.
+then|GL23|First coffee, *then* work.
+there|24|My car is over *there*.
+there are|25|*There are* three cats in the garden.
+there is|24|*There is* a cat in the garden.
+There you are|92|Can I have my ticket? *There you are*.
+these|18|*These* shoes are new.
+they are|16|*They are* my friends.
+thing|35|What is this *thing*?
+think|70|I *think* you are right.
+third|31|March is the *third* month.
+this|4|*This* is my book.
+those|18|*Those* houses are old.
+thousand|29|One *thousand* people came.
+thumb|33|I hurt my *thumb*.
+Thursday|27|I have English on *Thursday*.
+tin|70|Open the *tin* of beans.
+tomato|72|I like *tomato* soup.
+too|3|I like pizza *too*.
+town|8|I live in a small *town*.
+train|93|I go to work by *train*.
+tram|93|Take the *tram* number four.
+Translate this sentence, please!|31|This is difficult. *Translate this sentence, please*!
+T-shirt|54|I'm wearing a blue *T-shirt*.
+Tuesday|27|See you on *Tuesday*.
+TV|25|I watch *TV* in the evening.
+twenty|29|I am *twenty*.
+twin|97|My sister has a *twin*.
+Ukraine|10|Kyiv is in *Ukraine*.
+uncle|100|My *uncle* is a farmer.
+underground|93|We take the *underground* in London.
+underscore|82|My email has an *underscore*.
+United Arab Emirates|58|Dubai is in the *United Arab Emirates*.
+up|79|Stand *up*, please.
+us|52|Come with *us*.
+USA|9|New York is in the *USA*.
+usually|65|I *usually* get up at six.
+vegetable|71|A carrot is a *vegetable*.
+verb|85|"Run" is a *verb*.
+vowel|22|"A" is a *vowel*.
+wait|80|*Wait* for me!
+waiter|5|The *waiter* brings the food.
+walk|79|I *walk* to work.
+walk a dog|79|I *walk a dog* every morning.
+wallet|55|My *wallet* is in my bag.
+Warsaw|9|*Warsaw* is the capital of Poland.
+Washington|9|*Washington* is in the USA.
+water|66|A glass of *water*, please.
+we are|16|*We are* from Slovakia.
+Wednesday|27|Today is *Wednesday*.
+week|27|A *week* has seven days.
+Well done!|31|You passed the test. *Well done*!
+well|GL23|*Well*, I don't know.
+west|58|The sun goes down in the *west*.
+what|1|*What* is this?
+What about...?|GL23|I'm fine. *What about* you?
+what colour|43|*What colour* is your car?
+What does it mean?|31|"Cheers" – *what does it mean*?
+what kind|94|*What kind* of car do you have?
+What will you have?|GL23|*What will you have*? A coffee, please.
+when|49|*When* is your birthday?
+Where ... from?|10|*Where* are you *from*?
+where|9|*Where* do you live?
+which|10|*Which* bag is yours?
+white|43|Snow is *white*.
+whiteboard|46|The teacher writes on the *whiteboard*.
+who|38|*Who* is that man?
+whose|56|*Whose* phone is this?
+why|95|*Why* are you sad?
+wife|98|My *wife* is from Spain.
+window|12|Open the *window*, please.
+wine|66|A glass of red *wine*, please.
+winter|28|It snows in *winter*.
+with|37|I live *with* my parents.
+without|65|Coffee *without* sugar, please.
+word|22|What does this *word* mean?
+wrong|46|Your answer is *wrong*.
+year|28|A *year* has twelve months.
+yes|3|*Yes*, I am.
+you|51|I love *you*.
+you are|3|*You are* my best friend.
+your|2|What is *your* name?
+yours|87|Is this pen *yours*?
+`,
 slovesa:``}
 ];
 
@@ -1696,6 +2745,14 @@ function pripravKnihu(k){
     if (!w || !ans) { k.vtChyby.push(r); return; }
     k.vt.push({ id: w.id, w, veta, ans });
     if (!w.veta) { w.veta = veta; w.ans = ans; }
+  });
+  // príklady použitia (For example): anglicky|lekcia|veta s *slovom*
+  k.prChyby = [];
+  riadky(k.priklady).forEach(r => {
+    const [en, Ls, veta] = r.split('|').map(x => (x || '').trim());
+    const w = k.w.find(x => x.en === en && x.id === en + '#' + Ls);
+    if (!w || !/\*[^*]+\*/.test(veta)) { k.prChyby.push(r); return; }
+    w.priklad = veta;
   });
   k.v = riadky(k.slovesa).map(r => {
     const [t, sk] = r.split('|');
@@ -1765,17 +2822,39 @@ function moznosti(spravna, kandidati){
 let hlas = null;
 function najdiHlas(){ try { const v = speechSynthesis.getVoices(); hlas = v.find(x => /en[-_]GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null; } catch(e){} }
 try { najdiHlas(); speechSynthesis.onvoiceschanged = najdiHlas; } catch(e){}
+// Prečíta text nahlas. Vráti Promise, ktorý sa splní, keď čítanie skončí
+// (bez zvuku alebo keď prehliadač čítať nevie: po čase, za ktorý sa veta dá prečítať očami).
+const casCitania = text => Math.max(1200, String(text).length * 60);
+function zastavHlas(){ try { speechSynthesis.cancel(); } catch(e){} }
 function povedz(t){
-  if (!t) return;
+  if (!t) return Promise.resolve();
   const text = String(t).replace(/\*/g, '').replace(/\.\.\./g, ' ').replace(/\(.*?\)/g, '').replace(/\//g, ' or ');
   // v Android appke číta hlas telefónu (WebView nepozná speechSynthesis)
-  if (window.AndroidHlas) { try { AndroidHlas.povedz(text); } catch(e){} return; }
-  try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB'; if (hlas) u.voice = hlas; u.rate = .9;
-    speechSynthesis.speak(u);
-  } catch(e){}
+  if (window.AndroidHlas) { try { AndroidHlas.povedz(text); } catch(e){} return new Promise(r => setTimeout(r, casCitania(text) + 600)); }
+  return new Promise(hotovo => {
+    let koniec = false;
+    const skonci = () => { if (!koniec) { koniec = true; clearTimeout(poistka); hotovo(); } };
+    // poistka, keby prehliadač nikdy neohlásil koniec čítania
+    const poistka = setTimeout(skonci, text.length * 120 + 3000);
+    try {
+      if (!('speechSynthesis' in window)) { clearTimeout(poistka); return setTimeout(skonci, casCitania(text)); }
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-GB'; if (hlas) u.voice = hlas; u.rate = .9;
+      u.onend = skonci; u.onerror = skonci;
+      speechSynthesis.speak(u);
+    } catch(e){ skonci(); }
+  });
+}
+// Príkladová veta slova: vlastná veta (z knihy) alebo príklad z bloku priklady
+const prikladSlova = w => (w && (w.veta || w.priklad)) || '';
+const prikladHtml = ex => ex ? `<div class="ex"><span class="fe">For example:</span> ${vetaHtml(ex)}</div>` : '';
+// Po odpovedi: prečíta text (ak je zvuk zapnutý), počká na dočítanie a potom zavolá dalej – len ak je človek stále na tej istej otázke
+async function citajAPokracuj(text, ok, jeStale, dalej){
+  if (S.zvuk && text) await povedz(text);
+  else await new Promise(r => setTimeout(r, text ? casCitania(text) : 600));
+  await new Promise(r => setTimeout(r, ok ? 350 : 1200));
+  if (jeStale()) dalej();
 }
 function toast(t){ const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; document.body.appendChild(el); setTimeout(() => el.remove(), 2200); }
 
@@ -1790,6 +2869,7 @@ const MODY = [
 ];
 
 function domov(){
+  zastavHlas();
   const p = pool(), vse = K.w.length;
   const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length;
   const chyby = K.w.filter(w => P.ch[w.id]).length;
@@ -1876,9 +2956,9 @@ function otazkaSlovo(w, kand){
   const ine = kand.filter(x => x.sk !== w.sk && x.en !== w.en);
   return en
     ? { w, lbl:'EN → SK', prompt: esc(w.en), sayEn: w.en, sub:'Vyber po slovensky', opts: moznosti(w.sk, ine.map(x => x.sk)), ans: w.sk,
-        po: w.veta ? vetaHtml(w.veta) : '' }
+        ex: prikladSlova(w), sayAfter: w.en }
     : { w, lbl:'SK → EN', prompt: esc(w.sk), sub:'Vyber po anglicky', opts: moznosti(w.en, ine.map(x => x.en)), ans: w.en, sayAfter: w.en,
-        po: w.veta ? vetaHtml(w.veta) : '' };
+        ex: prikladSlova(w) };
 }
 
 function otazky(mod){
@@ -1893,7 +2973,7 @@ function otazky(mod){
     const e = p.filter(w => w.em), all = K.w.filter(w => w.em);
     if (e.length < 1) { toast('V týchto lekciách nie sú obrázky. Vyber viac lekcií.'); return null; }
     return vyber(e, n).map(w => ({ w, lbl:'Čo je na obrázku?', prompt: w.em, emoji: true, sub:'Vyber anglické slovo',
-      opts: moznosti(w.en, all.filter(x => x.en !== w.en).map(x => x.en)), ans: w.en, sayAfter: w.en, po: '<b>' + esc(w.en) + '</b> = ' + esc(w.sk) }));
+      opts: moznosti(w.en, all.filter(x => x.en !== w.en).map(x => x.en)), ans: w.en, sayAfter: w.en, po: '<b>' + esc(w.en) + '</b> = ' + esc(w.sk), ex: prikladSlova(w) }));
   }
   if (mod === 'vety') {
     const v = vetyVPool();
@@ -1962,19 +3042,20 @@ function odpoved(q, b){
   if (!ok) b.classList.add('bad');
   zapis(q.w.id, ok);
   if (ok) R.ok++; else R.zle.push(q.w);
-  if (S.zvuk && q.sayAfter) povedz(q.sayAfter);
   const fb = document.getElementById('fb');
   fb.hidden = false;
   fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? 'Správne!' : 'Správne je: ' + esc(q.ans)}</div>
-    ${q.po ? `<div class="ex">${q.po}</div>` : ''}
+    ${q.po ? `<div class="ex">${q.po}</div>` : ''}${prikladHtml(q.ex)}
     <button class="primary" id="dalej">Ďalej</button>`;
   const tlacidlo = document.getElementById('dalej'), kolo = R;
-  const dalej = () => { R.i++; R.i < R.q.length ? otazka() : vysledok(); };
+  let preslo = false;
+  const dalej = () => { if (preslo) return; preslo = true; zastavHlas(); R.i++; R.i < R.q.length ? otazka() : vysledok(); };
   tlacidlo.onclick = dalej;
-  // automaticky ďalej len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
-  // po správnej odpovedi rýchlo ďalej (s vetou o chvíľu dlhšie, nech sa dá prečítať); po chybe čaká na „Ďalej“
-  if (ok) setTimeout(() => { if (R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo)) dalej(); }, q.po ? 1100 : 450);
   fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  // prečíta príkladovú vetu (alebo slovo), počká na dočítanie a až potom prejde ďalej
+  // – len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
+  const nahlas = q.ex || q.sayAfter;
+  citajAPokracuj(nahlas, ok, () => R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo), dalej);
 }
 function vysledok(){
   const n = R.q.length, zle = [...new Map(R.zle.map(w => [w.id, w])).values()];
@@ -2028,14 +3109,15 @@ function karticky(){
     document.getElementById('koniec').onclick = domov;
     if (en && S.zvuk) povedz(w.en);
     document.getElementById('karta').onclick = () => {
-      if (otocena) { povedz(w.en); return; }
+      const ex = prikladSlova(w);
+      if (otocena) { povedz(ex ? w.en + '. ' + ex : w.en); return; }
       otocena = true;
       const z = document.getElementById('zad');
       z.hidden = false; z.style.display = 'contents';
-      z.innerHTML = `<span class="back">${esc(en ? w.sk : w.en)}</span>${w.veta ? `<span class="ex">${vetaHtml(w.veta)}</span>` : ''}`;
+      z.innerHTML = `<span class="back">${esc(en ? w.sk : w.en)}</span>${ex ? `<span class="ex"><span class="fe">For example:</span> ${vetaHtml(ex)}</span>` : ''}`;
       document.querySelector('#karta .lbl').textContent = 'Ťukni pre výslovnosť';
       document.getElementById('hod').hidden = false;
-      if (S.zvuk) povedz(w.en);
+      if (S.zvuk) povedz(ex ? w.en + '. ' + ex : w.en);
     };
     document.getElementById('nie').onclick = () => { zapis(w.id, false, 'karticky'); rad.push(rad.shift()); kresli(); };
     document.getElementById('ano').onclick = () => { zapis(w.id, true, 'karticky'); rad.shift(); hotovo++; kresli(); };
@@ -2068,12 +3150,15 @@ function pisanie(slova){
       vstup.classList.add(ok ? 'ok' : 'bad'); vstup.readOnly = true;
       if (ok && napovedy === 0) zapis(w.id, true, 'pisanie'); else if (!ok) zapis(w.id, false, 'pisanie');
       if (ok) R.ok++; else R.zle.push(w);
-      if (S.zvuk) povedz(w.en);
       const fb = document.getElementById('fb'); fb.hidden = false;
+      const ex = prikladSlova(w);
       fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? (napovedy ? 'Správne, s nápovedou' : 'Správne!') : 'Správne je: ' + esc(w.en)}</div>
-        ${w.veta ? `<div class="ex">${vetaHtml(w.veta)}</div>` : ''}<button class="primary" id="dalej">Ďalej</button>`;
-      const d = document.getElementById('dalej'); d.focus();
-      d.onclick = () => { R.i++; R.i < R.q.length ? kresli() : vysledok(); };
+        ${prikladHtml(ex)}<button class="primary" id="dalej">Ďalej</button>`;
+      const d = document.getElementById('dalej'), kolo = R, idx = R.i; d.focus();
+      let preslo = false;
+      const dalej = () => { if (preslo) return; preslo = true; zastavHlas(); R.i++; R.i < R.q.length ? kresli() : vysledok(); };
+      d.onclick = dalej;
+      citajAPokracuj(ex || w.en, ok, () => R === kolo && R.i === idx && document.body.contains(d), dalej);
     };
     document.getElementById('over').onclick = over;
     document.getElementById('f').onsubmit = e => { e.preventDefault(); over(); };
