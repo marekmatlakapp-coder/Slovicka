@@ -1972,7 +1972,8 @@ function odpoved(q, b){
   const dalej = () => { R.i++; R.i < R.q.length ? otazka() : vysledok(); };
   tlacidlo.onclick = dalej;
   // automaticky ďalej len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
-  if (ok && !q.po) setTimeout(() => { if (R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo)) dalej(); }, 900);
+  // po správnej odpovedi rýchlo ďalej (s vetou o chvíľu dlhšie, nech sa dá prečítať); po chybe čaká na „Ďalej“
+  if (ok) setTimeout(() => { if (R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo)) dalej(); }, q.po ? 1100 : 450);
   fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 function vysledok(){
