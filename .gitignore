@@ -2,3 +2,5 @@ android/build/
 android/podpis/
 Slovicka.apk
 *.idsig
+tests/ngsl-data/
+tests/porovnanie-ngsl.json
