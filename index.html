@@ -2967,7 +2967,8 @@ function prihlas(id){
   S = load(kluc('nast'), NAST0); S.skup = S.skup || {};
   D = load(kluc('dni'), {});
   if (!profil().uroven) return urovenObr();
-  nastavKnihu() ? domov() : pripravujeme();
+  if (!nastavKnihu()) return pripravujeme();
+  if (!obnovKolo()) domov();
 }
 const profil = () => U.list.find(p => p.id === U.akt);
 
@@ -3120,7 +3121,7 @@ const MODY = [
 ];
 
 function domov(){
-  zastavHlas();
+  zastavHlas(); zmazKolo();
   const p = pool(), vse = K.w.length;
   const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length;
   const chyby = K.w.filter(w => P.ch[w.id]).length;
@@ -3231,13 +3232,12 @@ function otazky(mod){
     if (!v.length) { toast('V týchto lekciách zatiaľ nie sú vety. Vyber viac lekcií.'); return null; }
     // ku každej možnosti si pamätáme slovo, aby sa pri chybe dalo vysvetliť, čo vybrané slovo znamená
     const slovoMoznosti = new Map(); K.vt.forEach(y => { if (!slovoMoznosti.has(y.ans)) slovoMoznosti.set(y.ans, y.w); });
-    return vyber(v, n).map(x => ({ w: x.w, lbl:'Doplň vetu', prompt: vetaHtml(x.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: x.w.sk,
-      opts: moznosti(x.ans, K.vt.filter(y => y.ans.toLowerCase() !== x.ans.toLowerCase()).map(y => y.ans)), ans: x.ans,
-      sayAfter: x.veta, po: vetaHtml(x.veta), sk: vetaSk(x.veta),
-      vysvetli: zvol => {
-        const w2 = slovoMoznosti.get(zvol);
-        return `<div class="vysv">Vybral si <b>${esc(zvol)}</b>${w2 ? ' = ' + esc(w2.sk) : ''}. Do tejto vety významom nepatrí – chýba tu <b>${esc(x.ans)}</b> = ${esc(x.w.sk)}.</div>`;
-      } }));
+    return vyber(v, n).map(x => {
+      const opts = moznosti(x.ans, K.vt.filter(y => y.ans.toLowerCase() !== x.ans.toLowerCase()).map(y => y.ans));
+      const mozSk = {}; opts.forEach(o => { const w2 = slovoMoznosti.get(o); if (w2) mozSk[o] = w2.sk; });
+      return { w: x.w, lbl:'Doplň vetu', prompt: vetaHtml(x.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: x.w.sk,
+        opts, ans: x.ans, mozSk, sayAfter: x.veta, po: vetaHtml(x.veta), sk: vetaSk(x.veta) };
+    });
   }
   if (mod === 'slovesa') {
     return vyber(K.v, n).map(otazkaSloveso);
@@ -3276,8 +3276,41 @@ function hlavicka(){
   return `<div class="bar"><button class="ghost" id="koniec" aria-label="Späť do menu">✕</button>
     <div class="progress"><i style="width:${R.i / R.q.length * 100}%"></i></div><span class="num">${R.i + 1} / ${R.q.length}</span></div>`;
 }
+// Pri chybe v Doplň vetu: čo znamená vybrané slovo a ktoré slovo do vety patrí
+function vysvetlenie(q, zvol){
+  const sk = q.mozSk[zvol];
+  return `<div class="vysv">Vybral si <b>${esc(zvol)}</b>${sk ? ' = ' + esc(sk) : ''}. Do tejto vety významom nepatrí – chýba tu <b>${esc(q.ans)}</b> = ${esc(q.w.sk)}.</div>`;
+}
+
+/* ---------- rozpracované kolo: po obnovení stránky (refresh) pokračovať na tej istej otázke ---------- */
+const kolKluc = () => kluc('kolo_' + K.id);
+const najdiW = id => K.w.find(w => w.id === id) || K.v.find(v => v.id === id);
+function ulozKolo(stav){ save(kolKluc(), stav); }
+function zmazKolo(){ try { localStorage.removeItem(kolKluc()); } catch(e){} }
+// uloží aktuálne kolo; posun 1 = otázka je už zodpovedaná, po refreshi pokračovať ďalšou
+function ulozR(posun = 0){
+  if (!R || !R.q) return;
+  const i = R.i + posun;
+  if (i >= R.q.length) return zmazKolo();
+  ulozKolo({ mod: R.mod, i, ok: R.ok, zle: R.zle.map(w => w.id),
+    q: R.mod === 'pisanie' ? R.q.map(w => ({ wid: w.id })) : R.q.map(q => Object.assign({}, q, { w: undefined, wid: q.w.id })) });
+}
+function obnovKolo(){
+  const st = load(kolKluc(), null);
+  if (!st || !Array.isArray(st.q) && !Array.isArray(st.rad)) return false;
+  try {
+    if (st.mod === 'karticky') { const rad = st.rad.map(najdiW).filter(Boolean); if (!rad.length) throw 0; karticky({ rad, hotovo: st.hotovo, celkom: st.celkom, en: st.en }); return true; }
+    const q = st.mod === 'pisanie' ? st.q.map(x => najdiW(x.wid)) : st.q.map(x => Object.assign({}, x, { w: najdiW(x.wid) }));
+    if (q.some(x => !x || (st.mod !== 'pisanie' && !x.w)) || !(st.i < q.length)) throw 0;
+    const obnova = { mod: st.mod, q, i: st.i, ok: st.ok || 0, zle: (st.zle || []).map(najdiW).filter(Boolean) };
+    if (st.mod === 'pisanie') pisanie(null, obnova); else { R = obnova; otazka(); }
+    return true;
+  } catch(e) { zmazKolo(); return false; }
+}
+
 function otazka(){
   const q = R.q[R.i];
+  ulozR();
   app.innerHTML = hlavicka() + `
   <section class="q">
     <div class="lbl">${q.lbl}</div>
@@ -3299,10 +3332,11 @@ function odpoved(q, b){
   if (!ok) b.classList.add('bad');
   zapis(q.w.id, ok);
   if (ok) R.ok++; else R.zle.push(q.w);
+  ulozR(1);
   const fb = document.getElementById('fb');
   fb.hidden = false;
   fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? 'Správne!' : 'Správne je: ' + esc(q.ans)}</div>
-    ${!ok && q.vysvetli ? q.vysvetli(zvol) : ''}
+    ${!ok && q.mozSk ? vysvetlenie(q, zvol) : ''}
     ${q.po ? `<div class="ex">${q.po}</div>` : ''}${q.sk ? `<div class="ex sk"><span class="fe">Po slovensky:</span> ${esc(q.sk)}</div>` : ''}${prikladHtml(q.ex)}
     <button class="primary" id="dalej">Ďalej</button>`;
   const tlacidlo = document.getElementById('dalej'), kolo = R;
@@ -3313,11 +3347,12 @@ function odpoved(q, b){
   // prečíta príkladovú vetu (alebo slovo), počká na dočítanie a až potom prejde ďalej
   // – len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
   const nahlas = q.ex || q.sayAfter;
-  const vysv = !ok && q.vysvetli ? q.vysvetli(zvol) : '';
+  const vysv = !ok && q.mozSk ? vysvetlenie(q, zvol) : '';
   citajAPokracuj(nahlas, ok, () => R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo), dalej,
     vysv ? casCitania(vysv.replace(/<[^>]+>/g, '') + (q.sk || '')) : 0);
 }
 function vysledok(){
+  zmazKolo();
   const n = R.q.length, zle = [...new Map(R.zle.map(w => [w.id, w])).values()];
   app.innerHTML = `
   <h1>Hotovo</h1>
@@ -3355,12 +3390,17 @@ function polozka(w){
 function bindPolozky(){ app.querySelectorAll('[data-say]').forEach(el => el.onclick = () => povedz(el.dataset.say)); }
 
 /* ---------- kartičky ---------- */
-function karticky(){
-  const p = pool(); if (!p.length) return;
-  let rad = vyber(p, S.dlzka), hotovo = 0, celkom = rad.length, otocena = false;
+function karticky(obnova){
+  const p = pool(); if (!p.length && !obnova) return;
+  let rad = obnova ? obnova.rad : vyber(p, S.dlzka), hotovo = obnova ? obnova.hotovo : 0, celkom = obnova ? obnova.celkom : rad.length, otocena = false;
   const kresli = () => {
     if (!rad.length) { toast('Kartičky hotové'); return domov(); }
-    const w = rad[0], en = smerEN();
+    // smer prvej kartičky po refreshi ostane rovnaký; potom náhodne podľa nastavenia
+    const en = obnova && obnova.en !== undefined ? obnova.en : smerEN();
+    if (obnova) obnova.en = undefined;
+    // uložiť rozpracované kartičky (po refreshi pokračovať)
+    ulozKolo({ mod: 'karticky', rad: rad.map(x => x.id), hotovo, celkom, en });
+    const w = rad[0];
     otocena = false;
     app.innerHTML = `<div class="bar"><button class="ghost" id="koniec" aria-label="Späť do menu">✕</button>
       <div class="progress"><i style="width:${hotovo / celkom * 100}%"></i></div><span class="num">${hotovo} / ${celkom}</span></div>
@@ -3388,11 +3428,12 @@ function karticky(){
 /* ---------- písanie ---------- */
 const norm = s => s.toLowerCase().replace(/[’`]/g, "'").replace(/\.\.\.|[?!.]/g, '').replace(/\s+/g, ' ').trim();
 const varianty = en => [...new Set([norm(en), norm(en.replace(/\(.*?\)/g, '')), norm(en.replace(/[()]/g, ''))])];
-function pisanie(slova){
+function pisanie(slova, obnova){
   const p = pool(); if (!p.length) return;
-  R = { mod: 'pisanie', q: slova ? mix(slova) : vyber(p, S.dlzka), i: 0, ok: 0, zle: [] };
+  R = obnova || { mod: 'pisanie', q: slova ? mix(slova) : vyber(p, S.dlzka), i: 0, ok: 0, zle: [] };
   const kresli = () => {
     const w = R.q[R.i]; let napovedy = 0, hotove = false;
+    ulozR();
     const ciel = w.en.replace(/\s*\(.*?\)/g, '');
     const maska = () => ciel.split('').map((c, i) => i < napovedy || !/[a-z]/i.test(c) ? c : '_').join('');
     app.innerHTML = hlavicka() + `
@@ -3410,6 +3451,7 @@ function pisanie(slova){
       vstup.classList.add(ok ? 'ok' : 'bad'); vstup.readOnly = true;
       if (ok && napovedy === 0) zapis(w.id, true, 'pisanie'); else if (!ok) zapis(w.id, false, 'pisanie');
       if (ok) R.ok++; else R.zle.push(w);
+      ulozR(1);
       const fb = document.getElementById('fb'); fb.hidden = false;
       const ex = prikladSlova(w);
       fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? (napovedy ? 'Správne, s nápovedou' : 'Správne!') : 'Správne je: ' + esc(w.en)}</div>
