@@ -1,6 +1,7 @@
 // Slovíčka: appka ide aj bez internetu. Pri každom otvorení s internetom si stiahne novú verziu.
-const CACHE = 'slovicka-v1';
-const SUBORY = ['./', 'index.html', 'manifest.webmanifest', 'ikona-192.png', 'ikona-512.png', 'ikona-180.png'];
+const CACHE = 'slovicka-v2';
+const SUBORY = ['./', 'index.html', 'manifest.webmanifest', 'ikona-192.png', 'ikona-512.png', 'ikona-180.png', 'pismo/pismo.css',
+  ...['atkinson-hyperlegible-400', 'atkinson-hyperlegible-700', 'bricolage-grotesque-600', 'bricolage-grotesque-800'].flatMap(f => ['latin', 'latin-ext'].map(x => 'pismo/' + f + '-' + x + '.woff2'))];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SUBORY)).then(() => self.skipWaiting()));

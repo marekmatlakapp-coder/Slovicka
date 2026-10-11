@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Tema" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#1d5ea8</item>
+        <item name="android:navigationBarColor">#e9f0f7</item>
+        <item name="android:windowBackground">@color/pozadie</item>
+    </style>
+    <color name="pozadie">#e9f0f7</color>
+    <color name="ikona_pozadie">#1d5ea8</color>
+</resources>

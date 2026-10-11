@@ -11,8 +11,7 @@
 <link rel="apple-touch-icon" href="ikona-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Slovíčka">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="pismo/pismo.css">
 <style>
 /* Layout: jedna úzka obrazovka pre mobil, karta s otázkou hore, veľké tlačidlá na palec dole.
    Farby: modrá z obálky učebnice, červená šípka ako značka. */
@@ -33,6 +32,7 @@
   --accent:#5b9be6; --accent-ink:#0b1420; --brand:#e2584a;
   --ok:#4cc883; --ok-bg:#163527; --bad:#f07068; --bad-bg:#3a1e20; --hl:#ff6fb5; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
 main{max-width:540px;margin:0 auto;padding-inline:16px;padding-block:calc(14px + env(safe-area-inset-top,0px)) calc(32px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
@@ -149,6 +149,7 @@ mark{background:none;color:var(--accent);font-weight:700}
 .level{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:110px;border-radius:18px}
 .level b{font-family:var(--f-disp);font-weight:800;font-size:40px;line-height:1}
 .level small{font-size:12px;color:var(--soft)}
+.level.zamk{opacity:.45;cursor:not-allowed;border-style:dashed}
 .level.on{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
 .it.prof{width:100%;border:0;border-radius:0;background:none;text-align:left;min-height:60px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
@@ -256,7 +257,7 @@ call off|zrušiť (akciu)|9||They had to *call off* the match because of the rai
 candy|cukrík|76|🍬
 captain|kapitán|61
 carpet|koberec|25
-carry on|pokračovať|86
+carry on|pokračovať (ďalej, nenechať sa rušiť)|86
 catch|chytiť|73||Can you *catch* the ball?
 catch up|dobehnúť, dohnať|100
 Celsius|Celzius|93
@@ -434,7 +435,7 @@ imagination|predstavivosť|9
 immediately|okamžite|50||Come here *immediately*!
 in order not to|aby nie|79
 in order to|aby|79||I study *in order to* pass the exam.
-in spite of|napriek|69
+in spite of|napriek (tomu, že)|69
 in the middle|v strede|17
 inch|palec (2,54 cm)|91
 incorrect|nesprávny|99
@@ -489,7 +490,7 @@ list|zoznam|95
 look alike|vyzerať podobne|90
 lucky|mať šťastie, šťastný|51|🍀
 magazine|časopis|85
-make a decision|rozhodnúť sa|56
+make a decision|urobiť rozhodnutie|56
 make money|zarábať peniaze|15
 make sense|dávať zmysel|66||That doesn't *make sense*.
 make sure|uistiť sa|41
@@ -830,7 +831,825 @@ wake up, woke up, woken up|zobudiť sa|
 wear, wore, worn|mať oblečené, nosiť|
 win, won, won|vyhrať|
 write, wrote, written|písať|
-`}
+`},
+{ id:'dm1', uroven:1, nazov:'English 1 · Direct Method 2022', kratko:'English 1',
+// Lekcia GLxx = gramatická lekcia, v appke skupina „Frázy“
+slova:`
+'s|privlastňovacie 's (Sarin, Petrov)|56
+a|neurčitý člen (jeden, nejaký)|4
+about|o (niečom)|63
+above|nad|20
+absent|neprítomný|7
+action|činnosť|85
+address|adresa|82
+adjective|prídavné meno|85
+affirmative|kladný (oznamovacia veta)|89
+Africa|Afrika|57
+African|africký|59
+after|po (potom)|23
+age|vek|GL35
+all|všetci, všetko|74
+alphabet|abeceda|21
+always|vždy|77
+American|americký|11
+and|a|20
+animal|zviera|44
+answer|odpoveď; odpovedať|22
+any|nejaký (v otázke), žiadny (v zápore)|89
+anybody|niekto (v otázke), nikto (v zápore)|90
+anything|niečo (v otázke), nič (v zápore)|91
+apartment|byt (americky)|81
+apartment building|bytový dom|82
+apple|jablko|71|🍎
+April|apríl|28
+aren't|nie sú (are not)|7
+Argentina|Argentína|58
+arm|ruka (paža)|33|💪
+Asia|Ázia|58
+Asian|ázijský|59
+ask|pýtať sa|50
+at|v, na, pri|25
+at home|doma|60
+at school|v škole|60
+at the moment|práve teraz|80
+at work|v práci|60
+August|august|28
+aunt|teta|100
+Austria|Rakúsko|58
+autumn|jeseň|28|🍂
+back|chrbát|34
+bad|zlý|75
+bad at|zlý v (niečom)|75
+bag|taška|55|👜
+ballpoint pen|guľôčkové pero|13|🖊️
+banana|banán|71|🍌
+bar|bar|59
+beard|brada|35|🧔
+because|pretože|95
+beer|pivo|71|🍺
+before|pred (časom)|23
+behind|za (vzadu)|20
+Belgium|Belgicko|9
+below|pod, nižšie|20
+belt|opasok|54
+Berlin|Berlín|8
+beside|vedľa|19
+between|medzi|20
+big|veľký|81
+bike|bicykel|73|🚲
+bird|vták|45|🐦
+biscuit|keks, sušienka|62|🍪
+black|čierny|43|⚫
+blackboard|tabuľa (čierna)|46
+block of flats|panelák|82
+blonde|blond|35
+blouse|blúzka|55|👚
+blue|modrý|43|🔵
+board|tabuľa|46
+body|telo|34
+book|kniha|12|📕
+both|obaja, oba|45
+box|krabica|13|📦
+boy|chlapec|4|👦
+bra|podprsenka|55
+Brazil|Brazília|57
+Brazilian|brazílsky|78
+bread|chlieb|61|🍞
+bread roll|rožok, žemľa|61
+break|prestávka|62
+breakfast|raňajky|69
+British|britský|81
+brother|brat|97
+brown|hnedý|43|🟤
+Brussels|Brusel|9
+building|budova|81|🏢
+bus|autobus|93|🚌
+but|ale|44
+butter|maslo|65|🧈
+button|gombík|54
+by|(cestovať) čím: by bus|93
+cake|koláč, torta|62|🍰
+call|volať, telefonovať|78|📞
+can|môcť, vedieť (niečo urobiť)|73
+can be|môže byť|62
+Can you repeat?|Môžete to zopakovať?|31
+Can you say it slowly?|Môžete to povedať pomaly?|31
+Canada|Kanada|10
+canary|kanárik|44
+cannot|nemôcť, nevedieť|74
+can't|nemôže, nevie (skrátene)|74
+cap|šiltovka|54|🧢
+capital|hlavné mesto|9
+car|auto|93|🚗
+carrot|mrkva|72|🥕
+cat|mačka|44|🐈
+CD|CD|12|💿
+ceiling|strop|12
+certainly|určite, samozrejme|GL21
+chair|stolička|13|🪑
+cheeseburger|cheeseburger|65
+cherry|čerešňa|71|🍒
+chicken|kura; kuracie mäso|71|🍗
+child|dieťa|97|🧒
+children|deti|97
+China|Čína|8
+Chinese|čínsky; čínština|68
+cinema|kino|25
+city|veľkomesto|8|🏙️
+city car|malé mestské auto|94
+class|trieda, hodina|26
+classroom|učebňa|19
+clean|čistý|55
+close|zatvoriť|48
+Close your book!|Zatvorte knihu!|31
+closed|zatvorený|14
+clothes|oblečenie|54
+coach|diaľkový autobus|93
+coat|kabát|54|🧥
+coffee|káva|62|☕
+Coke|kola|66
+cold|studený|57|🥶
+colon|dvojbodka (:)|GL8
+come|prísť|48
+comma|čiarka (,)|GL8
+communication|komunikácia|84
+computer|počítač|74|💻
+consonant|spoluhláska|22
+continent|svetadiel|57
+continuous|priebehový (čas)|49
+corridor|chodba|19
+count|počítať|29
+country|krajina, štát|8
+country code|predvoľba krajiny|100
+cousin|bratranec, sesternica|100
+curry|kari|68
+Czech Republic|Česká republika|58
+dad|otec, ocko|98
+daddy|ocinko|98
+dance|tancovať|74|💃
+daughter|dcéra|99
+day|deň|27
+December|december|28
+desk|písací stôl, lavica|14
+different|iný, odlišný|76
+difficult|ťažký (náročný)|83
+dining room|jedáleň|70
+dinner|večera|69
+dirty|špinavý|55
+divorced|rozvedený|98
+do|robiť|37
+doctor|lekár|5
+does|robí (on, ona, ono)|38
+doesn't|nerobí (does not)|42
+dog|pes|44|🐕
+don't|nerobia, nerob (do not)|41
+door|dvere|12|🚪
+dot|bodka (v adrese)|82
+double|dvojitý|2
+down|dole|79
+dress|šaty|55|👗
+drink|piť; nápoj|66|🥤
+driver|vodič|6
+Dublin|Dublin|9
+ear|ucho|33|👂
+east|východ|58
+easy|ľahký (jednoduchý)|83
+eat|jesť|65
+Egypt|Egypt|57
+Eiffel tower|Eiffelova veža|14|🗼
+elbow|lakeť|34
+electric|elektrický|96
+elephant|slon|44|🐘
+eleven|jedenásť|29
+email|e-mail|82|📧
+England|Anglicko|8
+English|anglický; angličtina|11
+estate|kombi (auto)|94
+Europe|Európa|57
+European|európsky|59
+ever|niekedy|70
+exam|skúška|83
+example|príklad|49
+Excellent!|Výborne!|31
+exclamation mark|výkričník (!)|GL31|❗
+exercise|cvičenie|83
+expert|odborník|76
+eye|oko|33|👁️
+face|tvár|33
+family|rodina|97|👪
+father|otec|97
+February|február|28
+feet|chodidlá (nohy)|34
+film|film|25|🎬
+finger|prst (na ruke)|33
+fish|ryba|71|🐟
+first|prvý|31|🥇
+fizzy|perlivý, sýtený|66
+flat|byt (britsky)|81
+floor|podlaha; poschodie|12
+food|jedlo|68
+foot|chodidlo (noha)|34|🦶
+football|futbal; futbalová lopta|15|⚽
+for|pre, na|72
+for example|napríklad|49
+fork|vidlička|68
+foul|odporný, hnusný|67
+fourth|štvrtý|32
+France|Francúzsko|9
+fresh|čerstvý|70
+French|francúzsky; francúzština|11
+Friday|piatok|27
+friend|kamarát|99
+frog|žaba|44|🐸
+from|z, od|10
+frozen|mrazený|70
+fruit|ovocie|71
+full stop|bodka (na konci vety)|GL8
+garden|záhrada|60
+German|nemecký; nemčina|11
+Germany|Nemecko|9
+get into|nastúpiť (do auta)|95
+get off|vystúpiť (z autobusu, vlaku)|95
+get on|nastúpiť (do autobusu, vlaku)|95
+get out of|vystúpiť (z auta)|95
+girl|dievča|4|👧
+give|dať|75
+go|ísť|48
+go for a walk|ísť na prechádzku|79
+go out|ísť von|48
+good|dobrý|73
+good at|dobrý v (niečom)|75
+good idea|dobrý nápad|GL23
+gorilla|gorila|45|🦍
+grammar|gramatika|83
+Great Britain|Veľká Británia|9
+great|skvelý|GL21
+green|zelený|43|🟢
+grey|sivý|43
+habit|zvyk|63
+hair|vlasy|34
+hamburger|hamburger|61|🍔
+hand|ruka (dlaň)|33|✋
+has|má|37
+hat|klobúk|54|🎩
+hatchback|hečbek (auto)|94
+have|mať|37
+have fun|zabávať sa|38
+he is|on je|5
+head|hlava|33
+hello|ahoj, dobrý deň|1
+her|jej; ju|2
+here|tu, sem|24
+Here you are|Nech sa páči (podávam)|92
+hers|jej (samostatne: je to jej)|87
+hi|ahoj|3|👋
+high|vysoký|14
+him|ho, jemu|51
+hippie|hipík|38
+his|jeho|2
+home|domov|59
+horse|kôň|45|🐴
+hot|horúci|57|🥵
+hot dog|párok v rožku|61|🌭
+house|dom|81|🏠
+how|ako|93
+How are you doing?|Ako sa darí?|1
+How are you?|Ako sa máš?|1
+how many|koľko (počítateľné)|30
+How old are you?|Koľko máš rokov?|30
+hundred|sto|29
+husband|manžel|98
+hyphen|spojovník (-)|82
+I am|ja som|3
+I don't know|neviem|72
+I don't understand|nerozumiem|31
+I'm fine|mám sa dobre|1
+I'm great|mám sa skvele|1
+I'm ok|mám sa fajn|1
+I'll have|dám si|GL23
+in|v|8
+in front of|pred (miestom)|20
+in the afternoon|poobede|69
+in the evening|večer|69
+in the morning|ráno|69
+India|India|57
+Indian|indický|68
+instead of|namiesto|94
+into|do (dovnútra)|95
+Ireland|Írsko|8
+Irish|írsky|11
+irregular|nepravidelný|18
+isn't|nie je (is not)|7
+it|to, ono|8
+it is called|volá sa to|96
+Italian|taliansky; taliančina|78
+Italy|Taliansko|10
+it's a pity|to je škoda|GL21
+jacket|bunda, sako|54
+January|január|28
+Japan|Japonsko|10
+Japanese|japonský; japončina|74
+jeans|džínsy|56|👖
+juice|džús|66|🧃
+July|júl|28
+jump|skákať|47
+jumper|sveter|54
+June|jún|28
+ketchup|kečup|61
+key|kľúč|13|🔑
+knee|koleno|34
+knife|nôž|68|🔪
+know|vedieť, poznať|80
+lamp|lampa|13
+language|jazyk (reč)|78
+laptop|notebook (prenosný počítač)|75
+large|veľký (rozmerom)|8
+last|posledný|31
+learn|učiť sa|78
+left|ľavý; vľavo|34
+leg|noha|34|🦵
+lesson|vyučovacia hodina, lekcia|62
+let's go|poďme|GL23
+letter|písmeno; list|21|✉️
+library|knižnica|60
+lie|ležať|47
+light|svetlo|12
+like|mať rád|61
+litre|liter|66
+little|malý; trochu|67
+live|bývať, žiť|81
+living room|obývačka|12
+logo|logo|94
+London|Londýn|9
+long|dlhý|35
+look at|pozerať sa na|50
+lot of|veľa|66
+lots of|kopa, veľa (hovorovo)|67
+low|nízky|14
+lunch|obed|69
+make|robiť, vyrábať|74
+man|muž|4|👨
+manager|vedúci|5
+March|marec|28
+married|ženatý, vydatá|98|💍
+May|máj|28
+me|ma, mne|51
+mean|znamenať|64
+meaning|význam|GL21
+message|správa|100|💬
+Mexico|Mexiko|58
+milk|mlieko|65|🥛
+million|milión|29
+mine|môj (samostatne: je to môj)|87
+Miss|slečna|3
+mobile phone|mobil|13|📱
+moment|chvíľa|80
+Monaco|Monako|8
+Monday|pondelok|27
+money|peniaze|75|💰
+month|mesiac|28
+Moscow|Moskva|9
+mother|matka|97
+mouse|myš|44|🐭
+moustache|fúzy|35
+mouth|ústa|33|👄
+move|hýbať sa|79
+Mr|pán|3
+Mrs|pani (vydatá)|3
+Ms|pani (bez ohľadu na stav)|3
+mum|mama|98
+mummy|mamička|98
+music|hudba|25|🎵
+my|môj|2
+name|meno|1
+nationality|národnosť|11
+neck|krk|34
+negative|záporný (veta)|6
+never|nikdy|71
+New York|New York|9|🗽
+new|nový|GL1
+nice|pekný, milý|67
+nice to meet you|teší ma|3
+Nigeria|Nigéria|57
+no|nie; žiadny|6
+no problem|žiadny problém|GL21
+nobody|nikto|92
+none of|žiadny z|100
+north|sever|58
+North America|Severná Amerika|58
+nose|nos|33|👃
+not|nie (zápor)|6
+not really|vlastne nie|GL23
+nothing|nič|92
+noun|podstatné meno|85
+November|november|28
+now|teraz|47
+nurse|zdravotná sestra|6
+object|predmet (vo vete)|86
+October|október|28
+of|z (časť niečoho)|9
+often|často|65
+OK|v poriadku|GL23
+on|na|14
+on foot|pešo|93
+on Friday afternoon|v piatok poobede|69
+on Monday morning|v pondelok ráno|69
+on Tuesdays|v utorky|GL21
+only|len, iba|46
+open|otvoriť; otvorený|14
+Open your book!|Otvorte knihu!|31
+opposite|oproti; opak|36
+or|alebo|15
+orange|oranžový|43|🟠
+orange|pomaranč|72|🍊
+our|náš|17
+ours|náš (samostatne: je to náš)|87
+out of|von z|95
+page|strana|12|📄
+pants|nohavice (US)|55
+parent|rodič|97
+Paris|Paríž|9
+park|park|24
+part|časť|34
+partner|partner|84
+pea|hrach|72
+pear|hruška|71|🍐
+pen|pero|13
+pencil|ceruzka|13|✏️
+people|ľudia|35
+person|osoba|35
+pet|domáce zviera|45
+phone number|telefónne číslo|2
+picture|obraz, obrázok|12|🖼️
+pink|ružový|43
+pizza|pizza|68|🍕
+place|miesto|73
+plane|lietadlo|93|✈️
+plate|tanier|68|🍽️
+please|prosím|21
+plural|množné číslo|16
+pocket|vrecko|24
+point at|ukázať na|50
+Poland|Poľsko|9
+Polish|poľský; poľština|11
+pony|poník|45
+popcorn|pukance|65|🍿
+possessive|privlastňovací|88
+postal code|PSČ|GL35
+postcode|poštové smerovacie číslo (UK)|82
+poster|plagát|15
+potato|zemiak|72|🥔
+prefer|mať radšej|62
+preposition|predložka|84
+present|prítomný; prítomný čas|7
+programmer|programátor|5
+pronoun|zámeno|86
+puma|puma|44
+put|položiť|79
+question|otázka|22|❓
+question mark|otáznik (?)|GL8
+rabbit|zajac, králik|45|🐇
+radio|rádio|26|📻
+read|čítať|48|📖
+really|naozaj|GL1
+red|červený|43|🔴
+Repeat, please!|Zopakujte, prosím!|31
+Republic of South Africa|Juhoafrická republika|57
+rice|ryža|71|🍚
+ride|jazdiť (na bicykli, koni)|73
+right|pravý; vpravo; správny|34
+room|izba|37
+Russia|Rusko|9
+Russian|ruský; ruština|11
+salad|šalát|GL23|🥗
+sales rep|obchodný zástupca|6
+saloon|sedan (auto)|94
+same|rovnaký|76
+Saturday|sobota|27
+Saudi Arabia|Saudská Arábia|58
+say|povedať|51
+school|škola|59|🏫
+Scotland|Škótsko|10
+season|ročné obdobie|28
+second|druhý|31|🥈
+secretary|sekretárka|6
+send|poslať|99
+sentence|veta|22
+September|september|28
+Shard|Shard (mrakodrap v Londýne)|14
+she is|ona je|5
+sheep|ovca|45|🐑
+shirt|košeľa|54|👔
+shoe|topánka|55|👞
+short|krátky; nízky|4
+short form|skrátený tvar|5
+similar|podobný|76
+simple|jednoduchý|63
+sing|spievať|63|🎤
+single|slobodný|98
+singular|jednotné číslo|16
+sister|sestra|97
+sit|sedieť|47
+sit down|sadnúť si|79
+skirt|sukňa|55
+Slovakia|Slovensko|58
+small|malý|8
+smartphone|smartfón|25
+smell|vôňa; voňať|67
+SMS|SMS správa|99
+so|takže|80
+sock|ponožka|55|🧦
+sofa|pohovka|13|🛋️
+some|nejaký, trochu|89
+some of|niektorí z|100
+somebody|niekto|90
+something|niečo|49
+sometimes|niekedy (občas)|79
+son|syn|99
+song|pieseň|63
+sorry|prepáč|GL21
+soup|polievka|68|🍲
+south|juh|58
+South America|Južná Amerika|58
+spaghetti|špagety|61|🍝
+Spain|Španielsko|10
+Spanish|španielsky; španielčina|60
+speak|hovoriť|60
+spell|hláskovať|21
+spoon|lyžica|68|🥄
+spring|jar|28|🌷
+stand|stáť|47
+stand up|postaviť sa|79
+street|ulica|82
+student|študent|4
+subject|podmet (vo vete)|86
+sugar|cukor|67
+summer|leto|28|🏖️
+Sunday|nedeľa|27
+supermarket|supermarket|14|🛒
+surname|priezvisko|1
+sushi|suši|61|🍣
+Sweden|Švédsko|57
+Swedish|švédsky; švédčina|60
+swim|plávať|73|🏊
+Swiss|švajčiarsky|78
+Switzerland|Švajčiarsko|78
+table|stôl|13
+tail|chvost|45
+take|vziať; ísť (autobusom)|50
+tall|vysoký (človek)|4
+tea|čaj|62|🍵
+teach|učiť (niekoho)|78
+teacher|učiteľ|4
+teaspoon|čajová lyžička|68
+television|televízia|25|📺
+tell|povedať (niekomu)|51
+test|test|83
+text|písať SMS; text|99
+text message|SMS správa (textová)|99
+thank you|ďakujem|92
+thank you very much|ďakujem veľmi pekne|GL21
+thanks|vďaka|1
+that|tamten, to|15
+that's right|presne tak|GL1
+the|určitý člen (ten)|9
+their|ich|17
+theirs|ich (samostatne: je to ich)|87
+them|ich, im|52
+then|potom|GL23
+there|tam|24
+there are|sú tam (viac vecí)|25
+there is|je tam (jedna vec)|24
+There you are|Tu to máš|92
+these|tieto|18
+they are|oni sú|16
+thing|vec|35
+think|myslieť|70
+third|tretí|31|🥉
+this|tento, toto|4
+those|tamtie|18
+thousand|tisíc|29
+thumb|palec (na ruke)|33|👍
+Thursday|štvrtok|27
+tin|plechovka, konzerva|70|🥫
+today|dnes|27
+toe|prst na nohe|73
+tomato|paradajka|72|🍅
+too|tiež|3
+touch|dotknúť sa|48
+town|mesto|8
+train|vlak|93|🚆
+tram|električka|93|🚋
+translate|preložiť|73
+Translate this sentence, please!|Preložte túto vetu, prosím!|31
+trousers|nohavice|54
+T-shirt|tričko|54|👕
+Tuesday|utorok|27
+TV|televízor|25
+twenty|dvadsať|29
+twin|dvojča|97
+Ukraine|Ukrajina|10
+Ukrainian|ukrajinský; ukrajinčina|11
+uncle|strýko, ujo|100
+under|pod|19
+underground|metro (Londýn)|93|🚇
+underscore|podčiarkovník (_)|82
+United Arab Emirates|Spojené arabské emiráty|58
+up|hore|79
+us|nás, nám|52
+USA|USA|9
+use|používať|49
+usually|zvyčajne|65
+vegetable|zelenina|71|🥦
+verb|sloveso|85
+vowel|samohláska|22
+wait|čakať|80
+waiter|čašník|5
+waitress|čašníčka|7
+walk|chodiť, prechádzať sa|79|🚶
+walk a dog|venčiť psa|79
+wall|stena|13|🧱
+wallet|peňaženka|55|👛
+waltz|valčík|74
+Warsaw|Varšava|9
+Washington|Washington|9
+water|voda|66|💧
+we are|my sme|16
+wear|mať oblečené, nosiť|56
+Wednesday|streda|27
+week|týždeň|27
+Well done!|Dobrá práca!|31
+well|no, nuž; dobre|GL23
+west|západ|58
+what|čo|1
+What about...?|A čo...?|GL23
+what colour|aká farba|43
+What does it mean?|Čo to znamená?|31
+what kind|aký druh|94
+What will you have?|Čo si dáš?|GL23
+when|kedy|49
+Where ... from?|Odkiaľ ...?|10
+where|kde|9
+which|ktorý|10
+white|biely|43|⚪
+whiteboard|biela tabuľa|46
+who|kto|38
+whose|čí|56
+why|prečo|95
+wife|manželka|98
+window|okno|12|🪟
+wine|víno|66|🍷
+winter|zima (ročné obdobie)|28|❄️
+with|s, so|37
+without|bez|65
+woman|žena|4|👩
+word|slovo|22
+write|písať|48|✍️
+wrong|nesprávny|46
+year|rok|28
+yellow|žltý|43|🟡
+yes|áno|3
+you|ty, vy; ťa, vás|51
+you are|ty si, vy ste|3
+your|tvoj, váš|2
+yours|tvoj, váš (samostatne)|87
+`,
+// Vety z kľúča knihy 1 (Answer Key). *Vynechané slovo* je z daného modulu. Za | je slovo zo slovníka, ak sa tvar líši.
+vety:`
+Are you *present*?
+Are they from *Spain*?
+Is that *waitress* German?
+Is John a *student*?
+Are we from *London*?
+Are you the *teacher*?
+Is the boy *short*?
+Is Mary *absent*?
+Is this book *large*?
+There are seven *chairs* in the classroom.|chair
+Is there a *smartphone* here?
+Are there chairs *behind* the table?
+There is a small *poster* on the wall.
+There is not an open book *under* the table.
+There are not students in this *classroom*.
+Is there a waitress *here*?
+Are there *sales reps* in class?|sales rep
+Is there a picture *above* your sofa?
+Are there *Ukrainian* books on the table?
+Are there boys and girls in the *park*?
+Is there a smartphone under her *box*?
+Is there a *driver* in the corridor?
+Are there *programmers* in the Shard?|programmer
+Are there *Irish* waitresses in class?
+Is there music on the *radio*?
+Is there a *football* on the floor?
+There isn't a large box on the *floor*.
+There aren't German *ballpoint pens* on the table.|ballpoint pen
+There is a small *picture* in the classroom.
+There isn't a large table in the *corridor*.
+There isn't a radio on the *table*.
+These chairs are *low*.
+Is B a *consonant*?
+Are the *sofas* behind the chairs?|sofa
+Your book is not *closed*.
+It is *in front of* you.
+Those boxes are not *small*.
+Hornsea is not a *city*.
+Are you a *woman*?
+What is the *capital* of Germany?
+I don't have a *book*.
+She doesn't have *brown* eyes.
+We don't have a *large* house.
+They don't have short *hair*.
+He doesn't have an *English* book.
+You don't have a small *room*.
+The table doesn't have four *legs*.|leg
+John and Mary don't have three *cats*.|cat
+*Does* she have long hair?|does
+Does the teacher have a *black* cat?
+Do you have a picture on the *wall*?
+Do Jack and Jill have a *rabbit*?
+Does an *elephant* have small ears?
+Does the sales rep have a red *beard*?
+Do people *have fun* in the city park?
+What day is it *today*?
+Do we have a *blackboard*?
+Are those women from *Belgium*?
+Are your *eyes* blue?|eye
+November has thirty *days*.|day
+These men don't have black *moustaches*.|moustache
+A *mouse* doesn't have a short tail.
+Those *birds* have large heads.|bird
+People don't have three *elbows*.|elbow
+*February* doesn't have twenty-seven days.
+These students have *pets*.|pet
+I am *opening* the book.|open
+The students aren't *standing*.|stand
+I am *writing*.|write
+The teacher isn't *closing* the window.|close
+I am not *putting* the book on the floor.|put
+Who is *reading*?|read
+Are the women eating *butter*?
+Are those nurses wearing *belts*?|belt
+Can Ann and Thomas *speak* English?
+Can Thomas say a *sentence* in French?
+Can Brian read in *Chinese*?
+Can Jenny *touch* her toes?
+Can Ann touch her *toes*?|toe
+Can they *translate* sentences into English?
+You can't *answer* all questions.
+The teacher *cannot* speak Chinese.
+Can you *spell* that word?
+She doesn't like the *cinema*.
+They don't *prefer* short black hair.
+We don't like *clean* cities.
+The teacher doesn't prefer *hot* tea.
+This Chinese word doesn't *mean* 'simple' in English.
+They don't *make* good computers in that country.
+The waitress doesn't *wear* a red cap.
+Does she like *dirty* towns?
+Does he prefer brown *bread*?
+Do they like German *television*?
+Does that French word mean '*ear*'?
+Do you *like* pictures?
+Do the students have dirty *shoes*?|shoe
+Do nurses wear white *caps*?|cap
+Does Jill have a large *garden*?
+I am *sitting* on the chair.|sit
+I am not drinking a *fizzy* drink.
+I am not using a *computer*.
+We are *learning* English.|learn
+Our teacher isn't dancing the *waltz*.
+My pet is *moving*.|move
+Our teacher is *teaching* English.|teach
+I'm not *texting* my friends.|text
+Is he *using* a computer?|use
+Do you like the *smell* of coffee?
+Does your *friend* speak Italian?
+Does John eat *chicken*?
+Do they wear *jeans*?
+Does your dad *often* walk the dog?
+Do your friends teach the *Spanish* language?
+Are there any *people* in the classroom?
+She does not have *anything* in her bag.
+The teacher can teach *somebody* here.
+Is there *anybody* standing behind me?
+Children do not have any *money* at school.
+*Nobody* can sing a song in Japanese.|nobody
+Do you drink anything before the *lesson*?
+Are you wearing *trousers*?
+I do not like *cold* coffee.
+They are teaching *Italian*.
+She is not learning *Russian*.
+Who is wearing a *yellow* T-shirt?
+What's your email *address*?
+What's your *surname*?
+Do you have *children*?
+What's your *phone number*?
+Are you *married*?
+Do you have a *brother* or a sister?
+What is your *mother*'s name?
+`,
+slovesa:``}
 ];
 
 /* ============================ appka ============================ */
@@ -859,19 +1678,36 @@ const profil = () => U.list.find(p => p.id === U.akt);
 
 function pripravKnihu(k){
   if (k.w) return;
-  k.w = k.slova.trim().split('\n').map(r => {
-    const [en, sk, L, em, veta] = r.split('|').map(s => (s || '').trim());
-    return { id: en + '#' + L, en, sk, L: +L, em, veta, ans: veta ? (veta.match(/\*(.+?)\*/) || [])[1] : '' };
+  const riadky = t => (t || '').trim().split('\n').map(r => r.trim()).filter(Boolean);
+  k.w = riadky(k.slova).map(r => {
+    const [en, sk, Ls, em, veta] = r.split('|').map(s => (s || '').trim());
+    // lekcia „GL21“ = gramatická lekcia → skupina Frázy
+    const L = /^GL/i.test(Ls) ? 1000 + parseInt(Ls.slice(2), 10) : parseInt(Ls, 10);
+    return { id: en + '#' + Ls, en, sk, L, em, veta, ans: veta ? (veta.match(/\*(.+?)\*/) || [])[1] : '' };
   });
-  k.v = k.slovesa.trim().split('\n').map(r => {
+  // vety na doplnenie: vlastné vety slov + vety z kľúča knihy (pole vety)
+  k.vt = k.w.filter(w => w.veta).map(w => ({ id: w.id, w, veta: w.veta, ans: w.ans }));
+  k.vtChyby = [];
+  riadky(k.vety).forEach(r => {
+    const [veta, hl] = r.split('|').map(x => x.trim());
+    const ans = (veta.match(/\*(.+?)\*/) || [])[1];
+    const kl = (hl || ans || '').toLowerCase();
+    const w = k.w.find(x => x.en.toLowerCase() === kl);
+    if (!w || !ans) { k.vtChyby.push(r); return; }
+    k.vt.push({ id: w.id, w, veta, ans });
+    if (!w.veta) { w.veta = veta; w.ans = ans; }
+  });
+  k.v = riadky(k.slovesa).map(r => {
     const [t, sk] = r.split('|');
     const [p, pa, pp] = t.split(',').map(s => s.trim());
     return { id: 'v#' + p, p, pa, pp, sk: sk.trim() };
   });
   k.skupiny = [...new Set(k.w.map(w => skupina(w.L)))].sort((a, b) => a - b);
 }
-const skupina = L => Math.floor((L - 1) / 10);
-const skupinaNazov = g => (g * 10 + 1) + '–' + (g * 10 + 10);
+const FRAZY = 100;
+const skupina = L => L >= 1000 ? FRAZY : Math.floor((L - 1) / 10);
+const skupinaNazov = g => g === FRAZY ? 'Frázy' : (g * 10 + 1) + '–' + (g * 10 + 10);
+const skupinaPopis = g => g === FRAZY ? 'Frázy z gramatických lekcií' : 'Lekcie ' + skupinaNazov(g);
 
 function nastavKnihu(){
   K = KNIHY.find(k => k.uroven === profil().uroven);
@@ -884,6 +1720,7 @@ function nastavKnihu(){
 }
 const vybraneSkup = () => S.skup[K.id];
 const pool = () => K.w.filter(w => vybraneSkup().includes(skupina(w.L)));
+const vetyVPool = () => K.vt.filter(x => vybraneSkup().includes(skupina(x.w.L)));
 const m = id => P.m[id] || 0;
 const NAUCENE = 4;
 
@@ -930,9 +1767,12 @@ function najdiHlas(){ try { const v = speechSynthesis.getVoices(); hlas = v.find
 try { najdiHlas(); speechSynthesis.onvoiceschanged = najdiHlas; } catch(e){}
 function povedz(t){
   if (!t) return;
+  const text = String(t).replace(/\*/g, '').replace(/\.\.\./g, ' ').replace(/\(.*?\)/g, '').replace(/\//g, ' or ');
+  // v Android appke číta hlas telefónu (WebView nepozná speechSynthesis)
+  if (window.AndroidHlas) { try { AndroidHlas.povedz(text); } catch(e){} return; }
   try {
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(String(t).replace(/\*/g, '').replace(/\.\.\./g, ' ').replace(/\(.*?\)/g, '').replace(/\//g, ' or '));
+    const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-GB'; if (hlas) u.voice = hlas; u.rate = .9;
     speechSynthesis.speak(u);
   } catch(e){}
@@ -953,7 +1793,7 @@ function domov(){
   const p = pool(), vse = K.w.length;
   const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length;
   const chyby = K.w.filter(w => P.ch[w.id]).length;
-  const pocty = { slova: p.length, obrazky: p.filter(w => w.em).length, vety: p.filter(w => w.veta).length,
+  const pocty = { slova: p.length, obrazky: p.filter(w => w.em).length, vety: vetyVPool().length,
     slovesa: K.v.length, karticky: p.length, pisanie: p.length };
   const sr = seria(), us = uspesnost(K.w), zv = zvladnute(K.w);
   app.innerHTML = `
@@ -991,7 +1831,7 @@ function domov(){
   </section>
 
   <div class="tiles">
-    ${MODY.map(md => `<button class="tile" data-m="${md.id}"><span class="ico">${md.ico}</span><b>${md.nazov}</b><small>${md.popis} · ${pocty[md.id]}</small></button>`).join('')}
+    ${MODY.filter(md => md.id !== 'slovesa' || K.v.length).map((md, i, a) => `<button class="tile" data-m="${md.id}" ${a.length % 2 && i === a.length - 1 ? 'style="grid-column:1/-1"' : ''}><span class="ico">${md.ico}</span><b>${md.nazov}</b><small>${md.popis} · ${pocty[md.id]}</small></button>`).join('')}
     <button class="tile big" data-m="chyby"><span class="ico" style="color:var(--bad)">!</span><span class="txt"><b>Opakuj chyby</b><small>${chyby ? chyby + ' slov, ktoré ti ešte nejdú' : 'Zatiaľ žiadne chyby'}</small></span></button>
     <button class="tile big" data-m="zoznam"><span class="ico">≡</span><span class="txt"><b>Zoznam slov</b><small>Prezri si slová, ťukni a vypočuj si výslovnosť</small></span></button>
   </div>
@@ -1056,11 +1896,11 @@ function otazky(mod){
       opts: moznosti(w.en, all.filter(x => x.en !== w.en).map(x => x.en)), ans: w.en, sayAfter: w.en, po: '<b>' + esc(w.en) + '</b> = ' + esc(w.sk) }));
   }
   if (mod === 'vety') {
-    const v = p.filter(w => w.veta), all = K.w.filter(w => w.veta);
+    const v = vetyVPool();
     if (!v.length) { toast('V týchto lekciách zatiaľ nie sú vety. Vyber viac lekcií.'); return null; }
-    return vyber(v, n).map(w => ({ w, lbl:'Doplň vetu', prompt: vetaHtml(w.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: w.sk,
-      opts: moznosti(w.ans, all.filter(x => x.ans.toLowerCase() !== w.ans.toLowerCase()).map(x => x.ans)), ans: w.ans,
-      sayAfter: w.veta, po: vetaHtml(w.veta) }));
+    return vyber(v, n).map(x => ({ w: x.w, lbl:'Doplň vetu', prompt: vetaHtml(x.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: x.w.sk,
+      opts: moznosti(x.ans, K.vt.filter(y => y.ans.toLowerCase() !== x.ans.toLowerCase()).map(y => y.ans)), ans: x.ans,
+      sayAfter: x.veta, po: vetaHtml(x.veta) }));
   }
   if (mod === 'slovesa') {
     return vyber(K.v, n).map(otazkaSloveso);
@@ -1128,9 +1968,11 @@ function odpoved(q, b){
   fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? 'Správne!' : 'Správne je: ' + esc(q.ans)}</div>
     ${q.po ? `<div class="ex">${q.po}</div>` : ''}
     <button class="primary" id="dalej">Ďalej</button>`;
+  const tlacidlo = document.getElementById('dalej'), kolo = R;
   const dalej = () => { R.i++; R.i < R.q.length ? otazka() : vysledok(); };
-  document.getElementById('dalej').onclick = dalej;
-  if (ok && !q.po) setTimeout(() => { if (document.getElementById('dalej')) dalej(); }, 900);
+  tlacidlo.onclick = dalej;
+  // automaticky ďalej len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
+  if (ok && !q.po) setTimeout(() => { if (R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo)) dalej(); }, 900);
   fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 function vysledok(){
@@ -1142,12 +1984,17 @@ function vysledok(){
   <div class="progress"><i style="width:${R.ok / n * 100}%"></i></div>
   ${zle.length ? `<h2>Tieto si zopakuj</h2><div class="list">${zle.map(w => polozka(w)).join('')}</div>` : '<p class="empty">Všetko správne. Výborne!</p>'}
   ${zle.length ? '<button class="primary" id="znovaZle">Precvič len tieto</button>' : ''}
-  <button class="${zle.length ? '' : 'primary'}" id="znova">Ďalšie kolo</button>
+  <button class="${zle.length ? '' : 'primary'}" id="celeZnova">Celé kolo znova od začiatku</button>
+  <button id="znova">Nové kolo s inými slovami</button>
   <button id="menu">Menu</button>`;
   bindPolozky();
   const zz = document.getElementById('znovaZle');
+  const opakuj = q => { const mod = R.mod; if (mod === 'pisanie') return pisanie(q.map(x => x.w || x)); R = { mod, q: mix(q).map(x => Object.assign({}, x, { opts: mix(x.opts) })), i: 0, ok: 0, zle: [] }; otazka(); };
+  const vsetky = R.q;
+  document.getElementById('celeZnova').onclick = () => opakuj(vsetky);
   if (zz) zz.onclick = () => {
     const mod = R.mod;
+    if (mod === 'pisanie') return pisanie(zle);
     const q = mod === 'slovesa' || mod === 'vety' || mod === 'obrazky'
       ? R.q.filter(x => zle.includes(x.w)).map(x => Object.assign({}, x, { opts: mix(x.opts) }))
       : zle.map(w => otazkaSlovo(w, K.w));
@@ -1198,9 +2045,9 @@ function karticky(){
 /* ---------- písanie ---------- */
 const norm = s => s.toLowerCase().replace(/[’`]/g, "'").replace(/\.\.\.|[?!.]/g, '').replace(/\s+/g, ' ').trim();
 const varianty = en => [...new Set([norm(en), norm(en.replace(/\(.*?\)/g, '')), norm(en.replace(/[()]/g, ''))])];
-function pisanie(){
+function pisanie(slova){
   const p = pool(); if (!p.length) return;
-  R = { mod: 'pisanie', q: vyber(p, S.dlzka), i: 0, ok: 0, zle: [] };
+  R = { mod: 'pisanie', q: slova ? mix(slova) : vyber(p, S.dlzka), i: 0, ok: 0, zle: [] };
   const kresli = () => {
     const w = R.q[R.i]; let napovedy = 0, hotove = false;
     const ciel = w.en.replace(/\s*\(.*?\)/g, '');
@@ -1237,7 +2084,7 @@ function pisanie(){
 function zoznam(){
   app.innerHTML = `<div class="bar"><button class="ghost" id="koniec">← Menu</button><h1 style="font-size:20px">Zoznam slov</h1></div>
     <input class="search" id="hladaj" placeholder="Hľadaj po anglicky alebo po slovensky" aria-label="Hľadať">
-    <div class="seg" style="grid-template-columns:1fr 1fr"><button class="on" data-t="s">Slová vo vybraných lekciách</button><button data-t="v">Slovesá</button></div>
+    <div class="seg" style="grid-template-columns:1fr 1fr"><button class="on" data-t="s">Slová vo vybraných lekciách</button><button data-t="v" ${K.v.length ? '' : 'hidden'}>Slovesá</button></div>
     <div id="vypis"></div>`;
   let typ = 's';
   const kresli = () => {
@@ -1247,7 +2094,7 @@ function zoznam(){
     if (typ === 's') {
       const g = {}; f.forEach(w => (g[skupina(w.L)] = g[skupina(w.L)] || []).push(w));
       document.getElementById('vypis').innerHTML = Object.keys(g).length ? Object.keys(g).sort((a, b) => a - b).map(k =>
-        `<h2 style="margin:14px 0 8px">Lekcie ${skupinaNazov(+k)}</h2><div class="list">${g[k].sort((a, b) => a.L - b.L || a.en.localeCompare(b.en)).map(w => polozka(w)).join('')}</div>`).join('')
+        `<h2 style="margin:14px 0 8px">${skupinaPopis(+k)}</h2><div class="list">${g[k].sort((a, b) => a.L - b.L || a.en.localeCompare(b.en)).map(w => polozka(w)).join('')}</div>`).join('')
         : '<p class="empty">Nič som nenašiel.</p>';
     } else {
       document.getElementById('vypis').innerHTML = f.length ? `<div class="list">${f.map(v => polozka(v)).join('')}</div>` : '<p class="empty">Nič som nenašiel.</p>';
@@ -1259,6 +2106,12 @@ function zoznam(){
   app.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { typ = b.dataset.t; app.querySelectorAll('[data-t]').forEach(x => x.classList.toggle('on', x === b)); kresli(); });
   kresli();
 }
+
+window.androidSpat = () => {
+  for (const id of ['koniec', 'spat']) { const b = document.getElementById(id); if (b) { b.click(); return 'ok'; } }
+  if (document.getElementById('menu')) { document.getElementById('menu').click(); return 'ok'; }
+  return 'koniec';
+};
 
 /* ---------- inštalácia na plochu ---------- */
 let instal = null;
@@ -1332,8 +2185,8 @@ function profilObr(){
   <section class="card">
     <h2>Lekcie</h2>
     <div class="rows">${K.skupiny.map(g => { const ws = K.w.filter(w => skupina(w.L) === g), z = zvladnute(ws), u = uspesnost(ws);
-      return `<div class="rowp"><span>Lekcie ${skupinaNazov(g)}</span><span class="progress"><i style="width:${z}%"></i></span><b>${z} %</b><small>${u.n ? u.p + ' % správne' : 'neskúšané'}</small></div>`; }).join('')}
-      <div class="rowp"><span>Nepravidelné slovesá</span><span class="progress"><i style="width:${vz}%"></i></span><b>${vz} %</b><small>${vs.n ? vs.p + ' % správne' : 'neskúšané'}</small></div>
+      return `<div class="rowp"><span>${skupinaPopis(g)}</span><span class="progress"><i style="width:${z}%"></i></span><b>${z} %</b><small>${u.n ? u.p + ' % správne' : 'neskúšané'}</small></div>`; }).join('')}
+      ${K.v.length ? `<div class="rowp"><span>Nepravidelné slovesá</span><span class="progress"><i style="width:${vz}%"></i></span><b>${vz} %</b><small>${vs.n ? vs.p + ' % správne' : 'neskúšané'}</small></div>` : ''}
     </div>
   </section>
 
@@ -1365,9 +2218,11 @@ function profilObr(){
 function urovenObr(){
   const p = profil();
   app.innerHTML = `
-  <div class="top"><span class="avatar" style="margin-left:0">${esc(p.meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>Akú úroveň máš?</h1><div class="kniha">${esc(p.meno)} · číslo na obálke knihy</div></div></div>
+  <div class="top"><span class="avatar" style="margin-left:0">${esc(p.meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>Akú úroveň máš?</h1><div class="kniha">${esc(p.meno)} · podľa čísla na obálke knihy</div></div></div>
   <div class="levels">${UROVNE.map(u => { const k = KNIHY.find(x => x.uroven === u);
-    return `<button class="level ${p.uroven === u ? 'on' : ''}" data-u="${u}"><b>${u}</b><small>${k ? 'slovíčka pripravené' : 'pripravujeme'}</small></button>`; }).join('')}</div>
+    return k ? `<button class="level ${p.uroven === u ? 'on' : ''}" data-u="${u}"><b>${u}</b><small>${(pripravKnihu(k), k.w.length)} slov</small></button>`
+      : `<button class="level zamk" disabled aria-label="Úroveň ${u} je zamknutá"><b>${u}</b><small><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 7V5a4 4 0 0 1 8 0v2h1v8H3V7zm2 0h4V5a2 2 0 0 0-4 0z" fill="currentColor"/></svg> zamknuté</small></button>`; }).join('')}</div>
+  <p class="sub" style="margin:0">Zamknuté úrovne sa odomknú, keď pribudnú slovíčka z ich knihy.</p>
   ${p.uroven ? '<button id="spat">Späť</button>' : ''}`;
   app.querySelectorAll('[data-u]').forEach(b => b.onclick = () => { p.uroven = +b.dataset.u; save('sl2_profily', U); nastavKnihu() ? domov() : pripravujeme(); });
   const sp = document.getElementById('spat'); if (sp) sp.onclick = () => nastavKnihu() ? domov() : pripravujeme();
