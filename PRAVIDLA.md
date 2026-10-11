@@ -1,4 +1,4 @@
-# Pravidlá obsahu appky Slovíčka
+# Pravidlá obsahu appky WordWise
 
 Platia pre každú knihu (úroveň). Pri pridávaní novej knihy prejsť všetky body.
 

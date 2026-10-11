@@ -1,7 +1,7 @@
 {
-  "name": "Slovíčka – angličtina",
-  "short_name": "Slovíčka",
-  "description": "Slovíčka z angličtiny podľa učebnice, úrovne 1–6.",
+  "name": "WordWise – anglické slovíčka",
+  "short_name": "WordWise",
+  "description": "Anglické slovíčka podľa učebnice, úrovne 1–6.",
   "lang": "sk",
   "start_url": "./",
   "scope": "./",

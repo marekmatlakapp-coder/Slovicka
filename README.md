@@ -1,4 +1,4 @@
-# Slovíčka
+# WordWise
 
 Webová appka na slovíčka z angličtiny podľa učebníc (úrovne 1–6). Inštaluje sa z prehliadača na plochu mobilu, ide aj bez internetu, pokrok sa ukladá v zariadení.
 
