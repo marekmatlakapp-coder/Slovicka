@@ -36,5 +36,5 @@ if [ ! -f "$PODPIS" ]; then
   keytool -genkeypair -keystore "$PODPIS" -alias slovicka -keyalg RSA -keysize 2048 -validity 10000 \
     -storepass "$(cat "$HESLO_SUBOR")" -keypass "$(cat "$HESLO_SUBOR")" -dname "CN=Slovicka, O=Marek, C=SK"
 fi
-cmd //c "$(cygpath -w "$BT/apksigner.bat") sign --ks $(cygpath -w "$PODPIS") --ks-pass file:$(cygpath -w "$HESLO_SUBOR") --out $(cygpath -w "D:/Slovicka/Slovicka.apk") $(cygpath -w "$B/zarovnane.apk")"
+cmd //c "$(cygpath -w "$BT/apksigner.bat") sign --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --ks $(cygpath -w "$PODPIS") --ks-pass file:$(cygpath -w "$HESLO_SUBOR") --out $(cygpath -w "D:/Slovicka/Slovicka.apk") $(cygpath -w "$B/zarovnane.apk")"
 cmd //c "$(cygpath -w "$BT/apksigner.bat") verify $(cygpath -w "D:/Slovicka/Slovicka.apk")" && echo "HOTOVO: D:/Slovicka/Slovicka.apk verzia $VN ($VC)"
