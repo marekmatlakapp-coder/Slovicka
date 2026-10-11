@@ -1,6 +1,6 @@
 # Slovíčka
 
-Webová appka na slovíčka z angličtiny podľa učebnice Direct Method (úrovne 1–6). Inštaluje sa z prehliadača na plochu mobilu, ide aj bez internetu, pokrok sa ukladá v zariadení.
+Webová appka na slovíčka z angličtiny podľa učebníc (úrovne 1–6). Inštaluje sa z prehliadača na plochu mobilu, ide aj bez internetu, pokrok sa ukladá v zariadení.
 
 - `index.html` je celá appka. Dáta kníh sú v poli `KNIHY` (každá kniha má `uroven` 1–6).
 - `sw.js` zabezpečí fungovanie bez internetu. Pri väčšej zmene zvýš `CACHE` (napr. `slovicka-v2`).

@@ -167,7 +167,7 @@ mark{background:none;color:var(--accent);font-weight:700}
    Sloveso: tvar1, tvar2, tvar3 | slovensky
    ===================================================================== */
 const KNIHY = [
-{ id:'dm3', uroven:3, nazov:'English 3 · Direct Method 2022', kratko:'English 3',
+{ id:'dm3', uroven:3, nazov:'English · úroveň 3', kratko:'English 3',
 slova:`
 a bit|trochu|76||I'm *a bit* tired today.
 a few|pár / niekoľko (počítateľné)|94||I have *a few* friends in London.
@@ -1331,7 +1331,7 @@ wear, wore, worn|mať oblečené, nosiť|
 win, won, won|vyhrať|
 write, wrote, written|písať|
 `},
-{ id:'dm1', uroven:1, nazov:'English 1 · Direct Method 2022', kratko:'English 1',
+{ id:'dm1', uroven:1, nazov:'English · úroveň 1', kratko:'English 1',
 // Lekcia GLxx = gramatická lekcia, v appke skupina „Frázy“
 slova:`
 's|privlastňovacie 's (Sarin, Petrov)|56
@@ -2880,7 +2880,7 @@ function domov(){
   <div class="top">
     <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg>
     <div style="min-width:0"><h1>Slovíčka</h1>
-      <div class="kniha">Úroveň ${K.uroven} · ${esc(K.nazov)}</div>
+      <div class="kniha">${esc(K.nazov)}</div>
     </div>
     <button class="avatar" id="profil" aria-label="Profil">${esc(profil().meno.slice(0, 1).toUpperCase())}</button>
   </div>
@@ -3250,7 +3250,7 @@ function profilObr(){
   const vs = uspesnost(K.v), vz = zvladnute(K.v);
   app.innerHTML = `
   <div class="bar"><button class="ghost" id="spat">← Menu</button></div>
-  <div class="top"><span class="avatar">${esc(profil().meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>${esc(profil().meno)}</h1><div class="kniha">Úroveň ${K.uroven} · ${esc(K.nazov)}</div></div></div>
+  <div class="top"><span class="avatar">${esc(profil().meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>${esc(profil().meno)}</h1><div class="kniha">${esc(K.nazov)}</div></div></div>
 
   <div class="hero">
     <span class="kpi"><b>${zv} %</b><small>zvládnuté</small></span>
