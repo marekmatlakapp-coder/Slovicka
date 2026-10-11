@@ -2130,6 +2130,8 @@ function bindInstal(){
 }
 window.addEventListener('appinstalled', () => { const c = document.querySelector('.instal'); if (c) c.remove(); });
 if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
+// požiadať prehliadač, aby pokrok nemazal pri nedostatku miesta
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch(e){}
 
 /* ---------- profily ---------- */
 const MODY_NAZ = { slova:'Slovíčka', obrazky:'Obrázky', vety:'Doplň vetu', slovesa:'Nepravidelné slovesá', karticky:'Kartičky', pisanie:'Napíš slovo', chyby:'Opakuj chyby' };
