@@ -95,6 +95,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .fb .res.ok{color:var(--ok)}.fb .res.bad{color:var(--bad)}
 .fb .ex{font-size:16px}
 mark{background:none;color:var(--accent);font-weight:700}
+.vysv{background:var(--bad-bg);border-radius:10px;padding:8px 10px;font-size:15px}
+.ex.sk{color:var(--soft);font-size:15px}
 .fe{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:2px}
 /* kartičky */
 .flash{background:var(--card);border:1px solid var(--line);border-radius:24px;min-height:300px;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center;cursor:pointer;width:100%}
@@ -2701,6 +2703,250 @@ yours|87|Is this pen *yours*?
 slovesa:``}
 ];
 
+// Slovenské preklady viet na doplnenie (anglická veta bez * | preklad). Zobrazia sa po odpovedi v „Doplň vetu“.
+const PREKLADY_VIET = `
+I'm a bit tired today.|Dnes som trochu unavený.
+I have a few friends in London.|Mám v Londýne pár kamarátov.
+Can I have a little milk, please?|Môžem dostať trochu mlieka, prosím?
+Will you be able to come tomorrow?|Budeš môcť prísť zajtra?
+You are absolutely right.|Máš úplnú pravdu.
+She speaks English with a French accent.|Hovorí po anglicky s francúzskym prízvukom.
+He had a car accident last year.|Minulý rok mal autonehodu.
+Can you say that again, please?|Môžeš to, prosím, povedať znova?
+Are you for or against the plan?|Si za ten plán, alebo proti nemu?
+How long does it take to get to the airport?|Ako dlho trvá cesta na letisko?
+Are you allergic to cats?|Si alergický na mačky?
+It's almost six o'clock.|Je takmer šesť hodín.
+My grandmother lives alone.|Moja babka býva sama.
+I have already eaten.|Už som jedol.
+Although it was raining, we went out.|Hoci pršalo, išli sme von.
+Can I have another cup of tea?|Môžem dostať ešte jednu šálku čaju?
+Is anyone at home?|Je niekto doma?
+Has the dude been in the army for three months?|Je ten chlapík v armáde už tri mesiace?
+She works as a teacher.|Pracuje ako učiteľka.
+Do you know how to attract new customers?|Vieš, ako prilákať nových zákazníkov?
+Why did you eat those awful candies?|Prečo si zjedol tie hrozné cukríky?
+My brother plays in a rock band.|Môj brat hrá v rockovej kapele.
+Do teenagers behave badly at school?|Správajú sa tínedžeri v škole zle?
+She doesn't believe in ghosts.|Ona neverí na duchov.
+Who does this chewing gum belong to?|Komu patrí táto žuvačka?
+Water boils at 100 degrees Celsius.|Voda vrie pri 100 stupňoch Celzia.
+I want to book a table for two.|Chcem si zarezervovať stôl pre dvoch.
+Don't break the window!|Nerozbi okno!
+Is your buddy crying?|Plače tvoj kamoš?
+They want to build a new house.|Chcú si postaviť nový dom.
+Have they met the killer by chance?|Stretli sa náhodou s vrahom?
+I'm tired, let's call it a day.|Som unavený, poďme na dnes skončiť.
+They had to call off the match because of the rain.|Kvôli dažďu museli zápas zrušiť.
+Can you catch the ball?|Vieš chytiť loptu?
+Did you turn the central heating down?|Stlmil si ústredné kúrenie?
+How should I change the reservation?|Ako mám zmeniť rezerváciu?
+Which one did you choose?|Ktorý si si vybral?
+Please clean up your room.|Uprac si, prosím, izbu.
+This sofa is very comfortable.|Táto pohovka je veľmi pohodlná.
+How much does it cost?|Koľko to stojí?
+Can I spend the day on the couch?|Môžem stráviť deň na gauči?
+Why is the baby crying?|Prečo bábätko plače?
+Are there any pills in the cupboard?|Sú v skrinke nejaké tabletky?
+The shop has a lot of customers.|Obchod má veľa zákazníkov.
+Swimming here is dangerous.|Plávať tu je nebezpečné.
+I can't decide what to wear.|Neviem sa rozhodnúť, čo si obliecť.
+When will you make a decision?|Kedy sa rozhodneš?
+The lake is very deep.|Jazero je veľmi hlboké.
+She might find her diamond.|Možno nájde svoj diamant.
+I do the shopping on Saturdays.|Nakupujem v sobotu.
+How much do you earn?|Koľko zarábaš?
+I don't like it either.|Ani mne sa to nepáči.
+What else do you need?|Čo ešte potrebuješ?
+Did you enjoy the film?|Páčil sa ti film?
+Have you ever been to Paris?|Bol si už niekedy v Paríži?
+Do you use a lot of exclamation marks in your messages?|Používaš vo svojich správach veľa výkričníkov?
+Can you explain it again?|Môžeš to vysvetliť znova?
+What kind of test did you fail?|Z akého testu si prepadol?
+I can't find my keys.|Neviem nájsť kľúče.
+I want to find out the truth.|Chcem zistiť pravdu.
+Our flight is delayed.|Náš let mešká.
+I have lived here for two years.|Bývam tu už dva roky.
+Please give back my book.|Vráť mi, prosím, moju knihu.
+I'm glad to see you.|Som rád, že ťa vidím.
+I'm going to visit my grandma tomorrow.|Zajtra idem navštíviť babku.
+What happened?|Čo sa stalo?
+Does your head teacher remind you to use the app?|Pripomína ti riaditeľ školy, aby si používal appku?
+She looked at herself in the mirror.|Pozrela sa na seba do zrkadla.
+He cut himself with a knife.|Porezal sa nožom.
+Hold my hand.|Drž ma za ruku.
+I hope you are well.|Dúfam, že sa máš dobre.
+How long have you lived here?|Ako dlho tu bývaš?
+How many brothers do you have?|Koľko máš bratov?
+How much is this?|Koľko to stojí?
+Come here immediately!|Poď sem okamžite!
+I study in order to pass the exam.|Učím sa, aby som zložil skúšku.
+We read out the instructions five minutes ago.|Pokyny sme prečítali nahlas pred piatimi minútami.
+It takes twenty minutes to get there.|Cesta tam trvá dvadsať minút.
+His wife should tell him the joke.|Jeho manželka by mu mala povedať ten vtip.
+I have just brought it.|Práve som to priniesol.
+Who has the horse kicked?|Koho kôň kopol?
+She is very kind.|Je veľmi milá.
+Do you know how to swim?|Vieš plávať?
+What do you use to cut grass on the lawn?|Čím kosíš trávu na trávniku?
+I'm tired, I need to lie down.|Som unavený, potrebujem si ľahnúť.
+That doesn't make sense.|To nedáva zmysel.
+The mathematician has already found the answer.|Matematik už našiel odpoveď.
+May I borrow your e-bike?|Smiem si požičať tvoj elektrobicykel?
+Our grandchildren might fly to other planets.|Naše vnúčatá možno budú lietať na iné planéty.
+That murderer has killed seven wolves.|Ten vrah zabil sedem vlkov.
+I made it myself.|Urobil som to sám.
+No one knows the answer.|Nikto nevie odpoveď.
+You ought to see a doctor.|Mal by si ísť k lekárovi.
+Did the builder have a birthday party last year?|Mal stavbár minulý rok narodeninovú oslavu?
+I promise I will help you.|Sľubujem, že ti pomôžem.
+I would rather stay at home.|Radšej by som zostal doma.
+You seem tired.|Zdáš sa unavený.
+I didn't share my pizza with you yesterday.|Včera som sa s tebou nepodelil o pizzu.
+What time does the shopping centre open?|O koľkej otvára nákupné centrum?
+I have lived here since 2019.|Bývam tu od roku 2019.
+Someone is at the door.|Niekto je pri dverách.
+How much money did you spend?|Koľko peňazí si minul?
+Are you still at work?|Si ešte v práci?
+This skirt is too expensive.|Táto sukňa je príliš drahá.
+Can I try on this jacket?|Môžem si vyskúšať túto bundu?
+If I saw Jane, I would help her.|Keby som videl Jane, pomohol by som jej.
+I would like a coffee, please.|Prosím si kávu.
+Have you finished yet?|Už si skončil?
+Are you present?|Si prítomný?
+Are they from Spain?|Sú zo Španielska?
+Is that waitress German?|Je tamtá čašníčka Nemka?
+Is John a student?|Je John študent?
+Are we from London?|Sme z Londýna?
+Are you the teacher?|Si ty učiteľ?
+Is the boy short?|Je ten chlapec nízky?
+Is Mary absent?|Je Mary neprítomná?
+Is this book large?|Je táto kniha veľká?
+There are seven chairs in the classroom.|V triede je sedem stoličiek.
+Is there a smartphone here?|Je tu smartfón?
+Are there chairs behind the table?|Sú za stolom stoličky?
+There is a small poster on the wall.|Na stene je malý plagát.
+There is not an open book under the table.|Pod stolom nie je otvorená kniha.
+There are not students in this classroom.|V tejto triede nie sú študenti.
+Is there a waitress here?|Je tu čašníčka?
+Are there sales reps in class?|Sú v triede obchodní zástupcovia?
+Is there a picture above your sofa?|Je nad tvojou pohovkou obraz?
+Are there Ukrainian books on the table?|Sú na stole ukrajinské knihy?
+Are there boys and girls in the park?|Sú v parku chlapci a dievčatá?
+Is there a smartphone under her box?|Je pod jej krabicou smartfón?
+Is there a driver in the corridor?|Je na chodbe vodič?
+Are there programmers in the Shard?|Sú v Sharde programátori?
+Are there Irish waitresses in class?|Sú v triede írske čašníčky?
+Is there music on the radio?|Hrá v rádiu hudba?
+Is there a football on the floor?|Je na zemi futbalová lopta?
+There isn't a large box on the floor.|Na zemi nie je veľká krabica.
+There aren't German ballpoint pens on the table.|Na stole nie sú nemecké guľôčkové perá.
+There is a small picture in the classroom.|V triede je malý obrázok.
+There isn't a large table in the corridor.|Na chodbe nie je veľký stôl.
+There isn't a radio on the table.|Na stole nie je rádio.
+These chairs are low.|Tieto stoličky sú nízke.
+Is B a consonant?|Je B spoluhláska?
+Are the sofas behind the chairs?|Sú pohovky za stoličkami?
+Your book is not closed.|Tvoja kniha nie je zatvorená.
+It is in front of you.|Je to pred tebou.
+Those boxes are not small.|Tamtie krabice nie sú malé.
+Hornsea is not a city.|Hornsea nie je veľkomesto.
+Are you a woman?|Si žena?
+What is the capital of Germany?|Aké je hlavné mesto Nemecka?
+I don't have a book.|Nemám knihu.
+She doesn't have brown eyes.|Nemá hnedé oči.
+We don't have a large house.|Nemáme veľký dom.
+They don't have short hair.|Nemajú krátke vlasy.
+He doesn't have an English book.|Nemá anglickú knihu.
+You don't have a small room.|Nemáš malú izbu.
+The table doesn't have four legs.|Stôl nemá štyri nohy.
+John and Mary don't have three cats.|John a Mary nemajú tri mačky.
+Does she have long hair?|Má dlhé vlasy?
+Does the teacher have a black cat?|Má učiteľ čiernu mačku?
+Do you have a picture on the wall?|Máš na stene obraz?
+Do Jack and Jill have a rabbit?|Majú Jack a Jill králika?
+Does an elephant have small ears?|Má slon malé uši?
+Does the sales rep have a red beard?|Má obchodný zástupca červenú bradu?
+Do people have fun in the city park?|Zabávajú sa ľudia v mestskom parku?
+What day is it today?|Aký je dnes deň?
+Do we have a blackboard?|Máme tabuľu?
+Are those women from Belgium?|Sú tamtie ženy z Belgicka?
+Are your eyes blue?|Máš modré oči?
+November has thirty days.|November má tridsať dní.
+These men don't have black moustaches.|Títo muži nemajú čierne fúzy.
+A mouse doesn't have a short tail.|Myš nemá krátky chvost.
+Those birds have large heads.|Tamtie vtáky majú veľké hlavy.
+People don't have three elbows.|Ľudia nemajú tri lakte.
+February doesn't have twenty-seven days.|Február nemá dvadsaťsedem dní.
+These students have pets.|Títo študenti majú domáce zvieratá.
+I am opening the book.|Otváram knihu.
+The students aren't standing.|Študenti nestoja.
+I am writing.|Píšem.
+The teacher isn't closing the window.|Učiteľ nezatvára okno.
+I am not putting the book on the floor.|Nekladiem knihu na zem.
+Who is reading?|Kto číta?
+Are the women eating butter?|Jedia tie ženy maslo?
+Are those nurses wearing belts?|Majú tamtie zdravotné sestry opasky?
+Can Ann and Thomas speak English?|Vedia Ann a Thomas po anglicky?
+Can Thomas say a sentence in French?|Vie Thomas povedať vetu po francúzsky?
+Can Brian read in Chinese?|Vie Brian čítať po čínsky?
+Can Jenny touch her toes?|Dotkne sa Jenny prstov na nohách?
+Can Ann touch her toes?|Dotkne sa Ann prstov na nohách?
+Can they translate sentences into English?|Vedia preložiť vety do angličtiny?
+You can't answer all questions.|Nemôžeš odpovedať na všetky otázky.
+The teacher cannot speak Chinese.|Učiteľ nevie po čínsky.
+Can you spell that word?|Vieš to slovo vyhláskovať?
+She doesn't like the cinema.|Nemá rada kino.
+They don't prefer short black hair.|Nemajú radšej krátke čierne vlasy.
+We don't like clean cities.|Nemáme radi čisté mestá.
+The teacher doesn't prefer hot tea.|Učiteľ nemá radšej horúci čaj.
+This Chinese word doesn't mean 'simple' in English.|Toto čínske slovo neznamená po anglicky „simple“ (jednoduchý).
+They don't make good computers in that country.|V tej krajine nevyrábajú dobré počítače.
+The waitress doesn't wear a red cap.|Čašníčka nenosí červenú šiltovku.
+Does she like dirty towns?|Má rada špinavé mestá?
+Does he prefer brown bread?|Má radšej tmavý chlieb?
+Do they like German television?|Majú radi nemeckú televíziu?
+Does that French word mean 'ear'?|Znamená to francúzske slovo „ear“ (ucho)?
+Do you like pictures?|Máš rád obrázky?
+Do the students have dirty shoes?|Majú študenti špinavé topánky?
+Do nurses wear white caps?|Nosia zdravotné sestry biele čiapky?
+Does Jill have a large garden?|Má Jill veľkú záhradu?
+I am sitting on the chair.|Sedím na stoličke.
+I am not drinking a fizzy drink.|Nepijem sýtený nápoj.
+I am not using a computer.|Nepoužívam počítač.
+We are learning English.|Učíme sa po anglicky.
+Our teacher isn't dancing the waltz.|Náš učiteľ netancuje valčík.
+My pet is moving.|Moje domáce zvieratko sa hýbe.
+Our teacher is teaching English.|Náš učiteľ učí angličtinu.
+I'm not texting my friends.|Nepíšem kamarátom SMS.
+Is he using a computer?|Používa počítač?
+Do you like the smell of coffee?|Máš rád vôňu kávy?
+Does your friend speak Italian?|Hovorí tvoj kamarát po taliansky?
+Does John eat chicken?|Je John kuracie mäso?
+Do they wear jeans?|Nosia džínsy?
+Does your dad often walk the dog?|Venčí tvoj otec často psa?
+Do your friends teach the Spanish language?|Učia tvoji kamaráti španielčinu?
+Are there any people in the classroom?|Sú v triede nejakí ľudia?
+She does not have anything in her bag.|V taške nemá nič.
+The teacher can teach somebody here.|Učiteľ tu môže niekoho učiť.
+Is there anybody standing behind me?|Stojí niekto za mnou?
+Children do not have any money at school.|Deti v škole nemajú žiadne peniaze.
+Nobody can sing a song in Japanese.|Nikto nevie zaspievať pieseň po japonsky.
+Do you drink anything before the lesson?|Piješ niečo pred hodinou?
+Are you wearing trousers?|Máš oblečené nohavice?
+I do not like cold coffee.|Nemám rád studenú kávu.
+They are teaching Italian.|Učia taliančinu.
+She is not learning Russian.|Neučí sa ruštinu.
+Who is wearing a yellow T-shirt?|Kto má oblečené žlté tričko?
+What's your email address?|Aká je tvoja e-mailová adresa?
+What's your surname?|Aké je tvoje priezvisko?
+Do you have children?|Máš deti?
+What's your phone number?|Aké je tvoje telefónne číslo?
+Are you married?|Si ženatý / vydatá?
+Do you have a brother or a sister?|Máš brata alebo sestru?
+What is your mother's name?|Ako sa volá tvoja mama?
+`;
+
 /* ============================ appka ============================ */
 const app = document.getElementById('app');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2847,13 +3093,18 @@ function povedz(t){
   });
 }
 // Príkladová veta slova: vlastná veta (z knihy) alebo príklad z bloku priklady
+// preklad vety na doplnenie (z PREKLADY_VIET)
+const VETY_SK = {};
+PREKLADY_VIET.trim().split('\n').forEach(r => { const i = r.indexOf('|'); if (i > 0) VETY_SK[r.slice(0, i).trim()] = r.slice(i + 1).trim(); });
+const vetaSk = veta => VETY_SK[String(veta).replace(/\*/g, '').trim()] || '';
 const prikladSlova = w => (w && (w.veta || w.priklad)) || '';
 const prikladHtml = ex => ex ? `<div class="ex"><span class="fe">For example:</span> ${vetaHtml(ex)}</div>` : '';
 // Po odpovedi: prečíta text (ak je zvuk zapnutý), počká na dočítanie a potom zavolá dalej – len ak je človek stále na tej istej otázke
-async function citajAPokracuj(text, ok, jeStale, dalej){
+async function citajAPokracuj(text, ok, jeStale, dalej, navyse = 0){
   if (S.zvuk && text) await povedz(text);
   else await new Promise(r => setTimeout(r, text ? casCitania(text) : 600));
-  await new Promise(r => setTimeout(r, ok ? 350 : 1200));
+  // po chybe dlhšia pauza; „navyse“ = čas na prečítanie vysvetlenia
+  await new Promise(r => setTimeout(r, (ok ? 350 : 1200) + navyse));
   if (jeStale()) dalej();
 }
 function toast(t){ const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; document.body.appendChild(el); setTimeout(() => el.remove(), 2200); }
@@ -2978,9 +3229,15 @@ function otazky(mod){
   if (mod === 'vety') {
     const v = vetyVPool();
     if (!v.length) { toast('V týchto lekciách zatiaľ nie sú vety. Vyber viac lekcií.'); return null; }
+    // ku každej možnosti si pamätáme slovo, aby sa pri chybe dalo vysvetliť, čo vybrané slovo znamená
+    const slovoMoznosti = new Map(); K.vt.forEach(y => { if (!slovoMoznosti.has(y.ans)) slovoMoznosti.set(y.ans, y.w); });
     return vyber(v, n).map(x => ({ w: x.w, lbl:'Doplň vetu', prompt: vetaHtml(x.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: x.w.sk,
       opts: moznosti(x.ans, K.vt.filter(y => y.ans.toLowerCase() !== x.ans.toLowerCase()).map(y => y.ans)), ans: x.ans,
-      sayAfter: x.veta, po: vetaHtml(x.veta) }));
+      sayAfter: x.veta, po: vetaHtml(x.veta), sk: vetaSk(x.veta),
+      vysvetli: zvol => {
+        const w2 = slovoMoznosti.get(zvol);
+        return `<div class="vysv">Vybral si <b>${esc(zvol)}</b>${w2 ? ' = ' + esc(w2.sk) : ''}. Do tejto vety významom nepatrí – chýba tu <b>${esc(x.ans)}</b> = ${esc(x.w.sk)}.</div>`;
+      } }));
   }
   if (mod === 'slovesa') {
     return vyber(K.v, n).map(otazkaSloveso);
@@ -3045,7 +3302,8 @@ function odpoved(q, b){
   const fb = document.getElementById('fb');
   fb.hidden = false;
   fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? 'Správne!' : 'Správne je: ' + esc(q.ans)}</div>
-    ${q.po ? `<div class="ex">${q.po}</div>` : ''}${prikladHtml(q.ex)}
+    ${!ok && q.vysvetli ? q.vysvetli(zvol) : ''}
+    ${q.po ? `<div class="ex">${q.po}</div>` : ''}${q.sk ? `<div class="ex sk"><span class="fe">Po slovensky:</span> ${esc(q.sk)}</div>` : ''}${prikladHtml(q.ex)}
     <button class="primary" id="dalej">Ďalej</button>`;
   const tlacidlo = document.getElementById('dalej'), kolo = R;
   let preslo = false;
@@ -3055,7 +3313,9 @@ function odpoved(q, b){
   // prečíta príkladovú vetu (alebo slovo), počká na dočítanie a až potom prejde ďalej
   // – len ak je človek stále na tej istej otázke (nie po odchode do menu alebo iného cvičenia)
   const nahlas = q.ex || q.sayAfter;
-  citajAPokracuj(nahlas, ok, () => R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo), dalej);
+  const vysv = !ok && q.vysvetli ? q.vysvetli(zvol) : '';
+  citajAPokracuj(nahlas, ok, () => R === kolo && R.q[R.i] === q && document.body.contains(tlacidlo), dalej,
+    vysv ? casCitania(vysv.replace(/<[^>]+>/g, '') + (q.sk || '')) : 0);
 }
 function vysledok(){
   const n = R.q.length, zle = [...new Map(R.zle.map(w => [w.id, w])).values()];
