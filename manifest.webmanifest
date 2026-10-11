@@ -1,0 +1,17 @@
+{
+  "name": "Slovíčka – angličtina",
+  "short_name": "Slovíčka",
+  "description": "Slovíčka z angličtiny podľa učebnice, úrovne 1–6.",
+  "lang": "sk",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e9f0f7",
+  "theme_color": "#1d5ea8",
+  "icons": [
+    { "src": "ikona-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "ikona-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "ikona-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

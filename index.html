@@ -1,0 +1,1390 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Slovíčka</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Slovíčka z angličtiny podľa učebnice, úrovne 1–6.">
+<meta name="theme-color" content="#1d5ea8">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="ikona-192.png" type="image/png">
+<link rel="apple-touch-icon" href="ikona-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Slovíčka">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: jedna úzka obrazovka pre mobil, karta s otázkou hore, veľké tlačidlá na palec dole.
+   Farby: modrá z obálky učebnice, červená šípka ako značka. */
+:root{
+  --bg:#e9f0f7; --card:#ffffff; --ink:#13253b; --soft:#5d6f86; --line:#d3deea;
+  --accent:#1d5ea8; --accent-ink:#ffffff; --brand:#c8382b;
+  --ok:#1e8a4c; --ok-bg:#dff3e7; --bad:#c33a3a; --bad-bg:#fbe3e1; --hl:#ff4fa3;
+  --f-disp:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", Roboto, system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1724; --card:#172435; --ink:#e6eef8; --soft:#93a5bc; --line:#26374d;
+  --accent:#5b9be6; --accent-ink:#0b1420; --brand:#e2584a;
+  --ok:#4cc883; --ok-bg:#163527; --bad:#f07068; --bad-bg:#3a1e20; --hl:#ff6fb5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1724; --card:#172435; --ink:#e6eef8; --soft:#93a5bc; --line:#26374d;
+  --accent:#5b9be6; --accent-ink:#0b1420; --brand:#e2584a;
+  --ok:#4cc883; --ok-bg:#163527; --bad:#f07068; --bad-bg:#3a1e20; --hl:#ff6fb5; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
+main{max-width:540px;margin:0 auto;padding-inline:16px;padding-block:calc(14px + env(safe-area-inset-top,0px)) calc(32px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+h1,h2{font-family:var(--f-disp);margin:0;text-wrap:balance}
+h1{font-size:26px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;min-height:50px}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.ghost{background:none;border:0;min-height:40px;padding:6px 10px;color:var(--soft)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.top{display:flex;align-items:center;gap:12px}
+.mark{width:34px;height:34px;flex:none}
+.top .kniha{font-size:14px;color:var(--soft)}
+.stats{margin-left:auto;text-align:right;font-size:13px;color:var(--soft);line-height:1.3;font-variant-numeric:tabular-nums}
+.stats b{color:var(--ink);font-size:16px}
+.progress{height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--ok);border-radius:6px;transition:width .4s}
+.summary{display:flex;justify-content:space-between;font-size:14px;color:var(--soft);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:40px;padding:6px 12px;border-radius:999px;font-size:15px;position:relative;overflow:hidden;font-variant-numeric:tabular-nums}
+.chip.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);font-weight:700}
+.chip .fill{position:absolute;left:0;bottom:0;height:3px;background:var(--ok)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:14px;min-height:112px;border-radius:18px}
+.tile .ico{font-family:var(--f-disp);font-weight:800;font-size:20px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--bg);color:var(--accent)}
+.tile b{font-size:17px;line-height:1.2}
+.tile small{color:var(--soft);font-size:13px;line-height:1.3}
+.tile.big{grid-column:1/-1;flex-direction:row;align-items:center;min-height:84px}
+.tile.big .txt{display:flex;flex-direction:column;gap:2px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.seg button{border:0;min-height:40px;border-radius:10px;font-size:15px;padding:6px}
+.seg button.on{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.settings{display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px 14px}
+.settings label{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.settings label:last-child{border-bottom:0}
+.settings input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent)}
+.settings select{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 8px}
+/* kvíz */
+.bar{display:flex;align-items:center;gap:10px}
+.bar .progress{flex:1}
+.bar .num{font-size:14px;color:var(--soft);font-variant-numeric:tabular-nums;min-width:48px;text-align:right}
+.q{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 18px 18px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
+.lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--soft)}
+.prompt{font-family:var(--f-disp);font-weight:800;font-size:32px;line-height:1.15;word-break:break-word;display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap}
+.prompt.emoji{font-size:84px;line-height:1.1}
+.prompt.veta{font-family:var(--f-body);font-weight:700;font-size:23px;line-height:1.4}
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--accent);margin:0 4px;color:var(--accent)}
+.say{min-height:40px;width:44px;padding:0;border-radius:50%;font-size:18px;flex:none}
+.sub{color:var(--soft);font-size:15px}
+.hint{font-size:15px;color:var(--accent);font-weight:700}
+.opts{display:grid;gap:10px}
+.opts button{text-align:left;font-size:19px;min-height:58px;padding:12px 16px;border-radius:16px}
+.opts button.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ok)}
+.opts button.bad{background:var(--bad-bg);border-color:var(--bad);box-shadow:inset 0 0 0 2px var(--bad)}
+.opts button:disabled{cursor:default}
+.fb{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.fb .res{font-weight:700}
+.fb .res.ok{color:var(--ok)}.fb .res.bad{color:var(--bad)}
+.fb .ex{font-size:16px}
+mark{background:none;color:var(--accent);font-weight:700}
+/* kartičky */
+.flash{background:var(--card);border:1px solid var(--line);border-radius:24px;min-height:300px;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center;cursor:pointer;width:100%}
+.flash .front{font-family:var(--f-disp);font-weight:800;font-size:34px;line-height:1.15}
+.flash .back{font-size:22px;font-weight:700;color:var(--accent)}
+.flash .ex{color:var(--soft);font-size:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two .no{color:var(--bad);font-weight:700}
+.two .yes{color:var(--ok);font-weight:700}
+/* písanie */
+.write{width:100%;font-size:22px;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--card);text-align:center}
+.write.ok{border-color:var(--ok)}.write.bad{border-color:var(--bad)}
+.letters{font-family:ui-monospace,Consolas,monospace;font-size:20px;letter-spacing:.15em;color:var(--accent)}
+/* výsledok */
+.score{font-family:var(--f-disp);font-weight:800;font-size:64px;line-height:1;text-align:center;font-variant-numeric:tabular-nums}
+.list{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.list .it{display:flex;gap:10px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);font-size:16px}
+.list .it:last-child{border-bottom:0}
+.list .it .en{font-weight:700;min-width:0;flex:1}
+.list .it .sk{color:var(--soft);min-width:0;flex:1}
+.list .it .L{font-size:12px;color:var(--soft);font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:3px;flex:none}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--ok)}
+.search{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+.empty{color:var(--soft);text-align:center;padding:20px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:15px;max-width:90vw;z-index:5}
+.avatar{width:46px;height:46px;border-radius:50%;flex:none;margin-left:auto;padding:0;min-height:0;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);border:0;font-family:var(--f-disp);font-weight:800;font-size:20px}
+.top > .avatar:first-child{margin-left:0}
+.avatar.sm{width:36px;height:36px;font-size:16px;margin:0}
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 14px;text-align:left;width:100%}
+.kpi{display:flex;flex-direction:column;min-width:0}
+.kpi b{font-family:var(--f-disp);font-weight:800;font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi small{font-size:12px;color:var(--soft);line-height:1.2}
+.heroTxt{grid-column:1/-1;font-size:13px;color:var(--soft)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 14px;display:flex;flex-direction:column;gap:12px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.day{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-variant-numeric:tabular-nums}
+.day .col{height:70px;width:100%;max-width:26px;background:var(--bg);border-radius:8px;display:flex;align-items:flex-end;overflow:hidden}
+.day .col i{display:block;width:100%;background:var(--accent);border-radius:8px}
+.day b{min-height:15px}.day small{color:var(--soft)}
+.rows{display:flex;flex-direction:column;gap:10px}
+.rowp{display:grid;grid-template-columns:1fr 70px 56px;grid-template-rows:auto auto;column-gap:10px;align-items:center;font-size:15px}
+.rowp .progress{height:8px}
+.rowp b{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rowp small{grid-column:1/-1;color:var(--soft);font-size:12px}
+.pp{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;flex:none}
+.pp.bad{color:var(--bad)}
+.cp{color:var(--soft);font-weight:400;font-size:12px}
+.list.flat{border:0;border-radius:0;background:none}
+.list.flat .it{padding-inline:0}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.level{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:110px;border-radius:18px}
+.level b{font-family:var(--f-disp);font-weight:800;font-size:40px;line-height:1}
+.level small{font-size:12px;color:var(--soft)}
+.level.on{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.it.prof{width:100%;border:0;border-radius:0;background:none;text-align:left;min-height:60px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<main id="app"></main>
+
+<script>
+/* =====================================================================
+   KNIHY — dáta. Každá kniha má úroveň 1–6. Ďalšiu knihu pridáš ako nový objekt do poľa KNIHY.
+   Slovo:   anglicky | slovensky | lekcia | obrázok (emoji, nepovinné) | veta s *hľadaným slovom* (nepovinná)
+   Sloveso: tvar1, tvar2, tvar3 | slovensky
+   ===================================================================== */
+const KNIHY = [
+{ id:'dm3', uroven:3, nazov:'English 3 · Direct Method 2022', kratko:'English 3',
+slova:`
+a bit|trochu|76||I'm *a bit* tired today.
+a few|pár, niekoľko (počítateľné)|94||I have *a few* friends in London.
+a little|trochu (nepočítateľné)|94||Can I have *a little* milk, please?
+able to|schopný, vedieť (niečo urobiť)|44||Will you be *able to* come tomorrow?
+absolutely|úplne, absolútne|16||You are *absolutely* right.
+absolutely not|v žiadnom prípade|16
+accent|prízvuk|87||She speaks English with a French *accent*.
+accident|nehoda|50||He had a car *accident* last year.
+accountant|účtovník|1
+activity|činnosť, aktivita|35
+adverb|príslovka|6
+again|znova|37||Can you say that *again*, please?
+against|proti|82||Are you for or *against* the plan?
+ahead|vpredu, dopredu|10
+air-conditioned|klimatizovaný|84
+air-conditioning|klimatizácia|84
+aircraft|lietadlo|49|✈️
+airport|letisko|38||How long does it take to get to the *airport*?
+album|album|30
+all sorts of|všetky možné druhy|73
+allergic|alergický|69||Are you *allergic* to cats?
+allergy|alergia|69
+almost|takmer|45||It's *almost* six o'clock.
+alone|sám, osamote|40||My grandmother lives *alone*.
+already|už|72||I have *already* eaten.
+although|hoci|83||*Although* it was raining, we went out.
+among|medzi (viacerými)|40
+anger|hnev|63|😠
+another|ďalší, iný (jeden)|39||Can I have *another* cup of tea?
+anyone|niekto (v otázke), ktokoľvek|86||Is *anyone* at home?
+apart from|okrem|70
+Arab|Arab|63
+architect|architekt|1
+area|plocha, oblasť|92
+army|armáda|61||Has the dude been in the *army* for three months?
+artist|umelec|7
+as|ako (pracovať ako)|1||She works *as* a teacher.
+as soon as possible|čo najskôr|85
+as usual|ako zvyčajne|31
+at a crossroads|na križovatke|58
+at once|hneď, okamžite|78
+at the bottom|na spodku, dole|17
+at the top|na vrchu, hore|17
+attack|útok, zaútočiť|61
+attract|prilákať|81||Do you know how to *attract* new customers?
+automatic|automatický|49
+automatically|automaticky|6
+awesome|úžasný|67
+awful|strašný, hrozný|67||Why did you eat those *awful* candies?
+back|zadná strana, chrbát|17
+baker's|pekáreň|85
+Baltic|Baltské (more)|54
+band|kapela|30||My brother plays in a rock *band*.
+beginner|začiatočník|2
+behave|správať sa|89||Do teenagers *behave* badly at school?
+behaviour|správanie|89
+believe (in)|veriť (v)|55||She doesn't *believe* in ghosts.
+belong to|patriť (komu)|84||Who does this chewing gum *belong to*?
+bicycle|bicykel|54|🚲
+biker|motorkár|61
+blog|blog|65
+blogger|bloger|65
+boat|loď, čln|22|⛵
+boil|variť (vodu), vrieť|93||Water *boils* at 100 degrees Celsius.
+bone|kosť|96|🦴
+book|rezervovať (aj kniha)|42||I want to *book* a table for two.
+bottle|fľaša|23|🍾
+bottle-opener|otvárač na fľaše|23
+bottom|spodok|17
+branch|pobočka; konár|85
+break|zlomiť, rozbiť|55||Don't *break* the window!
+break a promise|porušiť sľub|55
+bridge|most|44|🌉
+briefcase|aktovka|51|💼
+buddy|kamoš|68||Is your *buddy* crying?
+build|stavať|44||They want to *build* a new house.
+builder|stavbár|1|👷
+business|podnikanie, obchod|15
+businessman|podnikateľ|81
+by accident|omylom, nešťastnou náhodou|50
+by chance|náhodou|67||Have they met the killer *by chance*?
+by mistake|omylom|41
+calculate|vypočítať|92
+calculator|kalkulačka|23|🧮
+call it a day|na dnes skončiť|10||I'm tired, let's *call it a day*.
+call off|zrušiť (akciu)|9||They had to *call off* the match because of the rain.
+candy|cukrík|76|🍬
+captain|kapitán|61
+carpet|koberec|25
+carry on|pokračovať|86
+catch|chytiť|73||Can you *catch* the ball?
+catch up|dobehnúť, dohnať|100
+Celsius|Celzius|93
+centimetre|centimeter|91
+central heating|ústredné kúrenie|25||Did you turn the *central heating* down?
+centre|centrum|84
+champion|víťaz, šampión|36|🏆
+championship|majstrovstvá|36
+chance|šanca, príležitosť|67
+change|zmeniť, zmena|42||How should I *change* the reservation?
+chemist's|lekáreň, drogéria|85
+chest of drawers|komoda|21
+chew|žuť|76
+chewing gum|žuvačka|76
+choice|výber, voľba|15
+choose|vybrať si|82||Which one did you *choose*?
+civil servant|štátny úradník|1
+clean|čistý; čistiť|12
+clean up|upratať|26||Please *clean up* your room.
+clever|múdry, šikovný|88
+coal|uhlie|59
+coast|pobrežie|54
+coffee table|konferenčný stolík|21
+comfort|pohodlie|53
+comfortable|pohodlný|53||This sofa is very *comfortable*.
+common|bežný; spoločný|73
+condition|stav; podmienka|64
+conflict|konflikt|63
+contain|obsahovať|60
+continue|pokračovať|83
+convenient|praktický, vhodný|21
+correct|správny|99
+cost|stáť (o cene)|14||How much does it *cost*?
+cost an arm and a leg|stáť majland|16
+couch|gauč|74|🛋️|Can I spend the day on the *couch*?
+credit|kredit, úver|14
+crime|zločin|60
+crisps|čipsy|77
+cross|prejsť cez; prečiarknuť|89
+cry|plakať|27|😢|Why is the baby *crying*?
+cupboard|skriňa, kredenc|24||Are there any pills in the *cupboard*?
+curtain|záves|25
+customer|zákazník|81||The shop has a lot of *customers*.
+cycle|bicyklovať|54
+dairy|mliečne výrobky|69
+danger|nebezpečenstvo|51|⚠️
+dangerous|nebezpečný|51||Swimming here is *dangerous*.
+dark|tmavý; tma|43
+data|údaje|64
+death|smrť|55
+decide|rozhodnúť sa|56||I can't *decide* what to wear.
+decision|rozhodnutie|56||When will you make a *decision*?
+deep|hlboký|59||The lake is very *deep*.
+degree|stupeň|93
+dentist|zubár|62
+department|oddelenie|88
+department store|obchodný dom|16
+despite|napriek|87
+diamond|diamant|59|💎|She might find her *diamond*.
+diary|denník|95
+diet|diéta, strava|71
+dig|kopať|59
+direction|smer|42
+distance|vzdialenosť|36
+divide|deliť|91|➗
+do the shopping|nakupovať|84|🛒|I *do the shopping* on Saturdays.
+do without|zaobísť sa bez|65
+downhill|z kopca|36
+drop|pustiť (na zem); kvapka|71|💧
+drugstore|drogéria (US)|85
+dry|suchý; sušiť|75
+dude|chlapík|68
+earn|zarábať|2||How much do you *earn*?
+economic|hospodársky, ekonomický|64
+economical|úsporný|64
+either|tiež nie (v zápore); jeden z dvoch|70||I don't like it *either*.
+electrician|elektrikár|1
+else|ešte, iné|70||What *else* do you need?
+emotion|emócia|98
+employ|zamestnávať|4
+employee|zamestnanec|4
+employer|zamestnávateľ|4
+enemy|nepriateľ|61
+engineer|inžinier|1
+enjoy|užívať si|27||Did you *enjoy* the film?
+enjoy yourself|zabav sa|52
+especially|najmä, hlavne|18
+ever|niekedy (v otázke)|29||Have you *ever* been to Paris?
+exact|presný|5
+exactly|presne|5
+exclamation mark|výkričník|98|❗|Do you use a lot of *exclamation marks* in your messages?
+exercise|cvičenie; cvičiť|71
+explain|vysvetliť|45||Can you *explain* it again?
+express|vyjadriť|98
+factory|továreň|3|🏭
+Fahrenheit|Fahrenheit|93
+fail|neuspieť, prepadnúť|89||What kind of test did you *fail*?
+fall apart|rozpadnúť sa|64
+false|nepravdivý|90
+fan|fanúšik; ventilátor|30
+fat|tučný; tuk|19
+fatty|mastný|19
+feeling|pocit|57
+female|ženský; žena|7
+find|nájsť|67||I can't *find* my keys.
+find out|zistiť|64||I want to *find out* the truth.
+fit|byť fit; sedieť (veľkosť)|79
+flame|plameň|59|🔥
+flat tyre|defekt (prázdna pneumatika)|53
+flight|let|49||Our *flight* is delayed.
+fly|letieť|49
+foot|stopa (30,48 cm); chodidlo|91|🦶
+for|po dobu (for an hour); pre|28||I have lived here *for* two years.
+for sure|určite, isto|41
+foreign|cudzí, zahraničný|39
+fortunately|našťastie|6
+fortune|majetok; osud|2
+free|zadarmo; voľný|14
+frequent|častý|74
+frequently|často|74
+friendship|priateľstvo|78
+front|predná časť|17
+full-time|na plný úväzok|9
+furniture|nábytok|24
+general|všeobecný; generál|61
+gentleman|pán, džentlmen|21
+get a job|nájsť si prácu|9
+giraffe|žirafa|47|🦒
+give away|darovať, rozdať|16
+give back|vrátiť|51||Please *give back* my book.
+glad|rád, potešený|14||I'm *glad* to see you.
+go ahead|pokračuj, nech sa páči|10
+go over|prejsť si, zopakovať|100
+go to college|ísť na vysokú školu|88
+go up|stúpať, ísť hore|14
+going to|chystať sa (budúcnosť)|37||I'm *going to* visit my grandma tomorrow.
+gold|zlato|18
+gonna|= going to (hovorovo)|68
+grass|tráva|80|🌱
+greet|pozdraviť|77
+greeting|pozdrav|77|👋
+group|skupina|56
+guilty|vinný|96
+guy|chlap, chalan|77
+hairdresser|kaderník|2|💇
+hairdryer|fén|75
+happen|stať sa|6||What *happened*?
+happiness|šťastie|78
+happy to do something|rád niečo urobiť|10
+hard|tvrdý; ťažký|18
+have had enough|mať dosť|15
+head teacher|riaditeľ školy|100||Does your *head teacher* remind you to use the app?
+health|zdravie|71
+heart|srdce|55|❤️
+heat|teplo, horúčava|25
+heating|kúrenie|25
+heavy metal|heavy metal|31
+herself|ona sama, sa (seba)|52||She looked at *herself* in the mirror.
+himself|on sám, sa (seba)|52||He cut *himself* with a knife.
+hip-hop|hip-hop|31
+hold|držať|43||*Hold* my hand.
+hope|dúfať; nádej|7||I *hope* you are well.
+horrible|hrozný|20
+hotel|hotel|39|🏨
+How about...?|Čo tak...?|16
+how long|ako dlho|28||*How long* have you lived here?
+how many|koľko (počítateľné)|11||*How many* brothers do you have?
+how much|koľko (nepočítateľné)|11||*How much* is this?
+huge|obrovský|67
+human being|ľudská bytosť|96
+human nature|ľudská povaha|96
+illness|choroba|71|🤒
+image|obraz, obrázok|57
+imagination|predstavivosť|9
+immediately|okamžite|50||Come here *immediately*!
+in order not to|aby nie|79
+in order to|aby|79||I study *in order to* pass the exam.
+in spite of|napriek|69
+in the middle|v strede|17
+inch|palec (2,54 cm)|91
+incorrect|nesprávny|99
+independence|nezávislosť|63
+independent|nezávislý|63
+indoor|vnútorný|35
+indoors|vo vnútri|35
+information|informácie|39
+instructions|pokyny, návod|97||We read out the *instructions* five minutes ago.
+insurance|poistenie|38
+insurance agent|poisťovací agent|38
+insurance policy|poistná zmluva|38
+intention|úmysel|37
+Israel|Izrael|63
+it takes|trvá (to)|82||*It takes* twenty minutes to get there.
+itself|samo, sa (seba)|52
+jazz|džez|31|🎷
+jet plane|prúdové lietadlo|38
+Jew|Žid|63
+Jewish|židovský|63
+job|práca, zamestnanie|1
+joke|vtip|27||His wife should tell him the *joke*.
+junk food|nezdravé jedlo|75|🍔
+just|práve; len|19||I have *just* brought it.
+keep|držať; nechať si|22
+keep a promise|dodržať sľub|55
+keep away from|držať sa ďalej od|22
+keep off|nevstupovať, nedotýkať sa|22
+kick|kopnúť|71||Who has the horse *kicked*?
+kill|zabiť|45
+killer|vrah|61
+kind|druh; milý|53||She is very *kind*.
+kinda|tak trochu (hovorovo)|68
+know how to|vedieť (ako)|16||Do you *know how to* swim?
+lady|dáma|21
+lake|jazero|80
+landscape|krajina (scenéria)|53|🏞️
+laugh|smiať sa|27|😂
+laugh at|smiať sa na (niekom)|27
+lawn|trávnik|80||What do you use to cut grass on the *lawn*?
+lawn mower|kosačka|80
+length|dĺžka|92
+lie|klamať; ležať|79
+lie down|ľahnúť si|79||I'm tired, I need to *lie down*.
+life|život|55
+life insurance|životné poistenie|38
+line|čiara; rad|20
+lion|lev|45|🦁
+lip|pera|80|👄
+Lisbon|Lisabon|40
+list|zoznam|95
+look alike|vyzerať podobne|90
+lucky|mať šťastie, šťastný|51|🍀
+magazine|časopis|85
+make a decision|rozhodnúť sa|56
+make money|zarábať peniaze|15
+make sense|dávať zmysel|66||That doesn't *make sense*.
+make sure|uistiť sa|41
+maker|výrobca|4
+male|mužský; muž|7
+marathon|maratón|33
+Mars|Mars|66
+mathematician|matematik|4||The *mathematician* has already found the answer.
+maximum|maximum|10
+may|smieť; možno|60||*May* I borrow your e-bike?
+medal|medaila|36|🏅
+Mediterranean|Stredozemné (more)|54
+meet|stretnúť|34
+meet up|stretnúť sa (dohodnuto)|34
+memory|pamäť; spomienka|95
+message|správa|57|💬
+midday|poludnie|74
+middle|stred|17
+might|možno (by)|60||Our grandchildren *might* fly to other planets.
+mile|míľa|5
+milestone|míľnik|86
+minimum|minimum|10
+mirror|zrkadlo|21|🪞
+mix|miešať|54
+more or less|viac-menej|20
+motorbike|motorka|56|🏍️
+motorcycle|motocykel|56
+move (house)|sťahovať sa|26
+move in|nasťahovať sa|26
+move out|vysťahovať sa|26
+movie|film|57|🎬
+movies|kino|57
+multiply|násobiť|91|✖️
+murder|vražda|60
+murderer|vrah, vrahyňa|61||That *murderer* has killed seven wolves.
+muscle|sval|80|💪
+musician|hudobník|4
+myself|ja sám, sa (seba)|52||I made it *myself*.
+nature|príroda|96
+nephew|synovec|9
+Net|internet|16
+newsagent's|trafika|85
+nice to meet you|teší ma|34
+niece|neter|9
+no one|nikto|86||*No one* knows the answer.
+noise|hluk|56
+noisy|hlučný|56
+not to|nie (aby nie)|79
+note|poznámka|100|📝
+notebook|zošit, notes|100|📓
+of course|samozrejme|18
+offer|ponúknuť; ponuka|14
+optimistic|optimistický|7
+other|iný, ostatný|39
+ought to|mal by|96||You *ought to* see a doctor.
+ourselves|my sami, sa (seba)|52
+outdoor|vonkajší|35
+outdoors|vonku|35
+over|nad, cez; viac ako|44
+own|vlastný; vlastniť|38
+pain|bolesť|71
+painter|maliar|23
+painting|maľba, obraz|23|🖼️
+pal|kamarát|68
+parallel|rovnobežný|20
+part-time|na čiastočný úväzok|9
+participle|príčastie|11
+party|oslava, párty|84|🎉|Did the builder have a birthday *party* last year?
+pass|prejsť (skúškou); podať|89
+passenger|cestujúci|49
+past participle|3. tvar slovesa (príčastie)|11
+pay a visit|navštíviť|62
+peaceful|pokojný|63
+pearl|perla|21
+pepper|korenie (čierne); paprika|77
+per|za, na (per hour)|49
+per cent|percento|82
+perfume|parfum|21
+perhaps|možno|18
+permission|povolenie|72
+perpendicular|kolmý|20
+pessimistic|pesimistický|7
+picnic|piknik|29|🧺
+pill|tabletka|71|💊
+pilot|pilot|49
+planet|planéta|60|🪐
+player|hráč|56
+plenty of|veľa, dostatok|81
+point|bod; ukázať|91
+pop|pop (hudba)|31
+Portugal|Portugalsko|40
+Prague|Praha|40
+prank|žart, recesia|27
+price|cena|14|🏷️
+prison|väzenie|60
+probably|pravdepodobne|46
+produce|vyrábať|3
+producer|výrobca, producent|4
+product|výrobok|3
+profile|profil|66
+promise|sľub; sľúbiť|55||I *promise* I will help you.
+pronunciation|výslovnosť|87
+protect|chrániť|61
+pull|ťahať|43
+push|tlačiť|43
+put off|odložiť|9
+quality|kvalita|5
+quick|rýchly|69
+quickly|rýchlo|69
+quiet|tichý|56|🤫
+quit|skončiť, dať výpoveď|81
+quiz|kvíz|66
+railway|železnica|50|🚆
+rap|rap|31
+rat|potkan|47|🐀
+rather|radšej|62||I would *rather* stay at home.
+razor|holiaci strojček, britva|75|🪒
+react|reagovať|69
+reaction|reakcia|69
+read out|prečítať nahlas|97
+ready|pripravený|81
+real|skutočný|40
+reality|skutočnosť|95
+realize|uvedomiť si|59
+really|naozaj|40
+reflexive|zvratný|52
+regularly|pravidelne|6
+remain|zostať|53
+remind|pripomenúť|96
+reservation|rezervácia|42
+result|výsledok|12
+ride|jazdiť (na)|54
+right|pravý; správny; právo|61
+roadworks|práce na ceste|26|🚧
+rock|rock; skala|31
+role|úloha, rola|80
+Rome|Rím|40
+run|bežať|33|🏃
+sad|smutný|20|😞
+safe|bezpečný|51
+safety|bezpečnosť|51
+salary|plat|83
+salty|slaný|80
+see eye to eye|zhodnúť sa|10
+See you soon!|Uvidíme sa čoskoro!|85
+seem|zdať sa|5||You *seem* tired.
+seller|predajca|2
+share|deliť sa, zdieľať|66||I didn't *share* my pizza with you yesterday.
+shave|holiť sa|75
+shaving cream|krém na holenie|75
+shaving foam|pena na holenie|75
+shop assistant|predavač|1
+shopping centre|nákupné centrum|84||What time does the *shopping centre* open?
+side|strana, bok|17
+silver|striebro|18
+simply|jednoducho|59
+since|odkedy, od|28||I have lived here *since* 2019.
+sing|spievať|31|🎤
+sink|umývadlo, drez|25
+skateboard|skejtbord|35|🛹
+skateboarding|skejtbording|35
+skin|koža|70
+slim|štíhly|19
+smile|úsmev; usmievať sa|27|😊
+so ... that|tak ... že|45
+so|tak; takže|46
+social|spoločenský, sociálny|65
+social networking|sociálne siete|65
+socialize|stretávať sa s ľuďmi|65
+soft|mäkký|18
+someone|niekto|86||*Someone* is at the door.
+soon|čoskoro|85
+sooner or later|skôr či neskôr|85
+sore throat|bolesť hrdla|70
+sort|druh|31
+sound|zvuk; znieť|49
+sparkling|perlivý, šumivý|76
+speed|rýchlosť|49
+spend|minúť; stráviť (čas)|14||How much money did you *spend*?
+spicy|pikantný, štipľavý|75|🌶️
+square metre|štvorcový meter|92
+stay|zostať; bývať (v hoteli)|39
+still|stále, ešte; nesýtený (voda)|72||Are you *still* at work?
+stone|kameň|25|🪨
+stop|zastaviť|78|🛑
+straight|rovný; rovno|20
+strategy|stratégia|81
+stressful|stresujúci|7
+strong|silný|43
+subway|metro (US)|50|🚇
+sugar-free|bez cukru|76
+suggest|navrhnúť|78
+suggestion|návrh|58
+suitcase|kufor|51|🧳
+supper|večera|72
+sure|istý|40
+surprise|prekvapenie|48|🎁
+sweet|sladký|76
+swim|plávať|33|🏊
+table tennis|stolný tenis|35|🏓
+take part in|zúčastniť sa|33
+tattoo|tetovanie|73
+team|tím|56
+teamwork|tímová práca|56
+technical|technický|66
+technique|technika (postup)|35
+techno|techno|31
+technology|technológia|66
+test|test, skúška|89
+textbook|učebnica|99
+thanks to|vďaka (niečomu)|66
+themselves|oni sami, sa (seba)|52
+thick|hrubý|18
+though|hoci; ale|84
+throat|hrdlo|70
+tick|odškrtnúť (fajka)|89|✔️
+ticket|lístok|38|🎫
+ticket office|pokladňa (lístky)|38
+tiger|tiger|45|🐅
+time-consuming|časovo náročný|7
+time is money|čas sú peniaze|58
+to|aby; do|79
+together|spolu|40
+tonight|dnes večer|37
+too|príliš; tiež|70||This skirt is *too* expensive.
+top|vrch|17
+tourist|turista|39
+tourist office|turistické informácie|39
+towel|uterák|75
+travel|cestovať|38
+triathlon|triatlon|54
+true|pravdivý|90
+try|skúsiť|33
+try on|vyskúšať si (oblečenie)|33||Can I *try on* this jacket?
+tube|metro (Londýn); trubica|50
+turn down|stlmiť; odmietnuť|98
+turn up|zosilniť; objaviť sa|26
+tyre|pneumatika|53|🛞
+uncomfortable|nepohodlný|53
+unfortunately|bohužiaľ|6
+until|až do|37
+unusual|nezvyčajný|31
+up to|až do; záleží na|67
+uphill|do kopca|36
+usual|zvyčajný|31
+verb form|tvar slovesa|13
+version|verzia|6
+village|dedina|54|🏘️
+virtual|virtuálny|95
+virus|vírus|74|🦠
+visa|víza|38
+visit|navštíviť; návšteva|62
+vocabulary|slovná zásoba|87
+wage|mzda|81
+wake up|zobudiť sa|79|⏰
+way too difficult|príliš ťažký|36
+way too long|príliš dlhý|36
+weak|slabý|43
+web|web|95
+website|webstránka|95
+weekend|víkend|27
+wet|mokrý|75
+What about...?|A čo...?|16
+What is ... like?|Aký je ...?|20
+wheel|koleso|53
+when pigs can fly|keď prasatá budú lietať (nikdy)|73|🐷
+wing|krídlo|75
+within walking distance|v pešej vzdialenosti|36
+wolf|vlk|45|🐺
+work out|cvičiť; vyriešiť|73
+worker|pracovník|2
+worth|hodný, stojí za|5
+would|by|29||If I saw Jane, I *would* help her.
+would like|chcel by som|22||I *would like* a coffee, please.
+would rather|radšej by|62
+yard|yard (91 cm); dvor|91
+yet|ešte (nie); už (v otázke)|72||Have you finished *yet*?
+yourself|ty sám, sa (seba)|52
+yourselves|vy sami, sa (seba)|52
+zoo|zoo|48
+`,
+slovesa:`
+be, was/were, been|byť|
+begin, began, begun|začať|
+break, broke, broken|zlomiť, rozbiť|
+bring, brought, brought|priniesť|
+build, built, built|stavať|
+buy, bought, bought|kúpiť|
+catch, caught, caught|chytiť|
+choose, chose, chosen|vybrať si|
+come, came, come|prísť|
+cost, cost, cost|stáť (o cene)|
+cut, cut, cut|rezať|
+dig, dug, dug|kopať|
+do, did, done|robiť|
+dream, dreamt, dreamt|snívať|
+drink, drank, drunk|piť|
+drive, drove, driven|šoférovať|
+eat, ate, eaten|jesť|
+feel, felt, felt|cítiť (sa)|
+find, found, found|nájsť|
+fly, flew, flown|letieť|
+forget, forgot, forgotten|zabudnúť|
+get, got, got|dostať|
+give, gave, given|dať|
+go, went, gone|ísť|
+have, had, had|mať|
+hold, held, held|držať|
+keep, kept, kept|držať, nechať si|
+know, knew, known|vedieť, poznať|
+learn, learnt, learnt|učiť sa|
+leave, left, left|odísť, nechať|
+lie, lay, lain|ležať|
+lose, lost, lost|stratiť|
+make, made, made|robiť, vyrobiť|
+mean, meant, meant|znamenať|
+meet, met, met|stretnúť|
+pay, paid, paid|platiť|
+put, put, put|položiť|
+read, read, read|čítať|
+ride, rode, ridden|jazdiť|
+run, ran, run|bežať|
+say, said, said|povedať|
+see, saw, seen|vidieť|
+sing, sang, sung|spievať|
+sit, sat, sat|sedieť|
+sleep, slept, slept|spať|
+smell, smelt, smelt|voňať, cítiť (nosom)|
+speak, spoke, spoken|hovoriť|
+spend, spent, spent|minúť, stráviť|
+stand, stood, stood|stáť|
+swim, swam, swum|plávať|
+take, took, taken|vziať|
+teach, taught, taught|učiť (niekoho)|
+tell, told, told|povedať (niekomu)|
+think, thought, thought|myslieť|
+wake up, woke up, woken up|zobudiť sa|
+wear, wore, worn|mať oblečené, nosiť|
+win, won, won|vyhrať|
+write, wrote, written|písať|
+`}
+];
+
+/* ============================ appka ============================ */
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mix = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const den = d => { const x = d || new Date(); return x.getFullYear() + '-' + String(x.getMonth()+1).padStart(2,'0') + '-' + String(x.getDate()).padStart(2,'0'); };
+function load(k, d){ try { const v = JSON.parse(localStorage.getItem(k)); return v ? Object.assign({}, d, v) : d; } catch(e){ return d; } }
+function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+
+// profily: viac ľudí na jednom zariadení, každý má vlastný pokrok
+let U = load('sl2_profily', { list: [], akt: null });
+const NAST0 = { skup: {}, smer: 'mix', dlzka: 10, zvuk: true };
+const UROVNE = [1, 2, 3, 4, 5, 6];
+let S, D, K, P;
+const kluc = k => 'sl2_' + U.akt + '_' + k;
+const ulozS = () => save(kluc('nast'), S);
+function prihlas(id){
+  U.akt = id; save('sl2_profily', U);
+  S = load(kluc('nast'), NAST0); S.skup = S.skup || {};
+  D = load(kluc('dni'), {});
+  if (!profil().uroven) return urovenObr();
+  nastavKnihu() ? domov() : pripravujeme();
+}
+const profil = () => U.list.find(p => p.id === U.akt);
+
+function pripravKnihu(k){
+  if (k.w) return;
+  k.w = k.slova.trim().split('\n').map(r => {
+    const [en, sk, L, em, veta] = r.split('|').map(s => (s || '').trim());
+    return { id: en + '#' + L, en, sk, L: +L, em, veta, ans: veta ? (veta.match(/\*(.+?)\*/) || [])[1] : '' };
+  });
+  k.v = k.slovesa.trim().split('\n').map(r => {
+    const [t, sk] = r.split('|');
+    const [p, pa, pp] = t.split(',').map(s => s.trim());
+    return { id: 'v#' + p, p, pa, pp, sk: sk.trim() };
+  });
+  k.skupiny = [...new Set(k.w.map(w => skupina(w.L)))].sort((a, b) => a - b);
+}
+const skupina = L => Math.floor((L - 1) / 10);
+const skupinaNazov = g => (g * 10 + 1) + '–' + (g * 10 + 10);
+
+function nastavKnihu(){
+  K = KNIHY.find(k => k.uroven === profil().uroven);
+  if (!K) return false;
+  pripravKnihu(K);
+  P = load(kluc('p_' + K.id), { m: {}, ch: {}, s: {}, mod: {} });
+  P.s = P.s || {}; P.mod = P.mod || {};
+  if (!S.skup[K.id] || !S.skup[K.id].length) S.skup[K.id] = K.skupiny.slice();
+  return true;
+}
+const vybraneSkup = () => S.skup[K.id];
+const pool = () => K.w.filter(w => vybraneSkup().includes(skupina(w.L)));
+const m = id => P.m[id] || 0;
+const NAUCENE = 4;
+
+function zapis(id, ok, mod){
+  if (ok) { P.m[id] = Math.min(5, m(id) + 1); if (m(id) >= 3) delete P.ch[id]; }
+  else { P.m[id] = Math.max(0, m(id) - 2); P.ch[id] = Date.now(); }
+  const s = P.s[id] || [0, 0]; s[0]++; if (ok) s[1]++; P.s[id] = s;
+  const md = mod || (R && R.mod) || 'slova'; const t = P.mod[md] || [0, 0]; t[0]++; if (ok) t[1]++; P.mod[md] = t;
+  const d = D[den()] = typeof D[den()] === 'object' ? D[den()] : { n: D[den()] || 0, ok: 0 };
+  d.n++; if (ok) d.ok++;
+  save(kluc('p_' + K.id), P); save(kluc('dni'), D);
+}
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+const dnesN = () => { const d = D[den()]; return typeof d === 'object' ? d.n : (d || 0); };
+// zvládnutie skupiny slov v % (0–5 bodov za slovo)
+const zvladnute = ws => ws.length ? Math.round(ws.reduce((a, w) => a + m(w.id), 0) / (ws.length * 5) * 100) : 0;
+function uspesnost(ws){ let n = 0, ok = 0; ws.forEach(w => { const s = P.s[w.id]; if (s) { n += s[0]; ok += s[1]; } }); return { n, ok, p: pct(ok, n) }; }
+// čo nejde: skúšané slová s najnižšou úspešnosťou
+function slabe(ws, max){
+  return ws.filter(w => P.s[w.id] && (P.ch[w.id] || P.s[w.id][1] < P.s[w.id][0]))
+    .map(w => ({ w, p: P.s[w.id][1] / P.s[w.id][0], ch: P.ch[w.id] ? 1 : 0 }))
+    .sort((a, b) => b.ch - a.ch || a.p - b.p || m(a.w.id) - m(b.w.id)).slice(0, max).map(x => x.w);
+}
+function seria(){
+  const d = new Date(); let n = 0;
+  if (!D[den(d)]) d.setDate(d.getDate() - 1);
+  while (D[den(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+// vážený výber: čo nevieš a kde si sa mýlil, príde častejšie
+function vyber(arr, n){
+  return arr.map(w => { const v = (6 - m(w.id)) ** 2 + (P.ch[w.id] ? 20 : 0); return { w, k: Math.random() ** (1 / v) }; })
+    .sort((a, b) => b.k - a.k).slice(0, n).map(x => x.w);
+}
+function moznosti(spravna, kandidati){
+  const out = [];
+  for (const c of mix(kandidati)) { if (c && c !== spravna && !out.includes(c)) out.push(c); if (out.length === 3) break; }
+  return mix([spravna, ...out]);
+}
+
+/* ---------- hlas ---------- */
+let hlas = null;
+function najdiHlas(){ try { const v = speechSynthesis.getVoices(); hlas = v.find(x => /en[-_]GB/i.test(x.lang)) || v.find(x => /^en/i.test(x.lang)) || null; } catch(e){} }
+try { najdiHlas(); speechSynthesis.onvoiceschanged = najdiHlas; } catch(e){}
+function povedz(t){
+  if (!t) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(t).replace(/\*/g, '').replace(/\.\.\./g, ' ').replace(/\(.*?\)/g, '').replace(/\//g, ' or '));
+    u.lang = 'en-GB'; if (hlas) u.voice = hlas; u.rate = .9;
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+function toast(t){ const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; document.body.appendChild(el); setTimeout(() => el.remove(), 2200); }
+
+/* ---------- domov ---------- */
+const MODY = [
+  { id:'slova', ico:'Aa', nazov:'Slovíčka', popis:'Vyber správny preklad' },
+  { id:'obrazky', ico:'◉', nazov:'Obrázky', popis:'Čo je na obrázku?' },
+  { id:'vety', ico:'_ _', nazov:'Doplň vetu', popis:'Ktoré slovo chýba?' },
+  { id:'slovesa', ico:'3×', nazov:'Nepravidelné slovesá', popis:'go – went – gone' },
+  { id:'karticky', ico:'⇄', nazov:'Kartičky', popis:'Otoč a povedz si, či vieš' },
+  { id:'pisanie', ico:'✎', nazov:'Napíš slovo', popis:'Najlepšie sa zapamätá' },
+];
+
+function domov(){
+  const p = pool(), vse = K.w.length;
+  const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length;
+  const chyby = K.w.filter(w => P.ch[w.id]).length;
+  const pocty = { slova: p.length, obrazky: p.filter(w => w.em).length, vety: p.filter(w => w.veta).length,
+    slovesa: K.v.length, karticky: p.length, pisanie: p.length };
+  const sr = seria(), us = uspesnost(K.w), zv = zvladnute(K.w);
+  app.innerHTML = `
+  <div class="top">
+    <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg>
+    <div style="min-width:0"><h1>Slovíčka</h1>
+      <div class="kniha">Úroveň ${K.uroven} · ${esc(K.nazov)}</div>
+    </div>
+    <button class="avatar" id="profil" aria-label="Profil">${esc(profil().meno.slice(0, 1).toUpperCase())}</button>
+  </div>
+
+  <button class="hero" id="profil2">
+    <span class="kpi"><b>${zv} %</b><small>zvládnuté</small></span>
+    <span class="kpi"><b>${us.n ? us.p + ' %' : '–'}</b><small>úspešnosť</small></span>
+    <span class="kpi"><b>${sr}</b><small>${sr === 1 ? 'deň' : sr >= 2 && sr <= 4 ? 'dni' : 'dní'} po sebe</small></span>
+    <span class="kpi"><b>${dnesN()}</b><small>dnes</small></span>
+    <span class="progress" style="grid-column:1/-1"><i style="width:${zv}%"></i></span>
+    <span class="heroTxt">${esc(profil().meno)} · naučené ${nauc} z ${vse} slov · ťukni pre profil</span>
+  </button>
+
+  <section>
+    <h2 style="margin-bottom:8px">Lekcie</h2>
+    <div class="chips">
+      ${K.skupiny.map(g => { const ws = K.w.filter(w => skupina(w.L) === g); const z = zvladnute(ws);
+        return `<button class="chip ${vybraneSkup().includes(g) ? 'on' : ''}" data-g="${g}">${skupinaNazov(g)} <small class="cp">${z} %</small><span class="fill" style="width:${z}%"></span></button>`; }).join('')}
+      <button class="chip" id="vsetky">${vybraneSkup().length === K.skupiny.length ? 'Zrušiť výber' : 'Všetky'}</button>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:10px">
+    <h2>Smer</h2>
+    <div class="seg" role="group" aria-label="Smer">
+      <button data-s="en">EN → SK</button><button data-s="sk">SK → EN</button><button data-s="mix">Mix</button>
+    </div>
+  </section>
+
+  <div class="tiles">
+    ${MODY.map(md => `<button class="tile" data-m="${md.id}"><span class="ico">${md.ico}</span><b>${md.nazov}</b><small>${md.popis} · ${pocty[md.id]}</small></button>`).join('')}
+    <button class="tile big" data-m="chyby"><span class="ico" style="color:var(--bad)">!</span><span class="txt"><b>Opakuj chyby</b><small>${chyby ? chyby + ' slov, ktoré ti ešte nejdú' : 'Zatiaľ žiadne chyby'}</small></span></button>
+    <button class="tile big" data-m="zoznam"><span class="ico">≡</span><span class="txt"><b>Zoznam slov</b><small>Prezri si slová, ťukni a vypočuj si výslovnosť</small></span></button>
+  </div>
+
+  ${instalHtml()}
+
+  <section style="display:flex;flex-direction:column;gap:8px">
+    <h2>Nastavenia</h2>
+    <div class="settings">
+      <label for="dlzka">Otázok v kole <select id="dlzka">${[10, 20, 30].map(n => `<option ${S.dlzka === n ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      <label for="zvuk">Prečítať anglické slovo nahlas <input type="checkbox" id="zvuk" ${S.zvuk ? 'checked' : ''}></label>
+    </div>
+  </section>`;
+
+  app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => {
+    const g = +b.dataset.g, a = vybraneSkup();
+    S.skup[K.id] = a.includes(g) ? a.filter(x => x !== g) : [...a, g].sort((x, y) => x - y);
+    if (!S.skup[K.id].length) S.skup[K.id] = [g];
+    ulozS(); domov();
+  });
+  document.getElementById('vsetky').onclick = () => {
+    S.skup[K.id] = vybraneSkup().length === K.skupiny.length ? [K.skupiny[0]] : K.skupiny.slice();
+    ulozS(); domov();
+  };
+  app.querySelectorAll('[data-s]').forEach(b => { b.classList.toggle('on', b.dataset.s === S.smer); b.onclick = () => { S.smer = b.dataset.s; ulozS(); domov(); }; });
+  app.querySelectorAll('[data-m]').forEach(b => b.onclick = () => spusti(b.dataset.m));
+  document.getElementById('dlzka').onchange = e => { S.dlzka = +e.target.value; ulozS(); };
+  document.getElementById('zvuk').onchange = e => { S.zvuk = e.target.checked; ulozS(); };
+  bindInstal();
+  document.getElementById('profil').onclick = profilObr;
+  document.getElementById('profil2').onclick = profilObr;
+  window.scrollTo(0, 0);
+}
+
+/* ---------- tvorba otázok ---------- */
+const smerEN = () => S.smer === 'en' || (S.smer === 'mix' && Math.random() < .5);
+const vetaHtml = (veta, prazdna) => esc(veta).replace(/\*(.+?)\*/, (_, x) => prazdna ? '<span class="blank">&nbsp;?&nbsp;</span>' : '<mark>' + x + '</mark>');
+const ed = p => { const [a, ...r] = p.split(' '); const z = /e$/.test(a) ? a + 'd' : /[^aeiou]y$/.test(a) ? a.slice(0, -1) + 'ied' : a + 'ed'; return [z, ...r].join(' '); };
+
+function otazkaSlovo(w, kand){
+  const en = smerEN();
+  const ine = kand.filter(x => x.sk !== w.sk && x.en !== w.en);
+  return en
+    ? { w, lbl:'EN → SK', prompt: esc(w.en), sayEn: w.en, sub:'Vyber po slovensky', opts: moznosti(w.sk, ine.map(x => x.sk)), ans: w.sk,
+        po: w.veta ? vetaHtml(w.veta) : '' }
+    : { w, lbl:'SK → EN', prompt: esc(w.sk), sub:'Vyber po anglicky', opts: moznosti(w.en, ine.map(x => x.en)), ans: w.en, sayAfter: w.en,
+        po: w.veta ? vetaHtml(w.veta) : '' };
+}
+
+function otazky(mod){
+  const n = S.dlzka, p = pool();
+  if (mod === 'slova') return vyber(p, n).map(w => otazkaSlovo(w, p));
+  if (mod === 'chyby') {
+    const ch = K.w.filter(w => P.ch[w.id]);
+    if (!ch.length) { toast('Zatiaľ nemáš žiadne chyby. Super!'); return null; }
+    return vyber(ch, n).map(w => otazkaSlovo(w, K.w));
+  }
+  if (mod === 'obrazky') {
+    const e = p.filter(w => w.em), all = K.w.filter(w => w.em);
+    if (e.length < 1) { toast('V týchto lekciách nie sú obrázky. Vyber viac lekcií.'); return null; }
+    return vyber(e, n).map(w => ({ w, lbl:'Čo je na obrázku?', prompt: w.em, emoji: true, sub:'Vyber anglické slovo',
+      opts: moznosti(w.en, all.filter(x => x.en !== w.en).map(x => x.en)), ans: w.en, sayAfter: w.en, po: '<b>' + esc(w.en) + '</b> = ' + esc(w.sk) }));
+  }
+  if (mod === 'vety') {
+    const v = p.filter(w => w.veta), all = K.w.filter(w => w.veta);
+    if (!v.length) { toast('V týchto lekciách zatiaľ nie sú vety. Vyber viac lekcií.'); return null; }
+    return vyber(v, n).map(w => ({ w, lbl:'Doplň vetu', prompt: vetaHtml(w.veta, true), veta: true, sub:'Ktoré slovo chýba?', hint: w.sk,
+      opts: moznosti(w.ans, all.filter(x => x.ans.toLowerCase() !== w.ans.toLowerCase()).map(x => x.ans)), ans: w.ans,
+      sayAfter: w.veta, po: vetaHtml(w.veta) }));
+  }
+  if (mod === 'slovesa') {
+    return vyber(K.v, n).map(otazkaSloveso);
+  }
+}
+
+function otazkaSloveso(v){
+  const typ = ['pa', 'pp', 'all'][Math.floor(Math.random() * 3)];
+  const ostatne = mix(K.v.filter(x => x !== v));
+  const troj = x => x.p + ' – ' + x.pa + ' – ' + x.pp, trojica = troj(v), e = ed(v.p);
+  let q;
+  // najprv mätúce tvary toho istého slovesa, potom tvary iných slovies ako záloha
+  if (typ === 'pa') q = { sub: v.sk + ' · <b>2. tvar</b> (minulý čas)', ans: v.pa, vlastne: [v.pp, v.p, e], ine: ostatne.map(x => x.pa) };
+  else if (typ === 'pp') q = { sub: v.sk + ' · <b>3. tvar</b> (past participle)', ans: v.pp, vlastne: [v.pa, v.p, e], ine: ostatne.map(x => x.pp) };
+  else q = { sub: v.sk + ' · <b>všetky tri tvary</b>', ans: trojica,
+    vlastne: mix([[v.p, v.pp, v.pa], [v.p, e, e], [v.p, v.pa, v.pa], [v.p, v.pp, v.pp], [v.p, v.p, v.pp], [v.p, v.pa, e]].map(a => a.join(' – '))),
+    ine: ostatne.map(troj) };
+  const opts = [q.ans];
+  for (const c of [...q.vlastne, ...q.ine]) { if (opts.length === 4) break; if (c && !opts.includes(c)) opts.push(c); }
+  return { w: v, lbl: 'Nepravidelné slovesá', prompt: esc(v.p), sayEn: v.p, sub: q.sub, opts: mix(opts), ans: q.ans, sayAfter: trojica.replace(/ – /g, ', '),
+    po: '<b>' + esc(trojica) + '</b>' };
+}
+
+/* ---------- kvíz ---------- */
+let R;
+function spusti(mod){
+  if (mod === 'zoznam') return zoznam();
+  if (mod === 'karticky') return karticky();
+  if (mod === 'pisanie') return pisanie();
+  const q = otazky(mod);
+  if (!q || !q.length) return;
+  R = { mod, q, i: 0, ok: 0, zle: [] };
+  otazka();
+}
+function hlavicka(){
+  return `<div class="bar"><button class="ghost" id="koniec" aria-label="Späť do menu">✕</button>
+    <div class="progress"><i style="width:${R.i / R.q.length * 100}%"></i></div><span class="num">${R.i + 1} / ${R.q.length}</span></div>`;
+}
+function otazka(){
+  const q = R.q[R.i];
+  app.innerHTML = hlavicka() + `
+  <section class="q">
+    <div class="lbl">${q.lbl}</div>
+    <div class="prompt ${q.emoji ? 'emoji' : ''} ${q.veta ? 'veta' : ''}"><span>${q.prompt}</span>${q.sayEn ? '<button class="say" id="say" aria-label="Prehrať">🔊</button>' : ''}</div>
+    <div class="sub">${q.sub}</div>
+    ${q.hint ? '<button class="ghost" id="hint">Nápoveda: po slovensky</button>' : ''}
+  </section>
+  <div class="opts">${q.opts.map((o, i) => `<button data-i="${i}">${esc(o)}</button>`).join('')}</div>
+  <div class="fb" id="fb" hidden></div>`;
+  document.getElementById('koniec').onclick = domov;
+  if (q.sayEn) { document.getElementById('say').onclick = () => povedz(q.sayEn); if (S.zvuk) povedz(q.sayEn); }
+  const h = document.getElementById('hint'); if (h) h.onclick = () => { h.outerHTML = '<div class="hint">= ' + esc(q.hint) + '</div>'; };
+  app.querySelectorAll('.opts button').forEach(b => b.onclick = () => odpoved(q, b));
+  window.scrollTo(0, 0);
+}
+function odpoved(q, b){
+  const zvol = q.opts[+b.dataset.i], ok = zvol === q.ans;
+  app.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (q.opts[+x.dataset.i] === q.ans) x.classList.add('ok'); });
+  if (!ok) b.classList.add('bad');
+  zapis(q.w.id, ok);
+  if (ok) R.ok++; else R.zle.push(q.w);
+  if (S.zvuk && q.sayAfter) povedz(q.sayAfter);
+  const fb = document.getElementById('fb');
+  fb.hidden = false;
+  fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? 'Správne!' : 'Správne je: ' + esc(q.ans)}</div>
+    ${q.po ? `<div class="ex">${q.po}</div>` : ''}
+    <button class="primary" id="dalej">Ďalej</button>`;
+  const dalej = () => { R.i++; R.i < R.q.length ? otazka() : vysledok(); };
+  document.getElementById('dalej').onclick = dalej;
+  if (ok && !q.po) setTimeout(() => { if (document.getElementById('dalej')) dalej(); }, 900);
+  fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function vysledok(){
+  const n = R.q.length, zle = [...new Map(R.zle.map(w => [w.id, w])).values()];
+  app.innerHTML = `
+  <h1>Hotovo</h1>
+  <div class="score">${pct(R.ok, n)} %</div>
+  <p class="sub" style="text-align:center;margin:0">${R.ok} z ${n} správne${R.ok === n ? ' · bez chyby!' : ''}</p>
+  <div class="progress"><i style="width:${R.ok / n * 100}%"></i></div>
+  ${zle.length ? `<h2>Tieto si zopakuj</h2><div class="list">${zle.map(w => polozka(w)).join('')}</div>` : '<p class="empty">Všetko správne. Výborne!</p>'}
+  ${zle.length ? '<button class="primary" id="znovaZle">Precvič len tieto</button>' : ''}
+  <button class="${zle.length ? '' : 'primary'}" id="znova">Ďalšie kolo</button>
+  <button id="menu">Menu</button>`;
+  bindPolozky();
+  const zz = document.getElementById('znovaZle');
+  if (zz) zz.onclick = () => {
+    const mod = R.mod;
+    const q = mod === 'slovesa' || mod === 'vety' || mod === 'obrazky'
+      ? R.q.filter(x => zle.includes(x.w)).map(x => Object.assign({}, x, { opts: mix(x.opts) }))
+      : zle.map(w => otazkaSlovo(w, K.w));
+    R = { mod, q: mix(q), i: 0, ok: 0, zle: [] }; otazka();
+  };
+  document.getElementById('znova').onclick = () => spusti(R.mod);
+  document.getElementById('menu').onclick = domov;
+  window.scrollTo(0, 0);
+}
+function polozka(w){
+  const en = w.en || (w.p + ' – ' + w.pa + ' – ' + w.pp), mm = m(w.id);
+  return `<div class="it" data-say="${esc(w.en || [w.p, w.pa, w.pp].join(', '))}" role="button" tabindex="0">
+    <span class="en">${esc(en)}</span><span class="sk">${esc(w.sk)}</span>
+    <span class="dots" aria-label="Zvládnutie ${mm} z 5">${[1,2,3,4,5].map(i => `<i class="${i <= mm ? 'on' : ''}"></i>`).join('')}</span></div>`;
+}
+function bindPolozky(){ app.querySelectorAll('[data-say]').forEach(el => el.onclick = () => povedz(el.dataset.say)); }
+
+/* ---------- kartičky ---------- */
+function karticky(){
+  const p = pool(); if (!p.length) return;
+  let rad = vyber(p, S.dlzka), hotovo = 0, celkom = rad.length, otocena = false;
+  const kresli = () => {
+    if (!rad.length) { toast('Kartičky hotové'); return domov(); }
+    const w = rad[0], en = smerEN();
+    otocena = false;
+    app.innerHTML = `<div class="bar"><button class="ghost" id="koniec" aria-label="Späť do menu">✕</button>
+      <div class="progress"><i style="width:${hotovo / celkom * 100}%"></i></div><span class="num">${hotovo} / ${celkom}</span></div>
+      <button class="flash" id="karta"><span class="lbl">Ťukni a otoč</span><span class="front">${esc(en ? w.en : w.sk)}</span><span id="zad" hidden></span></button>
+      <div class="two" id="hod" hidden><button class="no" id="nie">Ešte neviem</button><button class="yes" id="ano">Viem</button></div>`;
+    document.getElementById('koniec').onclick = domov;
+    if (en && S.zvuk) povedz(w.en);
+    document.getElementById('karta').onclick = () => {
+      if (otocena) { povedz(w.en); return; }
+      otocena = true;
+      const z = document.getElementById('zad');
+      z.hidden = false; z.style.display = 'contents';
+      z.innerHTML = `<span class="back">${esc(en ? w.sk : w.en)}</span>${w.veta ? `<span class="ex">${vetaHtml(w.veta)}</span>` : ''}`;
+      document.querySelector('#karta .lbl').textContent = 'Ťukni pre výslovnosť';
+      document.getElementById('hod').hidden = false;
+      if (S.zvuk) povedz(w.en);
+    };
+    document.getElementById('nie').onclick = () => { zapis(w.id, false, 'karticky'); rad.push(rad.shift()); kresli(); };
+    document.getElementById('ano').onclick = () => { zapis(w.id, true, 'karticky'); rad.shift(); hotovo++; kresli(); };
+  };
+  kresli();
+}
+
+/* ---------- písanie ---------- */
+const norm = s => s.toLowerCase().replace(/[’`]/g, "'").replace(/\.\.\.|[?!.]/g, '').replace(/\s+/g, ' ').trim();
+const varianty = en => [...new Set([norm(en), norm(en.replace(/\(.*?\)/g, '')), norm(en.replace(/[()]/g, ''))])];
+function pisanie(){
+  const p = pool(); if (!p.length) return;
+  R = { mod: 'pisanie', q: vyber(p, S.dlzka), i: 0, ok: 0, zle: [] };
+  const kresli = () => {
+    const w = R.q[R.i]; let napovedy = 0, hotove = false;
+    const ciel = w.en.replace(/\s*\(.*?\)/g, '');
+    const maska = () => ciel.split('').map((c, i) => i < napovedy || !/[a-z]/i.test(c) ? c : '_').join('');
+    app.innerHTML = hlavicka() + `
+      <section class="q"><div class="lbl">Napíš po anglicky</div><div class="prompt">${esc(w.sk)}</div>
+        <div class="letters" id="maska">${esc(maska())}</div></section>
+      <form id="f" autocomplete="off"><input class="write" id="vstup" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Odpoveď po anglicky"></form>
+      <div class="two"><button id="hint">Ukáž písmeno</button><button class="primary" id="over">Skontroluj</button></div>
+      <div class="fb" id="fb" hidden></div>`;
+    document.getElementById('koniec').onclick = domov;
+    const vstup = document.getElementById('vstup'); vstup.focus();
+    document.getElementById('hint').onclick = () => { if (hotove) return; napovedy = Math.min(ciel.length, napovedy + 1); document.getElementById('maska').textContent = maska(); vstup.focus(); };
+    const over = () => {
+      if (hotove) return; hotove = true;
+      const ok = varianty(w.en).includes(norm(vstup.value));
+      vstup.classList.add(ok ? 'ok' : 'bad'); vstup.readOnly = true;
+      if (ok && napovedy === 0) zapis(w.id, true, 'pisanie'); else if (!ok) zapis(w.id, false, 'pisanie');
+      if (ok) R.ok++; else R.zle.push(w);
+      if (S.zvuk) povedz(w.en);
+      const fb = document.getElementById('fb'); fb.hidden = false;
+      fb.innerHTML = `<div class="res ${ok ? 'ok' : 'bad'}">${ok ? (napovedy ? 'Správne, s nápovedou' : 'Správne!') : 'Správne je: ' + esc(w.en)}</div>
+        ${w.veta ? `<div class="ex">${vetaHtml(w.veta)}</div>` : ''}<button class="primary" id="dalej">Ďalej</button>`;
+      const d = document.getElementById('dalej'); d.focus();
+      d.onclick = () => { R.i++; R.i < R.q.length ? kresli() : vysledok(); };
+    };
+    document.getElementById('over').onclick = over;
+    document.getElementById('f').onsubmit = e => { e.preventDefault(); over(); };
+  };
+  kresli();
+}
+
+/* ---------- zoznam ---------- */
+function zoznam(){
+  app.innerHTML = `<div class="bar"><button class="ghost" id="koniec">← Menu</button><h1 style="font-size:20px">Zoznam slov</h1></div>
+    <input class="search" id="hladaj" placeholder="Hľadaj po anglicky alebo po slovensky" aria-label="Hľadať">
+    <div class="seg" style="grid-template-columns:1fr 1fr"><button class="on" data-t="s">Slová vo vybraných lekciách</button><button data-t="v">Slovesá</button></div>
+    <div id="vypis"></div>`;
+  let typ = 's';
+  const kresli = () => {
+    const q = norm(document.getElementById('hladaj').value);
+    const zdroj = typ === 's' ? pool() : K.v;
+    const f = zdroj.filter(w => !q || norm((w.en || w.p + ' ' + w.pa + ' ' + w.pp) + ' ' + w.sk).includes(q));
+    if (typ === 's') {
+      const g = {}; f.forEach(w => (g[skupina(w.L)] = g[skupina(w.L)] || []).push(w));
+      document.getElementById('vypis').innerHTML = Object.keys(g).length ? Object.keys(g).sort((a, b) => a - b).map(k =>
+        `<h2 style="margin:14px 0 8px">Lekcie ${skupinaNazov(+k)}</h2><div class="list">${g[k].sort((a, b) => a.L - b.L || a.en.localeCompare(b.en)).map(w => polozka(w)).join('')}</div>`).join('')
+        : '<p class="empty">Nič som nenašiel.</p>';
+    } else {
+      document.getElementById('vypis').innerHTML = f.length ? `<div class="list">${f.map(v => polozka(v)).join('')}</div>` : '<p class="empty">Nič som nenašiel.</p>';
+    }
+    bindPolozky();
+  };
+  document.getElementById('koniec').onclick = domov;
+  document.getElementById('hladaj').oninput = kresli;
+  app.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { typ = b.dataset.t; app.querySelectorAll('[data-t]').forEach(x => x.classList.toggle('on', x === b)); kresli(); });
+  kresli();
+}
+
+/* ---------- inštalácia na plochu ---------- */
+let instal = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instal = e; const b = document.getElementById('instal'); if (b) { b.hidden = false; document.getElementById('instalTxt').textContent = 'Bude na ploche ako ikona a pôjde aj bez internetu.'; } });
+const jeApp = () => { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch(e) { return false; } };
+const iOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+function instalHtml(){
+  if (jeApp() || !/^https?:/.test(location.protocol)) return '';
+  const txt = iOS ? 'V Safari ťukni dole na Zdieľať (štvorček so šípkou) a potom na Pridať na plochu.'
+    : instal ? 'Bude na ploche ako ikona a pôjde aj bez internetu.' : 'V Chrome ťukni vpravo hore na ⋮ a potom na Inštalovať aplikáciu (alebo Pridať na plochu).';
+  return `<section class="card instal"><h2>Nainštaluj si appku</h2><p id="instalTxt" style="margin:0">${txt}</p>${iOS ? '' : `<button class="primary" id="instal" ${instal ? '' : 'hidden'}>Inštalovať</button>`}</section>`;
+}
+function bindInstal(){
+  const b = document.getElementById('instal');
+  if (b) b.onclick = async () => { if (!instal) return; instal.prompt(); try { await instal.userChoice; } catch(e){} instal = null; b.closest('.instal').remove(); };
+}
+window.addEventListener('appinstalled', () => { const c = document.querySelector('.instal'); if (c) c.remove(); });
+if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+/* ---------- profily ---------- */
+const MODY_NAZ = { slova:'Slovíčka', obrazky:'Obrázky', vety:'Doplň vetu', slovesa:'Nepravidelné slovesá', karticky:'Kartičky', pisanie:'Napíš slovo', chyby:'Opakuj chyby' };
+function kto(){
+  app.innerHTML = `
+  <div class="top"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg><h1>Kto sa učí?</h1></div>
+  ${U.list.length ? `<div class="list">${U.list.map(p => `<button class="it prof" data-id="${p.id}"><span class="avatar sm">${esc(p.meno.slice(0, 1).toUpperCase())}</span><span class="en">${esc(p.meno)}</span><span class="sk">${p.uroven ? 'úroveň ' + p.uroven : 'vyber úroveň'} →</span></button>`).join('')}</div>` : '<p class="sub">Napíš svoje meno. Appka si bude pamätať tvoj pokrok na tomto zariadení.</p>'}
+  <form id="novy" class="row" autocomplete="off">
+    <input class="search" id="meno" maxlength="24" placeholder="${U.list.length ? 'Pridať ďalšie meno' : 'Tvoje meno'}" aria-label="Meno" style="flex:1;min-width:0">
+    <button class="primary" type="submit">${U.list.length ? 'Pridať' : 'Začať'}</button>
+  </form>
+  ${instalHtml()}`;
+  bindInstal();
+  app.querySelectorAll('[data-id]').forEach(b => b.onclick = () => prihlas(b.dataset.id));
+  document.getElementById('novy').onsubmit = e => {
+    e.preventDefault();
+    const meno = document.getElementById('meno').value.trim();
+    if (!meno) return;
+    const id = 'u' + Date.now().toString(36);
+    U.list.push({ id, meno }); save('sl2_profily', U); prihlas(id);
+  };
+}
+
+function profilObr(){
+  const us = uspesnost(K.w), zv = zvladnute(K.w), sr = seria();
+  const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length, skusane = K.w.filter(w => P.s[w.id]).length;
+  const zle = slabe([...K.w, ...K.v], 15);
+  const dni = []; for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const x = D[den(d)]; dni.push({ d, n: typeof x === 'object' ? x.n : (x || 0) }); }
+  const maxDen = Math.max(10, ...dni.map(x => x.n));
+  const vs = uspesnost(K.v), vz = zvladnute(K.v);
+  app.innerHTML = `
+  <div class="bar"><button class="ghost" id="spat">← Menu</button></div>
+  <div class="top"><span class="avatar">${esc(profil().meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>${esc(profil().meno)}</h1><div class="kniha">Úroveň ${K.uroven} · ${esc(K.nazov)}</div></div></div>
+
+  <div class="hero">
+    <span class="kpi"><b>${zv} %</b><small>zvládnuté</small></span>
+    <span class="kpi"><b>${us.n ? us.p + ' %' : '–'}</b><small>úspešnosť</small></span>
+    <span class="kpi"><b>${nauc}</b><small>naučených slov</small></span>
+    <span class="kpi"><b>${skusane}</b><small>vyskúšaných</small></span>
+  </div>
+
+  <section class="card">
+    <h2>Posledných 7 dní · ${sr} ${sr === 1 ? 'deň' : sr >= 2 && sr <= 4 ? 'dni' : 'dní'} po sebe</h2>
+    <div class="days">${dni.map(x => `<div class="day"><span class="col"><i style="height:${x.n / maxDen * 100}%"></i></span><b>${x.n || ''}</b><small>${['Ne','Po','Ut','St','Št','Pi','So'][x.d.getDay()]}</small></div>`).join('')}</div>
+  </section>
+
+  <section class="card">
+    <h2>Čo ti nejde</h2>
+    ${zle.length ? `<div class="list flat">${zle.map(w => { const s = P.s[w.id]; return polozka(w).replace('<span class="dots"', `<span class="pp bad">${pct(s[1], s[0])} %</span><span class="dots"`); }).join('')}</div>
+      <button class="primary" id="precvic">Precvič tieto slová</button>` : '<p class="sub">Zatiaľ nič. Keď sa pomýliš, slovo sa objaví tu.</p>'}
+  </section>
+
+  <section class="card">
+    <h2>Lekcie</h2>
+    <div class="rows">${K.skupiny.map(g => { const ws = K.w.filter(w => skupina(w.L) === g), z = zvladnute(ws), u = uspesnost(ws);
+      return `<div class="rowp"><span>Lekcie ${skupinaNazov(g)}</span><span class="progress"><i style="width:${z}%"></i></span><b>${z} %</b><small>${u.n ? u.p + ' % správne' : 'neskúšané'}</small></div>`; }).join('')}
+      <div class="rowp"><span>Nepravidelné slovesá</span><span class="progress"><i style="width:${vz}%"></i></span><b>${vz} %</b><small>${vs.n ? vs.p + ' % správne' : 'neskúšané'}</small></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Úspešnosť podľa cvičenia</h2>
+    <div class="rows">${Object.keys(MODY_NAZ).map(k => { const t = P.mod[k]; return `<div class="rowp"><span>${MODY_NAZ[k]}</span><span class="progress"><i style="width:${t ? pct(t[1], t[0]) : 0}%"></i></span><b>${t ? pct(t[1], t[0]) + ' %' : '–'}</b><small>${t ? t[0] + ' odpovedí' : ''}</small></div>`; }).join('')}</div>
+  </section>
+
+  <div class="two"><button id="zmenU">Zmeniť úroveň</button><button id="zmen">Zmeniť profil</button></div>
+  <button id="reset" class="no">Vynulovať pokrok tejto úrovne</button>
+  <p class="sub" style="text-align:center;font-size:13px">Pokrok sa ukladá len v tomto zariadení a prehliadači.</p>`;
+  document.getElementById('spat').onclick = domov;
+  document.getElementById('zmen').onclick = () => { U.akt = null; save('sl2_profily', U); kto(); };
+  document.getElementById('zmenU').onclick = urovenObr;
+  bindPolozky();
+  const pr = document.getElementById('precvic');
+  if (pr) pr.onclick = () => {
+    const q = zle.map(w => w.en ? otazkaSlovo(w, K.w) : otazkaSloveso(w));
+    R = { mod: 'chyby', q: mix(q), i: 0, ok: 0, zle: [] }; otazka();
+  };
+  const rs = document.getElementById('reset');
+  rs.onclick = () => {
+    if (rs.dataset.potvrd) { P = { m: {}, ch: {}, s: {}, mod: {} }; save(kluc('p_' + K.id), P); toast('Pokrok vynulovaný'); return profilObr(); }
+    rs.dataset.potvrd = 1; rs.textContent = 'Naozaj? Ťukni znova';
+  };
+  window.scrollTo(0, 0);
+}
+
+function urovenObr(){
+  const p = profil();
+  app.innerHTML = `
+  <div class="top"><span class="avatar" style="margin-left:0">${esc(p.meno.slice(0, 1).toUpperCase())}</span><div style="min-width:0"><h1>Akú úroveň máš?</h1><div class="kniha">${esc(p.meno)} · číslo na obálke knihy</div></div></div>
+  <div class="levels">${UROVNE.map(u => { const k = KNIHY.find(x => x.uroven === u);
+    return `<button class="level ${p.uroven === u ? 'on' : ''}" data-u="${u}"><b>${u}</b><small>${k ? 'slovíčka pripravené' : 'pripravujeme'}</small></button>`; }).join('')}</div>
+  ${p.uroven ? '<button id="spat">Späť</button>' : ''}`;
+  app.querySelectorAll('[data-u]').forEach(b => b.onclick = () => { p.uroven = +b.dataset.u; save('sl2_profily', U); nastavKnihu() ? domov() : pripravujeme(); });
+  const sp = document.getElementById('spat'); if (sp) sp.onclick = () => nastavKnihu() ? domov() : pripravujeme();
+  window.scrollTo(0, 0);
+}
+function pripravujeme(){
+  const p = profil();
+  app.innerHTML = `
+  <div class="top"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h14l12 16-12 16H8l12-16z" fill="var(--brand)"/></svg><div style="min-width:0"><h1>Slovíčka</h1><div class="kniha">${esc(p.meno)} · úroveň ${p.uroven}</div></div></div>
+  <section class="card"><h2>Úroveň ${p.uroven} pripravujeme</h2>
+    <p style="margin:0">Pre túto knihu ešte nemám slovíčka. Odfoť slovník na konci knihy (strany so slovami a číslami lekcií) a nepravidelné slovesá a pošli ich Marekovi.</p></section>
+  <div class="two"><button id="zmenU">Zmeniť úroveň</button><button id="zmen">Zmeniť profil</button></div>`;
+  document.getElementById('zmenU').onclick = urovenObr;
+  document.getElementById('zmen').onclick = () => { U.akt = null; save('sl2_profily', U); kto(); };
+}
+
+if (U.akt && U.list.some(p => p.id === U.akt)) prihlas(U.akt); else kto();
+</script>
+</body>
+</html>
