@@ -13,7 +13,7 @@ Obrázok je emoji v poli 4 riadku slova. Musí byť jasné, **ktoré jedno angli
    🥦 brokolica (nie zelenina), 🎷 saxofón (nie džez), 🎤 mikrofón (nie spievať), 🛒 vozík (nie supermarket), 🧺 kôš (nie piknik),
    🍾 šampanské (nie fľaša), ⏰ budík (nie zobudiť sa), 🍂 lístie (nie jeseň), 💻 je notebook (počítač = 🖥️).
 4. **Obrázok nesmie mať v bežnej reči iný význam**: 👍 = „páči sa mi / OK“ (nie palec), 🍀 = šťastie.
-5. **V jednej knihe žiadne dva podobné obrázky** (aj keď ide o iné emoji): 😞/😢, 🤒/😢, 📕/📖, 👋/✋, 👚/👕, tváre 👦 👧 🧒 👨 👩 (nechať najviac muž + žena).
+5. **V jednej knihe žiadne dva podobné obrázky** (aj keď ide o iné emoji): 😞/😢, 🤒/😢, 📕/📖, 👋/✋, 👚/👕, 👓/🕶️, tváre 👦 👧 🧒 👨 👩 (nechať najviac muž + žena).
 6. Pred zverejnením vykresliť všetky obrázky so slovami na jeden list a prezrieť očami (na mobile vyzerajú emoji inak ako v zozname).
 
 ## Významy slov (slovenský preklad)

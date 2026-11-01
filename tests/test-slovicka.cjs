@@ -107,13 +107,13 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
   }
   // každé slovo v oboch knihách má príkladovú vetu so zvýrazneným slovom
   const bezPr = await pg.evaluate(() => KNIHY.map(k => { pripravKnihu(k); return k.id + ':' + k.w.filter(w => !/\*[^*]+\*/.test(prikladSlova(w))).length + '/' + k.prChyby.length; }).join(' '));
-  over(bezPr === 'dm3:0/0 dm1:0/0', 'každé slovo má For example vetu (' + bezPr + ')');
+  over(bezPr === 'dm3:0/0 dm2:0/0 dm1:0/0', 'každé slovo má For example vetu (' + bezPr + ')');
   const bezSk = await pg.evaluate(() => KNIHY.map(k => { pripravKnihu(k); return k.vt.filter(x => !vetaSk(x.veta)).map(x => x.veta); }).flat());
   over(bezSk.length === 0, 'každá veta na doplnenie má slovenský preklad ' + bezSk.slice(0, 5).join(' | '));
   // pravidlá obrázkov (PRAVIDLA.md): zakázané emoji a žiadne dva rovnaké/podobné obrázky v jednej knihe
   const obr = await pg.evaluate(() => {
     const ZAKAZ = ['🏨','🏷️','🧮','🗼','🎁','🏆','🌱','🥦','👍','🧺','🛒','🎤','🍾','❓','📖','🌷','🏖️','❄️','🍂','💍','🍀','⏰','🐷','🎷','💇','😞','🤒'];
-    const PODOBNE = [['😢','😞'],['😢','🤒'],['📕','📖'],['👋','✋'],['👚','👕'],['👦','👨'],['👧','👩'],['🧒','👦'],['🧒','👧']];
+    const PODOBNE = [['😢','😞'],['😢','🤒'],['📕','📖'],['👋','✋'],['👚','👕'],['👦','👨'],['👧','👩'],['🧒','👦'],['🧒','👧'],['👓','🕶️']];
     return KNIHY.map(k => { pripravKnihu(k);
       const em = k.w.filter(w => w.em).map(w => w.em);
       const zak = k.w.filter(w => ZAKAZ.includes(w.em)).map(w => w.en + w.em);
@@ -122,7 +122,7 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
       return k.id + ':' + [...zak, ...dup, ...pod].join(',');
     }).join(' ');
   });
-  over(obr === 'dm3: dm1:', 'obrázky podľa pravidiel: bez zakázaných, rovnakých a podobných (' + obr + ')');
+  over(obr === 'dm3: dm2: dm1:', 'obrázky podľa pravidiel: bez zakázaných, rovnakých a podobných (' + obr + ')');
 
   // celé kolo znova: tie isté slová od začiatku
   async function dohraj(){ for (let i = 0; i < 40 && !(await pg.isVisible('text=Hotovo')); i++) {
@@ -242,7 +242,7 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
   await pg.click('#profil'); await pg.click('#zmen');
   await pg.fill('#meno', 'Emma'); await pg.click('#novy button');
   const zamk = await pg.$$eval('.level', e => e.map(x => x.disabled));
-  over(JSON.stringify(zamk) === JSON.stringify([false, true, false, true, true, true]), 'odomknuté úrovne 1 a 3, ostatné zamknuté ' + JSON.stringify(zamk));
+  over(JSON.stringify(zamk) === JSON.stringify([false, false, false, true, true, true]), 'odomknuté úrovne 1, 2 a 3, ostatné zamknuté ' + JSON.stringify(zamk));
   over(await pg.isVisible('text=zamknuté'), 'zamknuté úrovne sú označené');
   await pg.screenshot({ path: out + '/0-uroven.png', fullPage: true });
   await pg.click('[data-u="1"]');
@@ -261,6 +261,35 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
   await pg.click('#profil'); await pg.click('#zmen');
   over(await pg.$$eval('.it.prof', e => e.length) === 2, 'výber z dvoch profilov [' + (await pg.$$eval('.it.prof', e => e.map(x=>x.textContent).join('|'))) + ']');
   over((await pg.textContent('#app')).includes('úroveň 3'), 'pri mene vidno úroveň');
+
+  // úroveň 2: unity a časti (part) podľa Language Labu
+  await pg.fill('#meno', 'Jana'); await pg.click('#novy button');
+  await pg.click('[data-u="2"]');
+  over(await pg.isVisible('text=English · úroveň 2'), 'úroveň 2 otvorí menu s knihou 2');
+  over(await pg.evaluate(() => K.cChyby.length === 0 && K.w.every(w => w.U >= 1 && w.U <= 21 && w.C.length)), 'úroveň 2: každé slovo má unit a časť ' + JSON.stringify(await pg.evaluate(() => K.cChyby)));
+  over(await pg.$$eval('[data-g]', e => e.map(x => x.textContent.trim().split(' ')[0] + ' ' + x.textContent.trim().split(' ')[1]).join(',')) === Array.from({ length: 21 }, (_, i) => 'Unit ' + (i + 1)).join(','), 'úroveň 2: výber Unit 1 až Unit 21');
+  over(!(await pg.isVisible('#casti')), 'úroveň 2: pri viacerých unitoch sa časti neponúkajú');
+  await pg.click('#vsetky'); // zruší výber → ostane len Unit 1
+  over(await pg.isVisible('text=Časti Unit 1') && (await pg.$$('[data-c]')).length === 7, 'úroveň 2: pri jednom unite ponúkne jeho časti (Unit 1 = 7 častí so slovami)');
+  await pg.click('[data-c="1"]');
+  const v11 = await pg.evaluate(() => pool().map(w => w.en).sort().join(','));
+  over(v11 === 'app,have got,passport', 'úroveň 2: časť 1/1 = have got, passport, app (' + v11 + ')');
+  const otz = await pg.evaluate(() => { S.dlzka = 10; return otazky('slova'); });
+  over(otz.length === 3 && otz.every(q => ['app', 'have got', 'passport'].includes(q.w.en) && q.opts.length === 4), 'úroveň 2: kvíz z časti 1/1 pýta len jej slová a má 4 možnosti');
+  await pg.click('[data-c="2"]');
+  over((await pg.evaluate(() => pool().length)) === 4, 'úroveň 2: dve časti naraz (1/1 + 1/2 = 4 slová)');
+  await pg.click('#vsetkyCasti');
+  over((await pg.evaluate(() => pool().length)) === await pg.evaluate(() => K.w.filter(w => w.C.some(c => c[0] === 1)).length), 'úroveň 2: „Celý unit“ vráti všetky slová Unit 1');
+  await pg.click('[data-g="7"]'); // ťuknutie vyberie práve Unit 7
+  over(await pg.evaluate(() => JSON.stringify(vybraneSkup())) === '[7]', 'úroveň 2: ťuknutie na unit vyberie práve ten unit');
+  over(await pg.evaluate(() => pool().some(w => w.en === 'glass')), 'úroveň 2: slovo z dvoch unitov (glass 5/8 aj 7/10) je v oboch');
+  await pg.reload();
+  over(await pg.isVisible('text=Časti Unit 7'), 'úroveň 2: výber unitu ostane po znovuotvorení');
+  await pg.screenshot({ path: out + '/9-uroven2-unit.png', fullPage: true });
+  await kviz('slova', 'Úroveň 2 Slovíčka (Unit 7)');
+  await pg.click('#vsetky');
+  await kviz('vety', 'Úroveň 2 Doplň vetu (všetky unity)');
+  await pg.click('#profil'); await pg.click('#zmen');
   // inštalácia a bez internetu
   over(await pg.evaluate(async () => { const r = await navigator.serviceWorker.ready; return !!r.active; }), 'appka sa vie uložiť do mobilu (service worker beží)');
   const man = await pg.evaluate(async () => (await fetch('manifest.webmanifest')).json());
