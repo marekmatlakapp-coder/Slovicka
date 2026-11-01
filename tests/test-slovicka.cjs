@@ -267,10 +267,10 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
   await pg.click('[data-u="2"]');
   over(await pg.isVisible('text=English · úroveň 2'), 'úroveň 2 otvorí menu s knihou 2');
   over(await pg.evaluate(() => K.cChyby.length === 0 && K.w.every(w => w.U >= 1 && w.U <= 21 && w.C.length)), 'úroveň 2: každé slovo má unit a časť ' + JSON.stringify(await pg.evaluate(() => K.cChyby)));
-  over(await pg.$$eval('[data-g]', e => e.map(x => x.textContent.trim().split(' ')[0] + ' ' + x.textContent.trim().split(' ')[1]).join(',')) === Array.from({ length: 21 }, (_, i) => 'Unit ' + (i + 1)).join(','), 'úroveň 2: výber Unit 1 až Unit 21');
+  over(await pg.$$eval('[data-g]', e => e.map(x => x.textContent.trim().split(' ')[0] + ' ' + x.textContent.trim().split(' ')[1]).join(',')) === Array.from({ length: 21 }, (_, i) => 'Modul ' + (i + 1)).join(','), 'úroveň 2: výber Modul 1 až Modul 21');
   over(!(await pg.isVisible('#casti')), 'úroveň 2: pri viacerých unitoch sa časti neponúkajú');
   await pg.click('#vsetky'); // zruší výber → ostane len Unit 1
-  over(await pg.isVisible('text=Časti Unit 1') && (await pg.$$('[data-c]')).length === 7, 'úroveň 2: pri jednom unite ponúkne jeho časti (Unit 1 = 7 častí so slovami)');
+  over(await pg.isVisible('text=Časti modulu 1') && (await pg.$$('[data-c]')).length === 7, 'úroveň 2: pri jednom unite ponúkne jeho časti (Unit 1 = 7 častí so slovami)');
   await pg.click('[data-c="1"]');
   const v11 = await pg.evaluate(() => pool().map(w => w.en).sort().join(','));
   over(v11 === 'app,have got,passport', 'úroveň 2: časť 1/1 = have got, passport, app (' + v11 + ')');
@@ -284,7 +284,15 @@ const over = (c, t) => { if (c) { ok++; console.log('✓', t); } else { zle++; c
   over(await pg.evaluate(() => JSON.stringify(vybraneSkup())) === '[7]', 'úroveň 2: ťuknutie na unit vyberie práve ten unit');
   over(await pg.evaluate(() => pool().some(w => w.en === 'glass')), 'úroveň 2: slovo z dvoch unitov (glass 5/8 aj 7/10) je v oboch');
   await pg.reload();
-  over(await pg.isVisible('text=Časti Unit 7'), 'úroveň 2: výber unitu ostane po znovuotvorení');
+  over(await pg.isVisible('text=Časti modulu 7'), 'úroveň 2: výber unitu ostane po znovuotvorení');
+  await pg.evaluate(() => document.getElementById('casti').scrollIntoView());
+  const y0 = await pg.evaluate(() => window.scrollY);
+  await pg.click('[data-c="1"]');
+  const y1 = await pg.evaluate(() => window.scrollY);
+  over(y0 > 100 && Math.abs(y1 - y0) < 5, 'úroveň 2: po ťuknutí na časť obrazovka neskočí hore (' + y0 + ' → ' + y1 + ')');
+  over((await pg.evaluate(() => pool().length)) < (await pg.evaluate(() => K.w.filter(w => w.C.some(c => c[0] === 7)).length)), 'úroveň 2: v module 7 vybraná len časť 7/1');
+  await pg.click('[data-g="7"]');
+  over(await pg.evaluate(() => vybraneCasti(7).length === 0 && pool().length === K.w.filter(w => w.C.some(c => c[0] === 7)).length), 'úroveň 2: ťuknutie na modul vyberie celý modul (zruší vybrané časti)');
   await pg.screenshot({ path: out + '/9-uroven2-unit.png', fullPage: true });
   await kviz('slova', 'Úroveň 2 Slovíčka (Unit 7)');
   await pg.click('#vsetky');

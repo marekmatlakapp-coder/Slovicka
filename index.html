@@ -4893,8 +4893,8 @@ function pripravKnihu(k){
 }
 // skupina slova: v knihe s unitmi číslo unitu, inak lekcie po desiatkach
 const skupW = (k, w) => k.casti ? w.U : skupina(w.L);
-const nazovG = g => K.casti ? 'Unit ' + g : skupinaNazov(g);
-const popisG = g => K.casti ? 'Unit ' + g : skupinaPopis(g);
+const nazovG = g => K.casti ? 'Modul ' + g : skupinaNazov(g);
+const popisG = g => K.casti ? 'Modul ' + g : skupinaPopis(g);
 // vybrané časti unitu (platia, keď je vybraný práve jeden unit; prázdne = celý unit)
 const castiKluc = u => K.id + ':' + u;
 const vybraneCasti = u => (S.cast && S.cast[castiKluc(u)]) || [];
@@ -4913,8 +4913,8 @@ function castiHtml(){
     return '<button class="chip ' + (vc.includes(c.p) ? 'on' : '') + '" data-c="' + c.p + '">' + u + '/' + c.p + ' · ' + esc(c.prve)
       + ' <small class="cp">' + z + ' %</small><span class="fill" style="width:' + z + '%"></span></button>';
   }).join('');
-  return '<section id="casti"><h2 style="margin-bottom:8px">Časti Unit ' + u + '</h2><div class="chips">' + chips
-    + '<button class="chip ' + (vc.length ? '' : 'on') + '" id="vsetkyCasti">Celý unit</button></div></section>';
+  return '<section id="casti"><h2 style="margin-bottom:8px">Časti modulu ' + u + '</h2><div class="chips">' + chips
+    + '<button class="chip ' + (vc.length ? '' : 'on') + '" id="vsetkyCasti">Celý modul</button></div></section>';
 }
 const FRAZY = 100;
 const skupina = L => L >= 1000 ? FRAZY : Math.floor((L - 1) / 10);
@@ -5028,7 +5028,9 @@ const MODY = [
   { id:'pisanie', ico:'✎', nazov:'Napíš slovo', popis:'Najlepšie sa zapamätá' },
 ];
 
-function domov(){
+// ostan === true: prekresliť a nechať obrazovku na tom istom mieste (výber modulov, častí, smeru)
+function domov(ostan){
+  const y = window.scrollY;
   zastavHlas(); zmazKolo();
   const p = pool(), vse = K.w.length;
   const nauc = K.w.filter(w => m(w.id) >= NAUCENE).length;
@@ -5055,7 +5057,7 @@ function domov(){
   </button>
 
   <section>
-    <h2 style="margin-bottom:8px">${K.casti ? 'Unity' : 'Lekcie'}</h2>
+    <h2 style="margin-bottom:8px">${K.casti ? 'Moduly' : 'Lekcie'}</h2>
     <div class="chips">
       ${K.skupiny.map(g => { const ws = K.w.filter(w => K.casti ? vCasti(w, g) : skupW(K, w) === g); const z = zvladnute(ws);
         return `<button class="chip ${vybraneSkup().includes(g) ? 'on' : ''}" data-g="${g}">${nazovG(g)} <small class="cp">${z} %</small><span class="fill" style="width:${z}%"></span></button>`; }).join('')}
@@ -5089,31 +5091,31 @@ function domov(){
 
   app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => {
     const g = +b.dataset.g, a = vybraneSkup();
-    // kniha s unitmi: ťuknutie vyberie práve tento unit (potom sa ukážu jeho časti); inak lekcie pridávaj/uberaj
-    if (K.casti) S.skup[K.id] = [g];
+    // kniha s unitmi: ťuknutie vyberie celý tento modul (potom si môže vybrať len jeho časti); inak lekcie pridávaj/uberaj
+    if (K.casti) { S.skup[K.id] = [g]; S.cast = S.cast || {}; S.cast[castiKluc(g)] = []; }
     else S.skup[K.id] = a.includes(g) ? a.filter(x => x !== g) : [...a, g].sort((x, y) => x - y);
     if (!S.skup[K.id].length) S.skup[K.id] = [g];
-    ulozS(); domov();
+    ulozS(); domov(true);
   });
   app.querySelectorAll('[data-c]').forEach(b => b.onclick = () => {
     const u = vybraneSkup()[0], c = +b.dataset.c, a = vybraneCasti(u);
     S.cast = S.cast || {}; S.cast[castiKluc(u)] = a.includes(c) ? a.filter(x => x !== c) : [...a, c].sort((x, y) => x - y);
-    ulozS(); domov();
+    ulozS(); domov(true);
   });
   const vsC = document.getElementById('vsetkyCasti');
-  if (vsC) vsC.onclick = () => { S.cast = S.cast || {}; S.cast[castiKluc(vybraneSkup()[0])] = []; ulozS(); domov(); };
+  if (vsC) vsC.onclick = () => { S.cast = S.cast || {}; S.cast[castiKluc(vybraneSkup()[0])] = []; ulozS(); domov(true); };
   document.getElementById('vsetky').onclick = () => {
     S.skup[K.id] = vybraneSkup().length === K.skupiny.length ? [K.skupiny[0]] : K.skupiny.slice();
-    ulozS(); domov();
+    ulozS(); domov(true);
   };
-  app.querySelectorAll('[data-s]').forEach(b => { b.classList.toggle('on', b.dataset.s === S.smer); b.onclick = () => { S.smer = b.dataset.s; ulozS(); domov(); }; });
+  app.querySelectorAll('[data-s]').forEach(b => { b.classList.toggle('on', b.dataset.s === S.smer); b.onclick = () => { S.smer = b.dataset.s; ulozS(); domov(true); }; });
   app.querySelectorAll('[data-m]').forEach(b => b.onclick = () => spusti(b.dataset.m));
   document.getElementById('dlzka').onchange = e => { S.dlzka = +e.target.value; ulozS(); };
   document.getElementById('zvuk').onchange = e => { S.zvuk = e.target.checked; ulozS(); };
   bindInstal();
   document.getElementById('profil').onclick = profilObr;
   document.getElementById('profil2').onclick = profilObr;
-  window.scrollTo(0, 0);
+  window.scrollTo(0, ostan === true ? y : 0);
 }
 
 /* ---------- tvorba otázok ---------- */
@@ -5492,7 +5494,7 @@ function profilObr(){
   </section>
 
   <section class="card">
-    <h2>${K.casti ? 'Unity' : 'Lekcie'}</h2>
+    <h2>${K.casti ? 'Moduly' : 'Lekcie'}</h2>
     <div class="rows">${K.skupiny.map(g => { const ws = K.w.filter(w => K.casti ? vCasti(w, g) : skupW(K, w) === g), z = zvladnute(ws), u = uspesnost(ws);
       return `<div class="rowp"><span>${popisG(g)}</span><span class="progress"><i style="width:${z}%"></i></span><b>${z} %</b><small>${u.n ? u.p + ' % správne' : 'neskúšané'}</small></div>`; }).join('')}
       ${K.v.length ? `<div class="rowp"><span>Nepravidelné slovesá</span><span class="progress"><i style="width:${vz}%"></i></span><b>${vz} %</b><small>${vs.n ? vs.p + ' % správne' : 'neskúšané'}</small></div>` : ''}
